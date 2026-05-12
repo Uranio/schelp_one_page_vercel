@@ -1,0 +1,213 @@
+/* ============================================================
+   SCHELP — Design tokens
+   ------------------------------------------------------------
+   Schelp is a dark-first podcast app. The palette pivots on
+   a coral/pink primary (lifted from the logo gradient) against
+   a near-black canvas, with deep indigo for hero surfaces and
+   a violet secondary used sparingly for category tags.
+   ============================================================ */
+
+/* -------------------- Fonts -------------------- */
+/* The app's display face is a tightly-set geometric grotesque
+   with a hint of warmth (rounded apertures, low contrast).
+   Closest open-source match: General Sans / Plus Jakarta Sans.
+   We default to Plus Jakarta Sans (Google Fonts) for portability.
+   Body uses Inter as a neutral pairing.                        */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* -------------------- Color: Brand -------------------- */
+  --coral-50:  #FFF1F1;
+  --coral-100: #FFD9DC;
+  --coral-200: #FFB3B9;
+  --coral-300: #FF8C95;
+  --coral-400: #FF6E78;   /* hover / lighter */
+  --coral-500: #FE6B6B;   /* PRIMARY — FAB, active icons, key dates */
+  --coral-600: #F25060;   /* logo darker stop */
+  --coral-700: #D63A4D;   /* press */
+  --coral-800: #A82839;
+  --coral-900: #6E1A26;
+
+  --violet-50:  #EFEAFF;
+  --violet-100: #D9CFFF;
+  --violet-200: #B6A3FF;
+  --violet-300: #9A85FF;
+  --violet-400: #8A70FF;
+  --violet-500: #7B62FF;   /* SECONDARY — category tags ("Cinema", "Economia") */
+  --violet-600: #6450E0;
+  --violet-700: #4B3CB8;
+
+  /* Indigo: hero / featured surface gradient */
+  --indigo-900: #1F1541;
+  --indigo-800: #271858;
+  --indigo-700: #2B1A66;
+  --indigo-600: #3A2480;
+  --indigo-glow: #4B2EA8;
+
+  /* -------------------- Color: Neutrals (dark-first) -------------------- */
+  --ink-0:   #000000;
+  --ink-10:  #0A0A0B;     /* page background */
+  --ink-20:  #0D0D0F;     /* alt surface */
+  --ink-30:  #141417;     /* card / elevated surface */
+  --ink-40:  #1A1A1F;     /* tag / chip bg, secondary surface */
+  --ink-50:  #252529;     /* divider, hairline */
+  --ink-60:  #34343A;     /* border, disabled */
+  --ink-70:  #555560;
+  --ink-80:  #7A7A85;
+  --ink-90:  #A8A8B0;     /* secondary text */
+  --ink-95:  #D6D6DA;
+  --ink-100: #FFFFFF;     /* primary text */
+
+  /* -------------------- Semantic surface tokens -------------------- */
+  --bg-page:        var(--ink-10);
+  --bg-surface:     var(--ink-30);
+  --bg-surface-2:   var(--ink-40);
+  --bg-elevated:    #1E1E24;
+  --bg-hero:        linear-gradient(135deg, var(--indigo-700) 0%, var(--indigo-900) 100%);
+  --bg-hero-glow:   radial-gradient(120% 80% at 80% 0%, var(--indigo-glow) 0%, transparent 55%),
+                    linear-gradient(135deg, var(--indigo-700) 0%, var(--indigo-900) 100%);
+
+  /* -------------------- Semantic foreground tokens -------------------- */
+  --fg-1: var(--ink-100);   /* high-emphasis text, headings */
+  --fg-2: var(--ink-95);    /* body text on dark */
+  --fg-3: var(--ink-90);    /* secondary, captions */
+  --fg-4: var(--ink-80);    /* muted, placeholder, calendar past days */
+  --fg-disabled: var(--ink-70);
+  --fg-on-coral: #FFFFFF;
+  --fg-on-violet-tag: var(--violet-500);  /* violet text on dark chip */
+
+  /* -------------------- Border tokens -------------------- */
+  --border-subtle:  var(--ink-50);
+  --border-default: var(--ink-60);
+  --border-strong:  var(--ink-70);
+  --border-focus:   var(--coral-500);
+
+  /* -------------------- Accent / status -------------------- */
+  --accent:         var(--coral-500);
+  --accent-hover:   var(--coral-400);
+  --accent-press:   var(--coral-700);
+  --accent-soft:    rgba(254, 107, 107, 0.12);
+  --accent-ring:    rgba(254, 107, 107, 0.35);
+
+  --success: #3FCF8E;
+  --warning: #F5B947;
+  --danger:  #FF5C6C;
+  --info:    var(--violet-500);
+
+  /* -------------------- Gradients (signature) -------------------- */
+  --grad-coral:   linear-gradient(135deg, #FF8A98 0%, #FE6B6B 50%, #F25060 100%);
+  --grad-shell:   linear-gradient(180deg, #FF9DA6 0%, #FE6B6B 60%, #E84A5E 100%); /* matches logo */
+  --grad-indigo:  linear-gradient(135deg, #4B2EA8 0%, #2B1A66 60%, #1F1541 100%);
+  --grad-waveform: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.10) 100%);
+
+  /* -------------------- Radii -------------------- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;     /* cards */
+  --radius-xl: 28px;     /* hero card */
+  --radius-2xl: 36px;
+  --radius-pill: 999px;
+
+  /* -------------------- Spacing scale (4 / 8 base) -------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* -------------------- Shadows -------------------- */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.45);
+  --shadow-md: 0 10px 24px -8px rgba(0,0,0,0.6);
+  --shadow-lg: 0 24px 48px -12px rgba(0,0,0,0.7);
+  --shadow-glow-coral:  0 10px 30px -6px rgba(254, 107, 107, 0.55);
+  --shadow-glow-indigo: 0 16px 60px -10px rgba(75, 46, 168, 0.55);
+
+  /* -------------------- Motion -------------------- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);     /* default — gentle settle */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* press release */
+  --dur-fast:   120ms;
+  --dur-base:   220ms;
+  --dur-slow:   400ms;
+
+  /* -------------------- Type — families -------------------- */
+  --font-display: 'Plus Jakarta Sans', 'SF Pro Display', system-ui, sans-serif;
+  --font-body:    'Inter', 'SF Pro Text', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* -------------------- Type — sizes / leading -------------------- */
+  --fs-display-xl: clamp(56px, 9vw, 120px);
+  --fs-display-lg: clamp(44px, 6.5vw, 80px);
+  --fs-display:    clamp(36px, 5vw, 56px);
+  --fs-h1:         40px;
+  --fs-h2:         28px;
+  --fs-h3:         22px;
+  --fs-h4:         18px;
+  --fs-body-lg:    18px;
+  --fs-body:       16px;
+  --fs-body-sm:    14px;
+  --fs-caption:    13px;
+  --fs-micro:      11px;
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.4;
+  --lh-relaxed: 1.6;
+
+  --tracking-tightest: -0.04em;
+  --tracking-tight:    -0.02em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.04em;
+  --tracking-widest:   0.16em;
+}
+
+/* ============================================================
+   Semantic element styles — apply these to real elements.
+   ============================================================ */
+
+html, body {
+  background: var(--bg-page);
+  color: var(--fg-1);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.display-xl, .display-lg, .display, h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--fg-1);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+  text-wrap: balance;
+}
+
+.display-xl { font-size: var(--fs-display-xl); font-weight: 800; letter-spacing: var(--tracking-tightest); }
+.display-lg { font-size: var(--fs-display-lg); font-weight: 800; letter-spacing: var(--tracking-tightest); }
+.display    { font-size: var(--fs-display);    font-weight: 700; }
+
+h1 { font-size: var(--fs-h1); line-height: var(--lh-tight); }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-snug); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-snug); }
+h4 { font-size: var(--fs-h4); line-height: var(--lh-snug); }
+
+p, .body { font-size: var(--fs-body); line-height: var(--lh-normal); color: var(--fg-2); }
+.body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-relaxed); color: var(--fg-2); }
+.body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-normal); color: var(--fg-3); }
+.caption { font-size: var(--fs-caption); line-height: var(--lh-normal); color: var(--fg-3); letter-spacing: var(--tracking-normal); }
+.micro,
+.eyebrow { font-size: var(--fs-micro); line-height: var(--lh-normal); color: var(--fg-3); text-transform: uppercase; letter-spacing: var(--tracking-widest); font-weight: 600; }
+
+code, pre, .mono { font-family: var(--font-mono); font-size: 0.95em; }

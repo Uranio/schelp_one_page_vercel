@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Schelp — AI podcasts made for your day</title>
+<meta name="description" content="Schelp builds podcasts on what you actually care about — instant from a prompt, episodic from a goal, even from a photo. Get early access for summer 2026.">
+<meta name="theme-color" content="#0A0A0B">
+
+<!-- Canonical & robots -->
+<link rel="canonical" href="https://schelp.app/">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Schelp">
+<meta property="og:title" content="Schelp — AI podcasts made for your day">
+<meta property="og:description" content="Podcasts on what you actually care about. Instant from a prompt, episodic from a goal, even from a photo.">
+<meta property="og:url" content="https://schelp.app/">
+<meta property="og:image" content="https://schelp.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Schelp — Podcasts made for your day, not anyone else's.">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Schelp — AI podcasts made for your day">
+<meta name="twitter:description" content="Podcasts on what you actually care about. Instant from a prompt, episodic from a goal, even from a photo.">
+<meta name="twitter:image" content="https://schelp.app/og.png">
+
+<!-- Favicons -->
+<link rel="icon" href="assets/logo-schelp.png">
+<link rel="apple-touch-icon" href="assets/logo-schelp.png">
+
+<!-- Fonts: preconnect to mitigate render cost. Self-host if you want to fully GDPR-proof. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Tokens + page styles -->
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="landing.css">
+
+<!-- Configure ESP endpoint, launch date, analytics here -->
+<script>
+  window.SchelpConfig = {
+    // Drop in your Formspree / Web3Forms / Loops endpoint here.
+    // Empty = preview mode (form simulates success).
+    formEndpoint: "",
+    // ISO date string for launch. Update when shipping date is firm.
+    launchDate: "2026-07-15T09:00:00",
+    // Plausible domain (e.g. "schelp.app"). Empty = no analytics loaded.
+    analyticsDomain: "",
+    analyticsSrc: "https://plausible.io/js/script.js"
+  };
+</script>
+
+<!-- Structured data for richer SERPs -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Schelp",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "iOS, Android",
+  "description": "AI podcast app that generates personalised episodes from a prompt, a goal, or an image.",
+  "url": "https://schelp.app/",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="bg-wash" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="Schelp — home">
+        <img src="assets/logo-schelp.png" alt="" width="36" height="36">
+        <span>schelp</span>
+      </a>
+      <div class="links">
+        <a href="#feat">How it works</a>
+        <a href="#release">Release</a>
+        <a href="mailto:hello@schelp.app">Contact</a>
+      </div>
+      <div class="lang" aria-label="Language"><b>EN</b> · IT</div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div>
+        <div class="badge"><span class="dot" aria-hidden="true"></span>Coming summer 2026 · iOS &amp; Android</div>
+        <h1 id="hero-heading" class="display">Podcasts made for <span class="shell">your day,</span> not anyone else's.</h1>
+        <p class="lede">Type a prompt, pick a goal, or drop an image — Schelp turns any spark into <em>a podcast that's actually yours</em>, episodic when you want a series, instant when you just want to listen now. <em>Stay informed on what really interests you.</em></p>
+
+        <form id="signup-form" class="form" novalidate>
+          <label for="email" class="visually-hidden" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Email address</label>
+          <input id="email" type="email" name="email" placeholder="your@email.com" required autocomplete="email" inputmode="email" aria-describedby="form-help">
+          <button type="submit">Get early access <span aria-hidden="true">→</span></button>
+        </form>
+        <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
+        <div id="form-help" class="form-help"><b>No spam.</b> We'll only email when Schelp is ready for you. By signing up you agree to our <a href="privacy.html">privacy policy</a>.</div>
+      </div>
+
+      <div class="phone-wrap" aria-hidden="true">
+        <div class="phone-halo"></div>
+        <svg class="ring ring-1" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#FE6B6B" stroke-width="0.4"/></svg>
+        <svg class="ring ring-2" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#7B62FF" stroke-width="0.4"/></svg>
+
+        <div class="phone">
+          <div class="screen">
+            <div class="status">
+              <span>9:41</span>
+              <span class="right">
+                <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 10h2v2H1zm3-2h2v4H4zm3-2h2v6H7zm3-2h2v8h-2zm3-2h2v10h-2z"/></svg>
+                <svg viewBox="0 0 16 12" fill="currentColor"><path d="M8 2C5 2 2.5 3 1 5l1.5 1.5C3.5 5.5 5.7 4.5 8 4.5s4.5 1 5.5 2L15 5C13.5 3 11 2 8 2zm0 3.5c-2 0-3.5.7-4.5 1.5L5 8.5C5.5 7.8 6.7 7.3 8 7.3s2.5.5 3 1.2L12.5 7c-1-.8-2.5-1.5-4.5-1.5zm0 3.2L6.5 10.2 8 11.7l1.5-1.5L8 8.7z"/></svg>
+                <svg viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="18" height="8" rx="2"/><rect x="2.5" y="3.5" width="14" height="5" fill="currentColor"/><rect x="20" y="4.5" width="1.5" height="3" fill="currentColor"/></svg>
+              </span>
+            </div>
+
+            <div class="home">
+              <div class="hcard">
+                <div class="avatar">g</div>
+                <div class="greet">Good evening,<br>Grace</div>
+                <div class="sub">A podcast before bed?</div>
+                <div class="pill">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-7h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-7H3z"/></svg>
+                  2 today
+                </div>
+                <div class="wv" id="wv"></div>
+              </div>
+
+              <h3 class="h2">This week's picks</h3>
+              <div class="pcards">
+                <div class="pcard">
+                  <div class="cov">
+                    <svg viewBox="0 0 200 125" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+                      <defs>
+                        <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#2A0E1A"/>
+                          <stop offset="60%" stop-color="#5A1322"/>
+                          <stop offset="100%" stop-color="#C42636"/>
+                        </linearGradient>
+                        <radialGradient id="sun1" cx="0.5" cy="0.5" r="0.5">
+                          <stop offset="0%" stop-color="#FFD27A"/>
+                          <stop offset="70%" stop-color="#F39A4B"/>
+                          <stop offset="100%" stop-color="#E0552F"/>
+                        </radialGradient>
+                      </defs>
+                      <rect width="200" height="125" fill="url(#sky1)"/>
+                      <circle cx="100" cy="68" r="30" fill="url(#sun1)"/>
+                      <path d="M0 95 Q60 78 120 92 T200 88 L200 125 L0 125 Z" fill="#1A0710" opacity="0.85"/>
+                      <path d="M0 108 Q70 96 140 104 T200 102 L200 125 L0 125 Z" fill="#0A0408"/>
+                      <g opacity="0.55">
+                        <rect x="30" y="86" width="4" height="12" fill="#0A0408"/>
+                        <rect x="36" y="84" width="4" height="14" fill="#0A0408"/>
+                        <rect x="160" y="82" width="4" height="16" fill="#0A0408"/>
+                        <rect x="166" y="85" width="4" height="13" fill="#0A0408"/>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="body">
+                    <div class="t">Cannes 2026: the Croisette verdict</div>
+                    <div class="d">The festival closes with this year's winners…</div>
+                    <div class="ft">
+                      <span class="tag">Cinema</span>
+                      <span class="dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 12 min</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="pcard">
+                  <div class="cov">
+                    <svg viewBox="0 0 200 125" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+                      <defs>
+                        <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#0F1B3F"/>
+                          <stop offset="100%" stop-color="#1F2A5C"/>
+                        </linearGradient>
+                        <linearGradient id="bar2" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="#FE6B6B"/>
+                          <stop offset="100%" stop-color="#F25060"/>
+                        </linearGradient>
+                      </defs>
+                      <rect width="200" height="125" fill="url(#sky2)"/>
+                      <circle cx="42" cy="30" r="10" fill="#FFEDA8" opacity="0.9"/>
+                      <circle cx="42" cy="30" r="16" fill="#FFEDA8" opacity="0.15"/>
+                      <rect x="20"  y="82" width="16" height="30" fill="#3FCF8E" opacity="0.85"/>
+                      <rect x="42"  y="66" width="16" height="46" fill="#F5B947"/>
+                      <rect x="64"  y="50" width="16" height="62" fill="url(#bar2)"/>
+                      <rect x="86"  y="38" width="16" height="74" fill="#FE6B6B"/>
+                      <rect x="108" y="22" width="16" height="90" fill="#FF9DA6"/>
+                      <rect x="130" y="38" width="16" height="74" fill="#7B62FF"/>
+                      <rect x="152" y="56" width="16" height="56" fill="#9A85FF"/>
+                      <rect x="174" y="72" width="16" height="40" fill="#D9CFFF" opacity="0.85"/>
+                      <path d="M28 78 L50 60 L72 46 L94 32 L116 20 L138 32 L160 50 L182 66" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.85"/>
+                    </svg>
+                  </div>
+                  <div class="body">
+                    <div class="t">Inflation: how to protect savings</div>
+                    <div class="d">Italian households look for shelter as prices stay high…</div>
+                    <div class="ft">
+                      <span class="tag">Economy</span>
+                      <span class="dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 18 min</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="h2">Your week</h3>
+              <div class="cal">
+                <div class="day"><span class="dow">Mon</span>19</div>
+                <div class="day"><span class="dow">Tue</span>20</div>
+                <div class="day"><span class="dow">Wed</span>21</div>
+                <div class="day" style="color:var(--fg-2)"><span class="dow">Thu</span>22</div>
+                <div class="day today"><span class="dow">Fri</span>23</div>
+              </div>
+            </div>
+
+            <div class="tabbar">
+              <div class="tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v8h5v-6h4v6h5v-8h3z"/></svg></div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-7h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-7H3z"/></svg></div>
+              <div class="pfab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h2l2-7 3 14 3-10 2 6h6"/></svg></div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="countdown-wrap" id="release" aria-labelledby="release-heading">
+      <div class="countdown-card">
+        <div>
+          <div class="eyebrow">● Public launch</div>
+          <h3 id="release-heading">We're opening ears in…</h3>
+          <p>Schelp arrives on iOS and Android in summer 2026. Drop your email above to join the early-access wave.</p>
+        </div>
+        <div class="counter" aria-label="Time until launch">
+          <div class="unit"><div class="n" data-u="d">00</div><div class="l">Days</div></div>
+          <div class="unit"><div class="n" data-u="h">00</div><div class="l">Hours</div></div>
+          <div class="unit"><div class="n" data-u="m">00</div><div class="l">Minutes</div></div>
+          <div class="unit"><div class="n" data-u="s">00</div><div class="l">Seconds</div></div>
+        </div>
+        <div class="countdown-arrived">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          We're live — download Schelp now.
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="feat" aria-labelledby="feat-heading">
+      <h2 id="feat-heading" class="visually-hidden" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">What Schelp does</h2>
+      <div class="feat">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3 6.5 7.5 11 9 6.5 10.5 5 15 3.5 10.5-1 9 3.5 7.5 5 3z" transform="translate(5 0)"/><path d="M17 13l1 2.5 2.5 1-2.5 1L17 20l-1-2.5-2.5-1 2.5-1L17 13z"/></svg></div>
+        <h3>One prompt, many podcasts.</h3>
+        <p>Type a single sentence, tweak a few knobs — length, vibe, hosts — and Schelp spins up an entire shelf of fresh episodes around it. Pick one and press play.</p>
+      </div>
+      <div class="feat">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></div>
+        <h3>Pick a goal, get a series.</h3>
+        <p>"Catch up on AI every morning." "Understand the markets in 30 days." Schelp turns the goal into episodes and drops them into the cracks of your real day — commute, run, dinner, bed.</p>
+      </div>
+      <div class="feat">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg></div>
+        <h3>Even from a photo.</h3>
+        <p>Drop in an image — a book cover, a screenshot, a place you visited — and Schelp builds an episode around it. Total freedom on what becomes audio.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="year">2026</span> Schelp · Podcasts for your day</div>
+    <div class="legal">
+      <a href="privacy.html">Privacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="mailto:hello@schelp.app">hello@schelp.app</a>
+    </div>
+    <div class="social">
+      <a href="#" aria-label="Schelp on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="Schelp on X"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 3h3l-7.5 8.6L22 21h-6.5l-5-6.5L4.6 21H2l8-9.2L2 3h6.7l4.5 6L18 3z"/></svg></a>
+      <a href="mailto:hello@schelp.app" aria-label="Email Schelp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+    </div>
+  </footer>
+
+  <!-- Cookie banner -->
+  <aside id="cookie-banner" class="cookie" role="dialog" aria-live="polite" aria-labelledby="cookie-title">
+    <h4 id="cookie-title">A small ask before we listen.</h4>
+    <p>We'd like to drop one anonymous analytics cookie so we can see what's working on this page. No tracking, no resale, no ads. See our <a href="privacy.html">privacy policy</a>.</p>
+    <div class="row">
+      <button type="button" class="btn-decline">Decline</button>
+      <button type="button" class="btn-accept">Accept</button>
+    </div>
+  </aside>
+
+  <script src="landing.js" defer></script>
+</body>
+</html>
