@@ -8,9 +8,9 @@ window.SchelpI18n = {
     // Document meta
     "doc.lang": "it",
     "meta.title": "Schelp — podcast AI pensati per la tua giornata",
-    "meta.description": "Schelp costruisce podcast su quello che ti interessa davvero. Voci che parlano sul serio, ricerca sul web in tempo reale, episodi che si infilano nella tua giornata. Accesso anticipato per l'estate 2026.",
+    "meta.description": "Schelp costruisce podcast su quello che ti interessa davvero. Voci che parlano sul serio, ricerca sul web in tempo reale, episodi che si infilano nella tua giornata. Prossimamente su iOS e Android.",
     "meta.ogTitle": "Schelp — podcast AI pensati per la tua giornata",
-    "meta.ogDescription": "Podcast su quello che ti interessa davvero. Da un prompt, da un link, da una voce o da una foto — con voci che parlano sul serio.",
+    "meta.ogDescription": "Podcast su quello che ti interessa davvero. Da un prompt, da una voce o da una foto — con voci che parlano sul serio.",
     "meta.ogImageAlt": "Schelp — podcast pensati per la tua giornata, non per chiunque altro.",
     "meta.ogLocale": "it_IT",
     "meta.themeColor": "#0A0A0B",
@@ -26,14 +26,15 @@ window.SchelpI18n = {
     "nav.lang.aria": "Cambia lingua",
 
     // Hero
-    "hero.badge": "In arrivo estate 2026 · iOS & Android",
+    "hero.badge": "Prossimamente · iOS & Android",
     "hero.h1.before": "Podcast pensati per la ",
     "hero.h1.accent": "tua giornata,",
     "hero.h1.after": " non per chiunque altro.",
-    "hero.lede.html": "Scrivi un prompt, fissa un obiettivo, manda una foto o un link — Schelp trasforma qualsiasi spunto in <em>un podcast davvero tuo</em>, con voci che parlano sul serio. <em>Restare informato su quello che ti interessa, finalmente.</em>",
+    "hero.lede.html": "Scrivi un prompt, fissa un obiettivo, manda una foto — Schelp trasforma qualsiasi spunto in <em>un podcast davvero tuo</em>, con voci che parlano sul serio. <em>Restare informato su quello che ti interessa, finalmente.</em>",
     "hero.emailLabel": "Indirizzo email",
     "hero.emailPlaceholder": "tu@email.com",
     "hero.cta": "Entra in anteprima",
+    "hero.comingSoon": "L'app è in arrivo — coming soon.",
     "hero.formHelp.html": "<b>Niente spam.</b> Ti scriviamo solo quando Schelp è pronto per te. Iscrivendoti accetti la nostra <a href=\"privacy.html\">informativa privacy</a>.",
 
     // Phone mockup — labels translate, podcast titles stay in Italian (they're real Italian-generated podcasts)
@@ -78,7 +79,7 @@ window.SchelpI18n = {
     "hiw.eyebrow": "Come funziona",
     "hiw.heading": "Da una scintilla, un episodio. Pensato per te.",
     "hiw.step1.title": "Inizia da una scintilla",
-    "hiw.step1.body": "Scrivi un'idea, incolla un link, parla nel microfono o manda una foto. Schelp legge il contesto, cerca le fonti giuste in tempo reale e ti dà un episodio fatto come si deve.",
+    "hiw.step1.body": "Scrivi un'idea, parla nel microfono o manda una foto. Schelp legge il contesto, cerca le fonti giuste in tempo reale e ti dà un episodio fatto come si deve.",
     "hiw.step1.b1": "Prompt",
     "hiw.step1.b2": "Link",
     "hiw.step1.b3": "Voce",
@@ -159,6 +160,11 @@ window.SchelpI18n = {
     "hiw.step4.b1": "Script",
     "hiw.step4.b2": "Fonti",
     "hiw.step4.b3": "Parametri",
+
+    // Try them — sezione con tre podcast d'esempio riproducibili
+    "trythem.eyebrow": "Ascolta tu stesso",
+    "trythem.heading": "Tre episodi veri dai nostri utenti. Premi play.",
+    "trythem.promptLabel": "Prompt",
 
     // Phone scene microcopy (scrollytelling)
     "mock.gen.header": "Cosa vuoi ascoltare?",
@@ -284,9 +290,9 @@ window.SchelpI18n = {
   en: {
     "doc.lang": "en",
     "meta.title": "Schelp — AI podcasts made for your day",
-    "meta.description": "Schelp builds podcasts on what you actually care about. Voices that truly speak, real-time web research, episodes that slip into the cracks of your day. Get early access for summer 2026.",
+    "meta.description": "Schelp builds podcasts on what you actually care about. Voices that truly speak, real-time web research, episodes that slip into the cracks of your day. Coming soon to iOS and Android.",
     "meta.ogTitle": "Schelp — AI podcasts made for your day",
-    "meta.ogDescription": "Podcasts on what you actually care about. From a prompt, a link, a voice or a photo — with voices that actually speak.",
+    "meta.ogDescription": "Podcasts on what you actually care about. From a prompt, a voice or a photo — with voices that actually speak.",
     "meta.ogImageAlt": "Schelp — podcasts made for your day, not anyone else's.",
     "meta.ogLocale": "en_US",
     "meta.themeColor": "#0A0A0B",
@@ -299,14 +305,15 @@ window.SchelpI18n = {
     "nav.contact": "Contact",
     "nav.lang.aria": "Switch language",
 
-    "hero.badge": "Coming summer 2026 · iOS & Android",
+    "hero.badge": "Coming soon · iOS & Android",
     "hero.h1.before": "Podcasts made for ",
     "hero.h1.accent": "your day,",
     "hero.h1.after": " not anyone else's.",
-    "hero.lede.html": "Type a prompt, set a goal, drop a photo or a link — Schelp turns any spark into <em>a podcast that's truly yours</em>, with voices that actually speak. <em>Stay informed on what really matters to you, finally.</em>",
+    "hero.lede.html": "Type a prompt, set a goal, drop a photo — Schelp turns any spark into <em>a podcast that's truly yours</em>, with voices that actually speak. <em>Stay informed on what really matters to you, finally.</em>",
     "hero.emailLabel": "Email address",
     "hero.emailPlaceholder": "you@email.com",
     "hero.cta": "Get early access",
+    "hero.comingSoon": "The app is on its way — coming soon.",
     "hero.formHelp.html": "<b>No spam.</b> We'll only email when Schelp is ready for you. By signing up you agree to our <a href=\"privacy.html\">privacy policy</a>.",
 
     "mock.subtitle": "Wind down with an episode",
@@ -348,7 +355,7 @@ window.SchelpI18n = {
     "hiw.eyebrow": "How it works",
     "hiw.heading": "From a spark, an episode. Made for you.",
     "hiw.step1.title": "Start from a spark",
-    "hiw.step1.body": "Write an idea, paste a link, speak into the mic, or send a photo. Schelp reads the context, pulls the right sources live, and gives you a well-built episode.",
+    "hiw.step1.body": "Write an idea, speak into the mic, or send a photo. Schelp reads the context, pulls the right sources live, and gives you a well-built episode.",
     "hiw.step1.b1": "Prompt",
     "hiw.step1.b2": "Link",
     "hiw.step1.b3": "Voice",
@@ -429,6 +436,11 @@ window.SchelpI18n = {
     "hiw.step4.b1": "Script",
     "hiw.step4.b2": "Sources",
     "hiw.step4.b3": "Parameters",
+
+    // Try them — three real demo podcasts the visitor can play
+    "trythem.eyebrow": "Hear it for yourself",
+    "trythem.heading": "Three real episodes from our users. Press play.",
+    "trythem.promptLabel": "Prompt",
 
     "mock.gen.header": "What do you want to hear?",
     "mock.gen.tab.quick": "Quick",

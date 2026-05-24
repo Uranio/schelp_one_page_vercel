@@ -28,6 +28,10 @@
   }
 
   function detectInitialLang() {
+    // Site is English-only for now (Italian commented out). Always start in EN,
+    // ignoring any saved/browser locale.
+    return "en";
+    /* Original auto-detection — restore when Italian is re-enabled:
     try {
       var saved = localStorage.getItem(LANG_KEY);
       if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
@@ -35,6 +39,7 @@
     var nav = (navigator.language || "it").toLowerCase();
     if (nav.indexOf("it") === 0) return "it";
     return "en";
+    */
   }
 
   function applyLanguage(lang) {
@@ -266,6 +271,24 @@
   }
 
   // -------------------- Scrollytelling --------------------
+  // Keep .substeps-display from overlapping its .hiw-step-head: anchor it
+  // dynamically below the head's real height. Hardcoded sticky offsets
+  // (50vh - 280px / 50vh + 80px) only leave 360px of gap, and step 2's head
+  // (longer body + bullets) easily blows past that, bleeding the substep
+  // text over the step-head's body.
+  function syncHiwSubstepsTop() {
+    if (window.matchMedia('(max-width: 900px)').matches) return;
+    document.querySelectorAll('.hiw-step-multi').forEach(function (step) {
+      var head = step.querySelector('.hiw-step-head');
+      var sub  = step.querySelector('.substeps-display');
+      if (!head || !sub) return;
+      var headH = head.getBoundingClientRect().height;
+      // step-head sticks at calc(50vh - 280px). Pin substeps below it with
+      // a 32px breathing gap, regardless of head content length.
+      sub.style.top = 'calc(50vh - 280px + ' + Math.ceil(headH) + 'px + 32px)';
+    });
+  }
+
   function setupScrollytelling() {
     var phoneWrap = document.querySelector('.hiw-phone-wrap');
     var steps = document.querySelectorAll('.hiw-step');
@@ -275,6 +298,14 @@
     var spacers = document.querySelectorAll('.substep-spacer');
     if (!phoneWrap || !steps.length) return;
     if (window.matchMedia('(max-width: 900px)').matches) return;
+
+    syncHiwSubstepsTop();
+    // Recompute after fonts settle and on viewport changes — head height can
+    // shift when web fonts load, so a single measurement at init isn't enough.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(syncHiwSubstepsTop);
+    }
+    window.addEventListener('resize', syncHiwSubstepsTop);
 
     var scenes = phoneWrap.querySelectorAll('.scene');
     var genSubs = phoneWrap.querySelectorAll('.gen-sub');
@@ -389,6 +420,245 @@
     });
   }
 
+  // -------------------- Try-them player --------------------
+  // Three demo podcasts in the "Try them" section. We use ONE shared HTMLAudio
+  // and swap its src when the user plays a different card — keeps things light
+  // and guarantees only one card is audible at a time.
+  function setupTryThemPlayers() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.tplayer'));
+    if (!cards.length) return;
+
+    var audio = new Audio();
+    audio.preload = 'metadata';
+    var current = null; // currently bound card
+
+    function fmtTime(sec) {
+      if (!isFinite(sec) || sec < 0) sec = 0;
+      var m = Math.floor(sec / 60);
+      var s = Math.floor(sec % 60);
+      return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function buildBars(card) {
+      var bars = card.querySelector('.tplayer-bars');
+      if (!bars) return;
+      bars.innerHTML = '';
+      var peaks = [];
+      try { peaks = JSON.parse(card.getAttribute('data-peaks') || '[]'); } catch (e) {}
+      if (!peaks.length) {
+        for (var i = 0; i < 40; i++) {
+          var x = i / 40;
+          var env = Math.sin(x * Math.PI) * 0.7 + 0.3;
+          var noise = Math.abs(Math.sin(42 * 13.7 + i * 7.3 + Math.cos(i * 3.1 + 42 * 2.9) * 5)) * 0.6 + 0.4;
+          peaks.push(env * noise);
+        }
+      }
+      var frag = document.createDocumentFragment();
+      peaks.slice(0, 40).forEach(function (h) {
+        var b = document.createElement('span');
+        b.className = 'b';
+        var pct = Math.max(0.10, Math.min(1, h));
+        b.style.height = (pct * 100) + '%';
+        var bf = document.createElement('span');
+        bf.className = 'bf';
+        b.appendChild(bf);
+        frag.appendChild(b);
+      });
+      bars.appendChild(frag);
+    }
+
+    function paintProgress(card, progress) {
+      var bars = card.querySelectorAll('.tplayer-bars .b');
+      var n = bars.length;
+      if (!n) return;
+      var seg = 1 / n;
+      for (var i = 0; i < n; i++) {
+        var start = i * seg;
+        var end = (i + 1) * seg;
+        var p = (progress - start) / (end - start);
+        if (p < 0) p = 0;
+        if (p > 1) p = 1;
+        var fill = bars[i].querySelector('.bf');
+        if (fill) fill.style.width = (p * 100) + '%';
+      }
+      var slider = card.querySelector('.tplayer-wave');
+      if (slider) slider.setAttribute('aria-valuenow', String(Math.round(progress * 100)));
+    }
+
+    function setCardState(card, state) {
+      cards.forEach(function (c) {
+        c.classList.toggle('is-playing', c === card && state === 'playing');
+        c.classList.toggle('is-loading', c === card && state === 'loading');
+      });
+    }
+
+    function resetCard(card) {
+      paintProgress(card, 0);
+      var cur = card.querySelector('.tplayer-cur');
+      if (cur) cur.textContent = '0:00';
+    }
+
+    function bindCard(card) {
+      current = card;
+      var src = card.getAttribute('data-mp3');
+      if (audio.src && audio.src.indexOf(src) !== -1) return; // already bound
+      try { audio.pause(); } catch (e) {}
+      audio.src = src;
+      audio.load();
+    }
+
+    function playCard(card) {
+      // If clicking the already-playing card, just toggle pause.
+      if (current === card && !audio.paused) {
+        audio.pause();
+        return;
+      }
+      // Switching cards: pause old, reset its visual progress, then start new.
+      if (current && current !== card) {
+        try { audio.pause(); } catch (e) {}
+        resetCard(current);
+        setCardState(current, 'idle');
+      }
+      bindCard(card);
+      setCardState(card, 'loading');
+      var p = audio.play();
+      if (p && typeof p.then === 'function') {
+        p.catch(function () { setCardState(card, 'idle'); });
+      }
+    }
+
+    // ---- per-card wiring ----
+    cards.forEach(function (card) {
+      buildBars(card);
+
+      // Pre-fill the duration if data-duration is set and audio hasn't loaded yet
+      var preDur = parseFloat(card.getAttribute('data-duration'));
+      if (isFinite(preDur) && preDur > 0) {
+        var dEl = card.querySelector('.tplayer-dur');
+        if (dEl && !dEl.dataset.locked) dEl.textContent = fmtTime(preDur);
+      }
+
+      var playBtn = card.querySelector('.tplayer-play');
+      if (playBtn) playBtn.addEventListener('click', function () { playCard(card); });
+
+      // ±10 / ±15 skip buttons
+      card.querySelectorAll('[data-skip]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (current !== card) { playCard(card); return; }
+          var delta = parseFloat(btn.getAttribute('data-skip')) || 0;
+          var dur = audio.duration || 0;
+          if (!dur) return;
+          audio.currentTime = Math.max(0, Math.min(dur - 0.1, audio.currentTime + delta));
+        });
+      });
+
+      // Seek by clicking on the waveform
+      var wave = card.querySelector('.tplayer-wave');
+      if (wave) {
+        var seek = function (clientX) {
+          var rect = wave.getBoundingClientRect();
+          var x = Math.max(0, Math.min(rect.width, clientX - rect.left));
+          var ratio = rect.width ? x / rect.width : 0;
+          if (current !== card) {
+            // Bind & start playing, then jump
+            playCard(card);
+            audio.addEventListener('loadedmetadata', function once() {
+              audio.removeEventListener('loadedmetadata', once);
+              if (audio.duration) audio.currentTime = ratio * audio.duration;
+            });
+          } else {
+            if (audio.duration) audio.currentTime = ratio * audio.duration;
+            paintProgress(card, ratio);
+          }
+        };
+        wave.addEventListener('click', function (e) { seek(e.clientX); });
+        wave.addEventListener('keydown', function (e) {
+          var dur = audio.duration || 0;
+          if (current !== card || !dur) return;
+          if (e.key === 'ArrowRight') { audio.currentTime = Math.min(dur, audio.currentTime + 5); e.preventDefault(); }
+          if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0,   audio.currentTime - 5); e.preventDefault(); }
+        });
+      }
+    });
+
+    // ---- shared audio events ----
+    audio.addEventListener('loadedmetadata', function () {
+      if (!current) return;
+      var dEl = current.querySelector('.tplayer-dur');
+      if (dEl && isFinite(audio.duration)) {
+        dEl.textContent = fmtTime(audio.duration);
+        dEl.dataset.locked = '1';
+      }
+    });
+    audio.addEventListener('timeupdate', function () {
+      if (!current || !audio.duration) return;
+      var progress = audio.currentTime / audio.duration;
+      paintProgress(current, progress);
+      var cur = current.querySelector('.tplayer-cur');
+      if (cur) cur.textContent = fmtTime(audio.currentTime);
+    });
+    audio.addEventListener('playing', function () { if (current) setCardState(current, 'playing'); });
+    audio.addEventListener('pause',   function () { if (current) setCardState(current, 'idle'); });
+    audio.addEventListener('waiting', function () { if (current) setCardState(current, 'loading'); });
+    audio.addEventListener('ended',   function () {
+      if (!current) return;
+      paintProgress(current, 1);
+      setCardState(current, 'idle');
+    });
+    audio.addEventListener('error', function () {
+      if (current) setCardState(current, 'idle');
+    });
+  }
+
+  // -------------------- Try-them mobile carousel dots --------------------
+  // On mobile the grid becomes a horizontal scroll-snap carousel. We add a
+  // dot per card that tracks the currently centered card. Desktop hides the
+  // dots via CSS, so this can run unconditionally.
+  function setupTryThemDots() {
+    var section = document.querySelector('.trythem');
+    if (!section) return;
+    var grid = section.querySelector('.trythem-grid');
+    var host = section.querySelector('.trythem-dots');
+    if (!grid || !host) return;
+
+    var cells = Array.prototype.slice.call(grid.querySelectorAll('.tplayer-cell'));
+    if (!cells.length) return;
+
+    host.innerHTML = '';
+    cells.forEach(function (cell, idx) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'trythem-dot' + (idx === 0 ? ' is-active' : '');
+      btn.setAttribute('aria-label', 'Episode ' + (idx + 1));
+      btn.addEventListener('click', function () {
+        cell.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      host.appendChild(btn);
+    });
+    var dots = Array.prototype.slice.call(host.querySelectorAll('.trythem-dot'));
+
+    function setActive(idx) {
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+    }
+
+    // IntersectionObserver against the scroller — picks the most-visible cell
+    // as the active one. Threshold tuned so a half-swiped card flips the dot
+    // when it crosses ~60% into view.
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        var best = null;
+        entries.forEach(function (e) {
+          if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
+        });
+        if (best && best.intersectionRatio > 0.55) {
+          var idx = cells.indexOf(best.target);
+          if (idx >= 0) setActive(idx);
+        }
+      }, { root: grid, threshold: [0.55, 0.7, 0.85, 0.99] });
+      cells.forEach(function (c) { io.observe(c); });
+    }
+  }
+
   // -------------------- Init --------------------
   function init() {
     applyLanguage(detectInitialLang());
@@ -398,6 +668,8 @@
     setupCookies();
     setupScrollytelling();
     setupMobileHowItWorks();
+    setupTryThemPlayers();
+    setupTryThemDots();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
