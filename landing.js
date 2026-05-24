@@ -329,11 +329,15 @@
     }
   }
 
-  // -------------------- Mobile carousel (touch-swipeable sub-scenes) --------------------
-  // On <900px viewports the desktop sticky scrollytelling is hidden. To still showcase
-  // the phone mockup on mobile, we clone each .gen-sub (and the macro .scene for
-  // non-multi steps) into a mini-phone inserted inside each substep / step. The mobile
-  // carousel uses native CSS scroll-snap for touch swipe — JS only updates the dot indicator.
+  // -------------------- Mobile "How it works" --------------------
+  // On <=900px viewports the desktop sticky scrollytelling is hidden. Instead of
+  // scroll-jacking the phone through scenes (fragile: hardcoded sticky offsets,
+  // overlapping titles, content clipped on short viewports), we lay the section
+  // out as a plain vertical flow and clone the phone mockups inline:
+  //   - multi-steps  -> one mini-phone PER substep, each locked to that sub-scene,
+  //                     prepended inside the substep so every app screen is shown;
+  //   - single steps -> one mini-phone appended after the step text.
+  // No IntersectionObserver, no sticky, no magic numbers.
   function buildMobilePhone(sceneClone, sceneName) {
     var wrap = document.createElement('div');
     wrap.className = 'mobile-phone-clone';
@@ -346,73 +350,42 @@
     return wrap;
   }
 
-  function setupMobileCarousel() {
+  // Clone a scene and, if it has .gen-sub sub-scenes, keep only the one matching
+  // `subScene` active (null = leave the clone's default active sub-scene as-is).
+  function cloneScene(src, subScene) {
+    var clone = src.cloneNode(true);
+    clone.classList.add('is-active');
+    if (subScene) {
+      clone.querySelectorAll('.gen-sub').forEach(function (g) {
+        g.classList.toggle('is-active', g.dataset.subScene === subScene);
+      });
+    }
+    return clone;
+  }
+
+  function setupMobileHowItWorks() {
     if (!window.matchMedia('(max-width: 900px)').matches) return;
 
     var phoneWrap = document.querySelector('.hiw-phone-wrap');
     if (!phoneWrap) return;
 
-    // For each multi-step (1, 2): clone the WHOLE .scene (with all .gen-sub inside)
-    // and prepend it inside .hiw-substeps. It will be position: sticky on mobile, so
-    // it stays visible while the user scrolls through the substeps below it.
+    // Multi-steps (1, 2): one mini-phone per substep, locked to its sub-scene.
     document.querySelectorAll('.hiw-step-multi[data-scene]').forEach(function (step) {
       var sceneName = step.dataset.scene;
       var src = phoneWrap.querySelector('.scene[data-scene="' + sceneName + '"]');
       if (!src) return;
-      var clone = src.cloneNode(true);
-      clone.classList.add('is-active');
-      var wrap = buildMobilePhone(clone, sceneName);
-      var substepsContainer = step.querySelector('.hiw-substeps');
-      if (substepsContainer) {
-        substepsContainer.insertBefore(wrap, substepsContainer.firstChild);
-      }
+      step.querySelectorAll('.hiw-substep').forEach(function (substep) {
+        var wrap = buildMobilePhone(cloneScene(src, substep.dataset.subScene), sceneName);
+        substep.insertBefore(wrap, substep.firstChild);
+      });
     });
 
-    // For non-multi steps (3, 4): clone the entire .scene inline AFTER the step text.
+    // Single steps (3, 4): one mini-phone appended after the step text.
     document.querySelectorAll('.hiw-step:not(.hiw-step-multi)[data-scene]').forEach(function (step) {
       var sceneName = step.dataset.scene;
       var src = phoneWrap.querySelector('.scene[data-scene="' + sceneName + '"]');
       if (!src) return;
-      var clone = src.cloneNode(true);
-      clone.classList.add('is-active');
-      var wrap = buildMobilePhone(clone, sceneName);
-      step.appendChild(wrap);
-    });
-
-    // Mobile IntersectionObserver — observes the `.substep-spacer` divs (one per
-    // substep). When a spacer enters the viewport center, we toggle the matching
-    // substep (absolute, opacity-fade) AND the matching .gen-sub inside the
-    // sticky phone clone. The spacers are the scroll consumers; the visible UI
-    // (phone + substep slot) doesn't move — only the contents fade in/out.
-    var mobileObserver = new IntersectionObserver(function (entries) {
-      var best = null;
-      entries.forEach(function (e) {
-        if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
-          best = e;
-        }
-      });
-      if (!best) return;
-      var spacer = best.target;
-      var subScene = spacer.dataset.subScene;
-      var stepEl = spacer.closest('.hiw-step-multi');
-      if (!stepEl) return;
-      // Highlight matching substep (text)
-      stepEl.querySelectorAll('.hiw-substep').forEach(function (s) {
-        s.classList.toggle('is-active', s.dataset.subScene === subScene);
-      });
-      // Swap matching .gen-sub inside the sticky phone clone (scene)
-      var clone = stepEl.querySelector('.mobile-phone-clone');
-      if (!clone) return;
-      clone.querySelectorAll('.gen-sub').forEach(function (g) {
-        g.classList.toggle('is-active', g.dataset.subScene === subScene);
-      });
-    }, {
-      threshold: [0.3, 0.5, 0.7],
-      rootMargin: '-35% 0px -35% 0px'
-    });
-
-    document.querySelectorAll('.hiw-step-multi .substep-spacer').forEach(function (s) {
-      mobileObserver.observe(s);
+      step.appendChild(buildMobilePhone(cloneScene(src, null), sceneName));
     });
   }
 
@@ -424,7 +397,7 @@
     setupForm();
     setupCookies();
     setupScrollytelling();
-    setupMobileCarousel();
+    setupMobileHowItWorks();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

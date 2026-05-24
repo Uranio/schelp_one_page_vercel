@@ -795,7 +795,8 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 }
 
 .hiw-sub-tag {
-  display: inline-block;
+  /* Substep number chips (1.1, 1.2, …) removed by request — hidden on every viewport. */
+  display: none;
   font-family: var(--font-mono); font-size: 12px; font-weight: 700;
   color: var(--coral-500);
   letter-spacing: 0.08em;
@@ -2096,142 +2097,120 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   .hiw-scrolly { grid-template-columns: 1fr; gap: 24px; }
   .hiw-phone-wrap { display: none; }
   .hiw-step {
-    min-height: auto; padding: 20px 0;
+    min-height: auto; padding: 36px 0;
     opacity: 1; filter: none; transform: none;
   }
   .hiw-step-num { font-size: 56px; margin-bottom: 12px; }
 
-  /* Howitworks mobile reset */
-  .hiw-step-multi { padding-top: 20px; position: relative; }
-  /* display: contents removes the wrapper from layout so num+h3 become direct
-     children of .hiw-step-multi — their sticky position is then bounded by the
-     entire step (~3000px) instead of just the ~220px-tall step-head. */
-  .hiw-step-head { display: contents; }
-  .hiw-substeps { margin-top: 8px; }
+  /* ===== How it works — mobile: plain static vertical flow =====
+     Desktop keeps the scroll-driven sticky scrollytelling; on touch / narrow
+     viewports we drop ALL of it (no sticky stack, no hardcoded top offsets, no
+     IntersectionObserver) and lay each step out as a normal vertical block:
+     number -> heading -> body -> bullets -> phone mockup(s). Multi-steps render
+     one mini-phone per substep so every app screen is shown, no scroll-jacking. */
+  .hiw-step-multi { padding-top: 8px; position: static; display: block; }
+  .hiw-step-head { display: block; position: static; top: auto; padding: 0; z-index: auto; }
+  .hiw-substeps { margin-top: 28px; position: static; }
   .substep-spacer { display: none; }
 
-  /* Sticky-stack header: number + heading stay pinned at the top of the step,
-     body + bullets scroll away below them naturally. Both num and h3 are
-     full-width with a solid bg-page background so the body scrolling underneath
-     is hidden as it passes behind them. */
+  /* Number + heading: fully static. No sticky, no solid bg fill, no z-index —
+     so body copy can never bleed through a gap between a pinned number and a
+     pinned heading (the old overlap bug). */
   .hiw-step .hiw-step-num {
-    position: sticky;
-    top: 0;
-    z-index: 7;
-    background: var(--bg-page);
-    font-size: 38px;
-    margin: 0;
-    padding: 12px 0 0;
-    width: 100%;
+    position: static;
+    background: none;
+    font-size: 46px;
+    margin: 0 0 8px;
+    padding: 0;
+    width: auto;
     display: block;
   }
   .hiw-step .hiw-step-head h3,
   .hiw-step > h3 {
-    position: sticky;
-    top: 64px;
-    z-index: 7;
-    background: var(--bg-page);
-    font-size: 22px;
-    line-height: 1.15;
-    margin: 0;
-    padding: 4px 0 14px;
-    width: 100%;
+    position: static;
+    background: none;
+    font-size: 24px;
+    line-height: 1.14;
+    margin: 0 0 14px;
+    padding: 0;
+    width: auto;
   }
-  /* Body + bullets are NOT sticky — they scroll behind num+h3 */
   .hiw-step .hiw-step-head p,
   .hiw-step > p {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 14px;
+    position: static;
+    z-index: auto;
+    margin: 0 0 16px;
   }
   .hiw-step .hiw-bullets {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 12px;
+    position: static;
+    z-index: auto;
+    margin: 0 0 4px;
   }
 
-  /* Mobile pattern: phone sticky at the top of each multi-step + a sticky
-     `.substeps-display` slot just below it that contains all substeps stacked
-     ABSOLUTELY (only the .is-active one visible via opacity). The
-     `.substep-spacer` divs (one per substep) sit below in normal flow and
-     consume scroll — the IntersectionObserver watches THEM to decide which
-     sub-scene + sub-text should be active. */
-  /* Phone clone sticks just below the sticky num+h3 stack
-     (num height ~56 + h3 height ~50 = ~110 from top) */
+  /* Phone clone: centered, in normal flow. For multi-steps the JS prepends one
+     mini-phone inside each substep (locked to that sub-scene). Keep `relative`
+     (NOT static) so the absolutely-positioned notch `::before` stays anchored to
+     the clone instead of escaping to the top of the section. */
   .hiw-step-multi .mobile-phone-clone {
-    position: sticky;
-    top: 116px;
-    z-index: 5;
+    position: relative;
     margin: 0 auto;
   }
 
-  /* Substeps slot sticks just below the phone clone */
+  /* Substeps slot: a plain vertical stack of cards, all visible at once. */
   .hiw-step-multi .substeps-display {
-    position: sticky;
-    top: 536px;          /* 116 (phone top) + 400 (phone height) + 20 (gap) */
-    z-index: 4;
-    min-height: 170px;
-    height: 170px;
-    margin-top: 20px;
-    overflow: hidden;
-    display: block;
-    background: var(--bg-page);
-    border-radius: 16px;
+    position: static;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    background: none;
+    border-radius: 0;
   }
 
-  /* Substeps stacked absolutely inside the display slot — only is-active visible */
+  /* Each substep = phone (prepended by JS) + tag + title/desc, stacked & centered. */
   .hiw-step-multi .hiw-substep {
-    position: absolute;
-    inset: 0;
-    padding: 18px 20px;
+    position: static;
+    inset: auto;
+    top: auto; left: auto; right: auto; bottom: auto;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
-    gap: 10px;
-    opacity: 0;
-    pointer-events: none;
-    transform: none;
-    transition: opacity 400ms var(--ease-out);
-    top: 0; left: 0; right: 0; bottom: 0;
-  }
-  .hiw-step-multi .hiw-substep.is-active {
+    gap: 16px;
     opacity: 1;
     pointer-events: auto;
+    transform: none;
+    transition: none;
   }
-  .hiw-step-multi .hiw-substep .hiw-sub-tag { align-self: center; }
   .hiw-step-multi .hiw-substep .hiw-sub-content {
     text-align: center;
     align-items: center;
   }
   .hiw-step-multi .hiw-substep .hiw-sub-content h4 {
-    font-size: 18px;
+    font-size: 19px;
     margin: 0;
   }
   .hiw-step-multi .hiw-substep .hiw-sub-content p {
     margin: 0 auto;
-    font-size: 13.5px;
-    line-height: 1.45;
-    max-width: 320px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 340px;
   }
 
-  /* Re-enable spacers on mobile as scroll consumers (they're hidden on desktop's
-     IO and re-hidden in the upper-mobile rule; we override here). */
-  .hiw-step-multi .substep-spacer {
-    display: block;
-    height: 70vh;
-    pointer-events: none;
-  }
-
-  /* Inside the sticky clone, only the active .gen-sub is visible (others fade out) */
+  /* Each clone is locked to a single sub-scene in JS — show only that one. */
   .mobile-phone-clone .gen-sub {
     opacity: 0;
     transition: opacity 400ms var(--ease-out);
   }
   .mobile-phone-clone .gen-sub.is-active { opacity: 1; }
 
-  /* Non-multi steps: phone is inline below the step text (no sticky) */
+  /* Non-multi steps: phone sits inline below the step text. */
   .hiw-step:not(.hiw-step-multi) .mobile-phone-clone {
     margin: 24px auto 0;
   }
