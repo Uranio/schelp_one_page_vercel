@@ -1,0 +1,65 @@
+[
+  {
+    "slot": "hero",
+    "id": 369,
+    "title": "La fondazione di Anthropic e Claude",
+    "type": "approfondimento",
+    "duration_min": 2,
+    "cover_style": "line_art",
+    "file": "assets/podcasts/hero.png"
+  },
+  {
+    "slot": "sug1",
+    "id": 359,
+    "title": "La notte in cui Jeff Buckley annegò",
+    "type": "approfondimento",
+    "duration_min": 2,
+    "cover_style": "technicolor",
+    "file": "assets/podcasts/sug1.png"
+  },
+  {
+    "slot": "sug2",
+    "id": 358,
+    "title": "Come il magma forma un vulcano",
+    "type": "didattica",
+    "duration_min": 3,
+    "cover_style": "line_art",
+    "file": "assets/podcasts/sug2.png"
+  },
+  {
+    "slot": "sug3",
+    "id": 371,
+    "title": "L'evoluzione di Apple da garage a colosso",
+    "type": "approfondimento",
+    "duration_min": 2,
+    "cover_style": "acquerello",
+    "file": "assets/podcasts/sug3.png"
+  },
+  {
+    "slot": "cont1",
+    "id": 357,
+    "title": "Pizza fatta in casa passo per passo",
+    "type": "didattica",
+    "duration_min": 2,
+    "cover_style": "minimalista",
+    "file": "assets/podcasts/cont1.png"
+  },
+  {
+    "slot": "cont2",
+    "id": 364,
+    "title": "La storia di Truxz: un gioco mai nato",
+    "type": "giornalistico",
+    "duration_min": 2,
+    "cover_style": "line_art",
+    "file": "assets/podcasts/cont2.png"
+  },
+  {
+    "slot": "cont3",
+    "id": 351,
+    "title": "Tecniche di Persuasione nella Vendita: Ancoraggio e Riprova Sociale",
+    "type": "approfondimento",
+    "duration_min": 5,
+    "cover_style": "line_art",
+    "file": "assets/podcasts/cont3.png"
+  }
+]

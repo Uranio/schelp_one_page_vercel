@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Schelp — AI podcasts made for your day</title>
-<meta name="description" content="Schelp builds podcasts on what you actually care about — instant from a prompt, episodic from a goal, even from a photo. Get early access for summer 2026.">
+<title data-i18n-text="meta.title">Schelp — podcast AI pensati per la tua giornata</title>
+<meta name="description" data-i18n-attr="content:meta.description" content="Schelp costruisce podcast su quello che ti interessa davvero. Voci che parlano sul serio, ricerca sul web in tempo reale, episodi che si infilano nella tua giornata. Accesso anticipato per l'estate 2026.">
 <meta name="theme-color" content="#0A0A0B">
 
 <!-- Canonical & robots -->
@@ -15,19 +15,19 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Schelp">
-<meta property="og:title" content="Schelp — AI podcasts made for your day">
-<meta property="og:description" content="Podcasts on what you actually care about. Instant from a prompt, episodic from a goal, even from a photo.">
+<meta property="og:title" data-i18n-attr="content:meta.ogTitle" content="Schelp — podcast AI pensati per la tua giornata">
+<meta property="og:description" data-i18n-attr="content:meta.ogDescription" content="Podcast su quello che ti interessa davvero. Da un prompt, da un link, da una voce o da una foto — con voci che parlano sul serio.">
 <meta property="og:url" content="https://schelp.app/">
 <meta property="og:image" content="https://schelp.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Schelp — Podcasts made for your day, not anyone else's.">
-<meta property="og:locale" content="en_US">
+<meta property="og:image:alt" data-i18n-attr="content:meta.ogImageAlt" content="Schelp — podcast pensati per la tua giornata, non per chiunque altro.">
+<meta property="og:locale" data-i18n-attr="content:meta.ogLocale" content="it_IT">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Schelp — AI podcasts made for your day">
-<meta name="twitter:description" content="Podcasts on what you actually care about. Instant from a prompt, episodic from a goal, even from a photo.">
+<meta name="twitter:title" data-i18n-attr="content:meta.ogTitle" content="Schelp — podcast AI pensati per la tua giornata">
+<meta name="twitter:description" data-i18n-attr="content:meta.ogDescription" content="Podcast su quello che ti interessa davvero. Da un prompt, da un link, da una voce o da una foto — con voci che parlano sul serio.">
 <meta name="twitter:image" content="https://schelp.app/og.png">
 
 <!-- Favicons -->
@@ -56,6 +56,9 @@
   };
 </script>
 
+<!-- i18n dictionary (must load BEFORE landing.js) -->
+<script src="i18n.js"></script>
+
 <!-- Structured data for richer SERPs -->
 <script type="application/ld+json">
 {
@@ -64,46 +67,52 @@
   "name": "Schelp",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "iOS, Android",
-  "description": "AI podcast app that generates personalised episodes from a prompt, a goal, or an image.",
+  "description": "AI podcast app that turns any spark — a prompt, a link, a voice, a photo — into personalised episodes with lifelike voices and live web research.",
   "url": "https://schelp.app/",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
 }
 </script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main" data-i18n-text="a11y.skipLink">Vai al contenuto</a>
   <div class="bg-wash" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <header>
     <nav class="nav" aria-label="Primary">
-      <a class="brand" href="/" aria-label="Schelp — home">
+      <a class="brand" href="/" data-i18n-attr="aria-label:nav.brand.aria" aria-label="Schelp — home">
         <img src="logo-schelp.png" alt="" width="36" height="36">
         <span>schelp</span>
       </a>
       <div class="links">
-        <a href="#feat">How it works</a>
-        <a href="#release">Release</a>
-        <a href="mailto:hello@schelp.app">Contact</a>
+        <a href="#feat" data-i18n-text="nav.howItWorks">Come funziona</a>
+        <a href="#release" data-i18n-text="nav.release">Lancio</a>
+        <a href="mailto:hello@schelp.app" data-i18n-text="nav.contact">Contatti</a>
       </div>
-      <div class="lang" aria-label="Language"><b>EN</b> · IT</div>
+      <button type="button" class="lang" id="lang-toggle" data-i18n-attr="aria-label:nav.lang.aria" aria-label="Cambia lingua">
+        <b id="lang-active">IT</b> · <span id="lang-other">EN</span>
+      </button>
     </nav>
   </header>
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-heading">
       <div>
-        <div class="badge"><span class="dot" aria-hidden="true"></span>Coming summer 2026 · iOS &amp; Android</div>
-        <h1 id="hero-heading" class="display">Podcasts made for <span class="shell">your day,</span> not anyone else's.</h1>
-        <p class="lede">Type a prompt, pick a goal, or drop an image — Schelp turns any spark into <em>a podcast that's actually yours</em>, episodic when you want a series, instant when you just want to listen now. <em>Stay informed on what really interests you.</em></p>
+        <div class="badge">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="dot" aria-hidden="true"></span>
+          <span data-i18n-text="hero.badge">In arrivo estate 2026 · iOS &amp; Android</span>
+        </div>
+        <h1 id="hero-heading" class="display"><span data-i18n-text="hero.h1.before">Podcast pensati per la </span><span class="shell" data-i18n-text="hero.h1.accent">tua giornata,</span><span data-i18n-text="hero.h1.after"> non per chiunque altro.</span></h1>
+        <p class="lede" data-i18n-html="hero.lede.html">Scrivi un prompt, fissa un obiettivo, manda una foto o un link — Schelp trasforma qualsiasi spunto in <em>un podcast davvero tuo</em>, con voci che parlano sul serio. <em>Restare informato su quello che ti interessa, finalmente.</em></p>
 
         <form id="signup-form" class="form" novalidate>
-          <label for="email" class="visually-hidden" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Email address</label>
-          <input id="email" type="email" name="email" placeholder="your@email.com" required autocomplete="email" inputmode="email" aria-describedby="form-help">
-          <button type="submit">Get early access <span aria-hidden="true">→</span></button>
+          <label for="email" class="visually-hidden" data-i18n-text="hero.emailLabel" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Indirizzo email</label>
+          <input id="email" type="email" name="email" data-i18n-attr="placeholder:hero.emailPlaceholder" placeholder="tu@email.com" required autocomplete="email" inputmode="email" aria-describedby="form-help">
+          <button type="submit"><span data-i18n-text="hero.cta">Entra in anteprima</span> <span aria-hidden="true">→</span></button>
         </form>
         <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
-        <div id="form-help" class="form-help"><b>No spam.</b> We'll only email when Schelp is ready for you. By signing up you agree to our <a href="privacy.html">privacy policy</a>.</div>
+        <div id="form-help" class="form-help" data-i18n-html="hero.formHelp.html"><b>Niente spam.</b> Ti scriviamo solo quando Schelp è pronto per te. Iscrivendoti accetti la nostra <a href="privacy.html">informativa privacy</a>.</div>
       </div>
 
       <div class="phone-wrap" aria-hidden="true">
@@ -123,109 +132,171 @@
             </div>
 
             <div class="home">
-              <div class="hcard">
-                <div class="avatar">g</div>
-                <div class="greet">Good evening,<br>Grace</div>
-                <div class="sub">A podcast before bed?</div>
-                <div class="pill">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-7h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-7H3z"/></svg>
-                  2 today
+              <!-- Hero panel: Dashboard banner with BrandMark, wordmark, KPI grid and HeroCTA -->
+              <div class="hero-panel">
+                <div class="hp-top">
+                  <img class="brandmark" src="logo-schelp.png" alt="" width="28" height="28">
+
+                  <span class="hp-wordmark">Schelp</span>
+                  <span class="hp-spacer"></span>
+                  <span class="hp-avatar" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="9" r="3.2"/>
+                      <path d="M5 20a7.2 7.2 0 0 1 14 0"/>
+                    </svg>
+                  </span>
                 </div>
-                <div class="wv" id="wv"></div>
+                <div class="hp-sub" data-i18n-text="mock.subtitle">Rilassati con un episodio</div>
+                <div class="hp-kpi">
+                  <div class="cell">
+                    <span class="v">12</span>
+                    <span class="l" data-i18n-text="mock.kpi1.label">MIN OGGI</span>
+                  </div>
+                  <div class="cell">
+                    <span class="v"><span class="flame" aria-hidden="true">🔥</span>7</span>
+                    <span class="l" data-i18n-text="mock.kpi2.label">STREAK</span>
+                  </div>
+                  <div class="cell">
+                    <span class="v">3</span>
+                    <span class="l" data-i18n-text="mock.kpi3.label">NUOVI</span>
+                  </div>
+                </div>
+                <div class="hp-cta">
+                  <img class="cov" src="assets/podcasts/hero.png" alt="" loading="lazy">
+                  <div class="meta">
+                    <div class="eyebrow" data-i18n-text="mock.heroCta.eyebrow">RIPRENDI</div>
+                    <div class="t" data-i18n-text="mock.podcasts.hero.title">La fondazione di Anthropic e Claude</div>
+                    <div class="s" data-i18n-text="mock.heroCta.meta">1 min rimasti</div>
+                  </div>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                </div>
               </div>
 
-              <h3 class="h2">This week's picks</h3>
-              <div class="pcards">
-                <div class="pcard">
-                  <div class="cov">
-                    <svg viewBox="0 0 200 125" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
-                      <defs>
-                        <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stop-color="#2A0E1A"/>
-                          <stop offset="60%" stop-color="#5A1322"/>
-                          <stop offset="100%" stop-color="#C42636"/>
-                        </linearGradient>
-                        <radialGradient id="sun1" cx="0.5" cy="0.5" r="0.5">
-                          <stop offset="0%" stop-color="#FFD27A"/>
-                          <stop offset="70%" stop-color="#F39A4B"/>
-                          <stop offset="100%" stop-color="#E0552F"/>
-                        </radialGradient>
-                      </defs>
-                      <rect width="200" height="125" fill="url(#sky1)"/>
-                      <circle cx="100" cy="68" r="30" fill="url(#sun1)"/>
-                      <path d="M0 95 Q60 78 120 92 T200 88 L200 125 L0 125 Z" fill="#1A0710" opacity="0.85"/>
-                      <path d="M0 108 Q70 96 140 104 T200 102 L200 125 L0 125 Z" fill="#0A0408"/>
-                      <g opacity="0.55">
-                        <rect x="30" y="86" width="4" height="12" fill="#0A0408"/>
-                        <rect x="36" y="84" width="4" height="14" fill="#0A0408"/>
-                        <rect x="160" y="82" width="4" height="16" fill="#0A0408"/>
-                        <rect x="166" y="85" width="4" height="13" fill="#0A0408"/>
-                      </g>
-                    </svg>
+              <!-- Suggerimenti della settimana -->
+              <div class="sug-section">
+                <div class="sec-label" data-i18n-text="mock.suggestions.label">Suggerimenti della settimana</div>
+                <div class="sug-row">
+                  <div class="sug-card">
+                    <div class="cov"><img src="assets/podcasts/sug1.png" alt="" loading="lazy"></div>
+                    <div class="t" data-i18n-text="mock.podcasts.sug1.title">La notte in cui Jeff Buckley annegò</div>
+                    <div class="d" data-i18n-text="mock.sug1.desc">Il Wolf River, una voce irripetibile e una serata che ha cambiato la musica per sempre.</div>
+                    <div class="meta">
+                      <span class="tag cat-cinema" data-i18n-text="mock.tag.music">Musica</span>
+                      <span class="dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 9 min</span>
+                    </div>
                   </div>
-                  <div class="body">
-                    <div class="t">Cannes 2026: the Croisette verdict</div>
-                    <div class="d">The festival closes with this year's winners…</div>
-                    <div class="ft">
-                      <span class="tag">Cinema</span>
+                  <div class="sug-card">
+                    <div class="cov"><img src="assets/podcasts/sug2.png" alt="" loading="lazy"></div>
+                    <div class="t" data-i18n-text="mock.podcasts.sug2.title">Come il magma forma un vulcano</div>
+                    <div class="d" data-i18n-text="mock.sug2.desc">Cosa succede sotto i nostri piedi, raccontato senza scorciatoie.</div>
+                    <div class="meta">
+                      <span class="tag cat-cultura" data-i18n-text="mock.tag.science">Scienza</span>
+                      <span class="dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 7 min</span>
+                    </div>
+                  </div>
+                  <div class="sug-card">
+                    <div class="cov"><img src="assets/podcasts/sug3.png" alt="" loading="lazy"></div>
+                    <div class="t" data-i18n-text="mock.podcasts.sug3.title">L'evoluzione di Apple, dal garage al colosso</div>
+                    <div class="d" data-i18n-text="mock.sug3.desc">Dal Macintosh allo Studio: ogni svolta della società che ha riscritto il personal computing.</div>
+                    <div class="meta">
+                      <span class="tag cat-tech" data-i18n-text="mock.tag.tech">Tech</span>
                       <span class="dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 12 min</span>
                     </div>
                   </div>
                 </div>
-                <div class="pcard">
-                  <div class="cov">
-                    <svg viewBox="0 0 200 125" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
-                      <defs>
-                        <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stop-color="#0F1B3F"/>
-                          <stop offset="100%" stop-color="#1F2A5C"/>
-                        </linearGradient>
-                        <linearGradient id="bar2" x1="0" y1="0" x2="1" y2="0">
-                          <stop offset="0%" stop-color="#FE6B6B"/>
-                          <stop offset="100%" stop-color="#F25060"/>
-                        </linearGradient>
-                      </defs>
-                      <rect width="200" height="125" fill="url(#sky2)"/>
-                      <circle cx="42" cy="30" r="10" fill="#FFEDA8" opacity="0.9"/>
-                      <circle cx="42" cy="30" r="16" fill="#FFEDA8" opacity="0.15"/>
-                      <rect x="20"  y="82" width="16" height="30" fill="#3FCF8E" opacity="0.85"/>
-                      <rect x="42"  y="66" width="16" height="46" fill="#F5B947"/>
-                      <rect x="64"  y="50" width="16" height="62" fill="url(#bar2)"/>
-                      <rect x="86"  y="38" width="16" height="74" fill="#FE6B6B"/>
-                      <rect x="108" y="22" width="16" height="90" fill="#FF9DA6"/>
-                      <rect x="130" y="38" width="16" height="74" fill="#7B62FF"/>
-                      <rect x="152" y="56" width="16" height="56" fill="#9A85FF"/>
-                      <rect x="174" y="72" width="16" height="40" fill="#D9CFFF" opacity="0.85"/>
-                      <path d="M28 78 L50 60 L72 46 L94 32 L116 20 L138 32 L160 50 L182 66" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.85"/>
-                    </svg>
-                  </div>
-                  <div class="body">
-                    <div class="t">Inflation: how to protect savings</div>
-                    <div class="d">Italian households look for shelter as prices stay high…</div>
-                    <div class="ft">
-                      <span class="tag">Economy</span>
-                      <span class="dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 18 min</span>
-                    </div>
-                  </div>
+              </div>
+
+              <!-- La tua giornata -->
+              <div class="day-section">
+                <div class="sec-label" data-i18n-text="mock.dayStrip.label">La tua giornata</div>
+                <div class="day-row">
+                  <div class="day-cell past done"><span class="n">14</span><span class="dot"></span></div>
+                  <div class="day-cell past done"><span class="n">15</span><span class="dot"></span></div>
+                  <div class="day-cell past"><span class="n">16</span><span class="dot"></span></div>
+                  <div class="day-cell today"><span class="n">17</span><span class="dot"></span></div>
+                  <div class="day-cell future"><span class="n">18</span><span class="dot"></span></div>
+                  <div class="day-cell future"><span class="n">19</span><span class="dot"></span></div>
                 </div>
               </div>
 
-              <h3 class="h2">Your week</h3>
-              <div class="cal">
-                <div class="day"><span class="dow">Mon</span>19</div>
-                <div class="day"><span class="dow">Tue</span>20</div>
-                <div class="day"><span class="dow">Wed</span>21</div>
-                <div class="day" style="color:var(--fg-2)"><span class="dow">Thu</span>22</div>
-                <div class="day today"><span class="dow">Fri</span>23</div>
+              <!-- Continua ad ascoltare -->
+              <div class="cl">
+                <div class="cl-label sec-label" data-i18n-text="mock.continueListening.label">Continua ad ascoltare</div>
+                <div class="cl-row">
+                  <div class="cl-card">
+                    <div class="cov"><img src="assets/podcasts/cont1.png" alt="" loading="lazy"><i class="prog" style="width:62%"></i></div>
+                    <div class="t" data-i18n-text="mock.podcasts.cont1.title">Pizza fatta in casa, passo per passo</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="cov"><img src="assets/podcasts/cont2.png" alt="" loading="lazy"><i class="prog" style="width:28%"></i></div>
+                    <div class="t" data-i18n-text="mock.podcasts.cont2.title">La storia di Truxz: un gioco mai nato</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="cov"><img src="assets/podcasts/cont3.png" alt="" loading="lazy"><i class="prog" style="width:88%"></i></div>
+                    <div class="t" data-i18n-text="mock.podcasts.cont3.title">Tecniche di persuasione nella vendita</div>
+                  </div>
+                </div>
               </div>
             </div>
 
+            <!-- MiniPlayer above tab bar -->
+            <div class="miniplayer">
+              <div class="progress"><i></i></div>
+              <div class="row">
+                <img class="cov" src="assets/podcasts/hero.png" alt="" loading="lazy">
+                <div class="t" data-i18n-text="mock.podcasts.hero.title">La fondazione di Anthropic e Claude</div>
+                <span class="wave" aria-hidden="true">
+                  <i class="played" style="height:5px"></i>
+                  <i class="played" style="height:9px"></i>
+                  <i class="played" style="height:6px"></i>
+                  <i class="played" style="height:11px"></i>
+                  <i class="played" style="height:8px"></i>
+                  <i class="played" style="height:13px"></i>
+                  <i class="played" style="height:6px"></i>
+                  <i class="played" style="height:10px"></i>
+                  <i style="height:7px"></i>
+                  <i style="height:12px"></i>
+                  <i style="height:5px"></i>
+                  <i style="height:9px"></i>
+                  <i style="height:6px"></i>
+                  <i style="height:11px"></i>
+                  <i style="height:8px"></i>
+                  <i style="height:6px"></i>
+                </span>
+                <span class="time" data-i18n-text="mock.miniPlayer.remaining">−4:12</span>
+                <span class="play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Tab bar — 5 icons, no labels (FAB Genera overlays the middle slot) -->
             <div class="tabbar">
-              <div class="tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v8h5v-6h4v6h5v-8h3z"/></svg></div>
-              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-7h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-7H3z"/></svg></div>
-              <div class="pfab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h2l2-7 3 14 3-10 2 6h6"/></svg></div>
-              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
-              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+              <div class="tab active" aria-label="Home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
+              </div>
+              <div class="tab" aria-label="Library">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>
+              </div>
+              <div class="tab fab-slot" aria-hidden="true">
+                <svg viewBox="0 0 24 24"></svg>
+              </div>
+              <div class="tab" aria-label="Calendar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+              </div>
+              <div class="tab" aria-label="Goals">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M5 6H3a2 2 0 0 0 2 4M19 6h2a2 2 0 0 1-2 4M9 14v3h6v-3M8 20h8"/></svg>
+              </div>
+            </div>
+
+            <!-- FAB Genera (overlays the central tab slot) -->
+            <div class="fab-wrap" aria-hidden="true">
+              <span class="sonar"></span>
+              <span class="sonar s2"></span>
+              <span class="sonar s3"></span>
+              <div class="fab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h2l2-7 3 14 3-10 2 6h6"/></svg>
+              </div>
             </div>
           </div>
         </div>
@@ -235,64 +306,823 @@
     <section class="countdown-wrap" id="release" aria-labelledby="release-heading">
       <div class="countdown-card">
         <div>
-          <div class="eyebrow">● Public launch</div>
-          <h3 id="release-heading">We're opening ears in…</h3>
-          <p>Schelp arrives on iOS and Android in summer 2026. Drop your email above to join the early-access wave.</p>
+          <div class="eyebrow" data-i18n-text="release.eyebrow">● Lancio pubblico</div>
+          <h3 id="release-heading" data-i18n-text="release.heading">Cominciamo ad ascoltare tra…</h3>
+          <p data-i18n-text="release.subtitle">Schelp arriva su iOS e Android nell'estate 2026. Lascia la tua email qui sopra per entrare nell'anteprima.</p>
         </div>
         <div class="counter" aria-label="Time until launch">
-          <div class="unit"><div class="n" data-u="d">00</div><div class="l">Days</div></div>
-          <div class="unit"><div class="n" data-u="h">00</div><div class="l">Hours</div></div>
-          <div class="unit"><div class="n" data-u="m">00</div><div class="l">Minutes</div></div>
-          <div class="unit"><div class="n" data-u="s">00</div><div class="l">Seconds</div></div>
+          <div class="unit"><div class="n" data-u="d">00</div><div class="l" data-i18n-text="countdown.days">Giorni</div></div>
+          <div class="unit"><div class="n" data-u="h">00</div><div class="l" data-i18n-text="countdown.hours">Ore</div></div>
+          <div class="unit"><div class="n" data-u="m">00</div><div class="l" data-i18n-text="countdown.minutes">Minuti</div></div>
+          <div class="unit"><div class="n" data-u="s">00</div><div class="l" data-i18n-text="countdown.seconds">Secondi</div></div>
         </div>
         <div class="countdown-arrived">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          We're live — download Schelp now.
+          <span data-i18n-text="release.live">Siamo live — scarica Schelp ora.</span>
         </div>
       </div>
     </section>
 
-    <section class="features" id="feat" aria-labelledby="feat-heading">
-      <h2 id="feat-heading" class="visually-hidden" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">What Schelp does</h2>
-      <div class="feat">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3 6.5 7.5 11 9 6.5 10.5 5 15 3.5 10.5-1 9 3.5 7.5 5 3z" transform="translate(5 0)"/><path d="M17 13l1 2.5 2.5 1-2.5 1L17 20l-1-2.5-2.5-1 2.5-1L17 13z"/></svg></div>
-        <h3>One prompt, many podcasts.</h3>
-        <p>Type a single sentence, tweak a few knobs — length, vibe, hosts — and Schelp spins up an entire shelf of fresh episodes around it. Pick one and press play.</p>
-      </div>
-      <div class="feat">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></div>
-        <h3>Pick a goal, get a series.</h3>
-        <p>"Catch up on AI every morning." "Understand the markets in 30 days." Schelp turns the goal into episodes and drops them into the cracks of your real day — commute, run, dinner, bed.</p>
-      </div>
-      <div class="feat">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg></div>
-        <h3>Even from a photo.</h3>
-        <p>Drop in an image — a book cover, a screenshot, a place you visited — and Schelp builds an episode around it. Total freedom on what becomes audio.</p>
+    <section class="howitworks" id="how" aria-labelledby="hiw-heading">
+      <header class="hiw-intro">
+        <div class="eyebrow" data-i18n-text="hiw.eyebrow">Come funziona</div>
+        <h2 id="hiw-heading" data-i18n-text="hiw.heading">Da una scintilla, un episodio. Pensato per te.</h2>
+      </header>
+
+      <div class="hiw-scrolly">
+        <div class="hiw-text">
+          <article class="hiw-step hiw-step-multi" data-scene="generate" data-sub-scene="quick">
+            <div class="hiw-step-head">
+              <div class="hiw-step-num" aria-hidden="true">01</div>
+              <h3 data-i18n-text="hiw.step1.title">Inizia da una scintilla</h3>
+              <p data-i18n-text="hiw.step1.body">Schelp ti accompagna in quattro mosse: dimmi cosa ascoltare, scegli quanto controllo vuoi, da dove pescare le notizie, e con che voce raccontartelo.</p>
+              <ul class="hiw-bullets">
+                <li data-i18n-text="hiw.step1.b1">Prompt</li>
+                <li data-i18n-text="hiw.step1.b2">Link</li>
+                <li data-i18n-text="hiw.step1.b3">Voce</li>
+                <li data-i18n-text="hiw.step1.b4">Foto</li>
+              </ul>
+            </div>
+
+            <div class="hiw-substeps">
+              <!-- Sticky display: 4 substeps absolute, only the active one is visible -->
+              <div class="substeps-display">
+                <div class="hiw-substep is-active" data-sub-scene="quick">
+                  <span class="hiw-sub-tag">1.1</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.quick.title">Quick mode</h4>
+                    <p data-i18n-text="hiw.sub.quick.body">Una frase, e basta. Schelp sceglie le fonti, la voce, il tono e la durata. Genera in pochi minuti.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="advanced">
+                  <span class="hiw-sub-tag">1.2</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.advanced.title">Advanced mode</h4>
+                    <p data-i18n-text="hiw.sub.advanced.body">Vuoi più controllo? Scegli lo stile narrativo e lo stile della copertina, poi vai avanti al prossimo passo.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="sources">
+                  <span class="hiw-sub-tag">1.3</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.sources.title">Scegli le fonti</h4>
+                    <p data-i18n-text="hiw.sub.sources.body">Lascia che l'AI cerchi nel web in tempo reale, oppure seleziona tu i siti da cui Schelp deve pescare.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="config">
+                  <span class="hiw-sub-tag">1.4</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.config.title">Durata, profondità, voce</h4>
+                    <p data-i18n-text="hiw.sub.config.body">Da 2 a 15 minuti. Ricerca leggera o profonda. Cento voci tra cui scegliere — poi premi "Crea podcast".</p>
+                  </div>
+                </div>
+              </div>
+              <!-- 4 invisible scroll-consumer spacers — IntersectionObserver triggers on these -->
+              <div class="substep-spacer" data-scene="generate" data-sub-scene="quick" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="generate" data-sub-scene="advanced" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="generate" data-sub-scene="sources" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="generate" data-sub-scene="config" aria-hidden="true"></div>
+            </div>
+          </article>
+          <article class="hiw-step hiw-step-multi" data-scene="tune" data-sub-scene="interests">
+            <div class="hiw-step-head">
+              <div class="hiw-step-num" aria-hidden="true">02</div>
+              <h3 data-i18n-text="hiw.step2.title">Diciamo a Schelp chi sei</h3>
+              <p data-i18n-text="hiw.step2.body">Tre passaggi rapidi dopo la registrazione: cosa ti accende, quando hai dieci minuti per ascoltare, e che obiettivo vuoi raggiungere. Da quel momento, ogni episodio è cucito su misura.</p>
+              <ul class="hiw-bullets">
+                <li data-i18n-text="hiw.step2.b1">Interessi</li>
+                <li data-i18n-text="hiw.step2.b2">Abitudini</li>
+                <li data-i18n-text="hiw.step2.b3">Obiettivi</li>
+              </ul>
+            </div>
+
+            <div class="hiw-substeps">
+              <div class="substeps-display">
+                <div class="hiw-substep is-active" data-sub-scene="interests">
+                  <span class="hiw-sub-tag">2.1</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.interests.title">Scegli i tuoi interessi</h4>
+                    <p data-i18n-text="hiw.sub.interests.body">Tech, news, cinema, cucina, scienza — dai a Schelp i temi che ti accendono e l'app inizia a tessere insieme i tuoi argomenti preferiti.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="habits">
+                  <span class="hiw-sub-tag">2.2</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.habits.title">Imposta le abitudini</h4>
+                    <p data-i18n-text="hiw.sub.habits.body">Quando hai dieci minuti? Il tragitto del mattino, la palestra alle 18, prima di dormire. Schelp incastra gli episodi nelle finestre che hai davvero.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="goal">
+                  <span class="hiw-sub-tag">2.3</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.goal.title">Definisci un obiettivo</h4>
+                    <p data-i18n-text="hiw.sub.goal.body">Imparare una lingua, restare aggiornato su un settore, capire un argomento a fondo. Un'intenzione che diventa una serie di episodi pianificata per mesi.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="substep-spacer" data-scene="tune" data-sub-scene="interests" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="tune" data-sub-scene="habits" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="tune" data-sub-scene="goal" aria-hidden="true"></div>
+            </div>
+          </article>
+          <article class="hiw-step" data-scene="plan">
+            <div class="hiw-step-num" aria-hidden="true">03</div>
+            <h3 data-i18n-text="hiw.step3.title">Mettilo nei buchi della tua giornata</h3>
+            <p data-i18n-text="hiw.step3.body">Dimmi quando hai tempo: il tragitto, la palestra, la pausa, prima di dormire. Schelp pianifica gli episodi nelle finestre giuste e ti aspetta lì.</p>
+            <ul class="hiw-bullets">
+              <li data-i18n-text="hiw.step3.b1">Tragitto</li>
+              <li data-i18n-text="hiw.step3.b2">Palestra</li>
+              <li data-i18n-text="hiw.step3.b3">Pausa</li>
+              <li data-i18n-text="hiw.step3.b4">Prima di dormire</li>
+            </ul>
+          </article>
+          <article class="hiw-step" data-scene="detail">
+            <div class="hiw-step-num" aria-hidden="true">04</div>
+            <h3 data-i18n-text="hiw.step4.title">Apri il dietro le quinte</h3>
+            <p data-i18n-text="hiw.step4.body">Ogni episodio ha la sua scheda: lo script integrale, le fonti citate, i parametri di generazione, la durata, la voce. Vedi cosa ha letto Schelp e da dove ha preso le notizie.</p>
+            <ul class="hiw-bullets">
+              <li data-i18n-text="hiw.step4.b1">Script</li>
+              <li data-i18n-text="hiw.step4.b2">Fonti</li>
+              <li data-i18n-text="hiw.step4.b3">Parametri</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="hiw-phone-wrap" data-scene="generate" aria-hidden="true">
+          <div class="phone">
+            <div class="screen">
+              <div class="status">
+                <span>9:41</span>
+                <span class="right">
+                  <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 10h2v2H1zm3-2h2v4H4zm3-2h2v6H7zm3-2h2v8h-2zm3-2h2v10h-2z"/></svg>
+                  <svg viewBox="0 0 16 12" fill="currentColor"><path d="M8 2C5 2 2.5 3 1 5l1.5 1.5C3.5 5.5 5.7 4.5 8 4.5s4.5 1 5.5 2L15 5C13.5 3 11 2 8 2zm0 3.5c-2 0-3.5.7-4.5 1.5L5 8.5C5.5 7.8 6.7 7.3 8 7.3s2.5.5 3 1.2L12.5 7c-1-.8-2.5-1.5-4.5-1.5zm0 3.2L6.5 10.2 8 11.7l1.5-1.5L8 8.7z"/></svg>
+                  <svg viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="18" height="8" rx="2"/><rect x="2.5" y="3.5" width="14" height="5" fill="currentColor"/><rect x="20" y="4.5" width="1.5" height="3" fill="currentColor"/></svg>
+                </span>
+              </div>
+
+              <!-- Scene 1: Generate — 4 sub-scenes (quick / advanced / sources / config) -->
+              <div class="scene scene-generate is-active" data-scene="generate">
+
+                <!-- Sub-scene 1.1 — QUICK mode -->
+                <div class="gen-sub is-active" data-sub-scene="quick">
+                  <div class="sc-pad">
+                    <div class="g-steps" aria-hidden="true">
+                      <span class="g-step is-active"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></span><span class="g-step-l">Tema</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="g-step-l">Fonti</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="g-step-l">Config</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l">Crea</span></span>
+                    </div>
+                    <div class="imt-wrap">
+                      <div class="imt-tab is-active"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.quick">Veloce</span><span class="imt-dot" aria-hidden="true"></span></div>
+                      <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.advanced">Avanzato</span></div>
+                      <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.audio">Audio</span></div>
+                      <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.image">Foto</span></div>
+                    </div>
+                    <div class="gen-prompt">
+                      <div class="gen-prompt-label" data-i18n-text="mock.gen.header">Cosa vuoi ascoltare?</div>
+                      <div class="gen-prompt-box">
+                        <span class="gen-prompt-text" data-i18n-text="mock.gen.placeholder">Es: la fondazione di Anthropic e Claude…</span><span class="gen-caret" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                    <div class="qm-panel">
+                      <div class="qm-header"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><span data-i18n-text="mock.qm.heading">Parametri quick mode</span></div>
+                      <div class="qm-chips">
+                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M3 12h3M18 12h3M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="2.4"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.sources">Fonti</span><span class="qm-chip-v" data-i18n-text="mock.qm.aimode">AI Mode</span></div>
+                        <span class="qm-sep"></span>
+                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"/><path d="m4 8 16-3M9 14h.01M15 14h.01"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.style">Stile</span><span class="qm-chip-v" data-i18n-text="mock.qm.auto">Auto</span></div>
+                        <span class="qm-sep"></span>
+                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.duration">Durata</span><span class="qm-chip-v">5 min</span></div>
+                      </div>
+                    </div>
+                    <button type="button" class="gen-cta gen-cta-amber" tabindex="-1">
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                      <span data-i18n-text="mock.gen.cta">Genera subito</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 1.2 — ADVANCED mode -->
+                <div class="gen-sub" data-sub-scene="advanced">
+                  <div class="sc-pad">
+                    <div class="g-steps" aria-hidden="true">
+                      <span class="g-step is-active"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></span><span class="g-step-l">Tema</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="g-step-l">Fonti</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="g-step-l">Config</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l">Crea</span></span>
+                    </div>
+                    <div class="imt-wrap">
+                      <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.quick">Veloce</span></div>
+                      <div class="imt-tab is-active is-violet"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.advanced">Avanzato</span><span class="imt-dot" aria-hidden="true"></span></div>
+                      <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.audio">Audio</span></div>
+                      <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.image">Foto</span></div>
+                    </div>
+                    <div class="gen-prompt">
+                      <div class="gen-prompt-label" data-i18n-text="mock.gen.header">Cosa vuoi ascoltare?</div>
+                      <div class="gen-prompt-box">
+                        <span class="gen-prompt-text">La fondazione di Anthropic e Claude — racconta la storia, i fondatori, la mission</span>
+                      </div>
+                    </div>
+                    <div class="ssb-row">
+                      <div class="ssb">
+                        <span class="ssb-ico" style="--c:#FF6B6B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"/><path d="m4 8 16-3M9 14h.01M15 14h.01"/></svg></span>
+                        <span class="ssb-info">
+                          <span class="ssb-label" data-i18n-text="mock.ssb.podcastStyle">Stile podcast</span>
+                          <span class="ssb-value" data-i18n-text="mock.style.approfondimento">Approfondimento</span>
+                        </span>
+                        <svg class="ssb-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                      </div>
+                      <div class="ssb">
+                        <span class="ssb-ico" style="--c:#7B61FF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg></span>
+                        <span class="ssb-info">
+                          <span class="ssb-label" data-i18n-text="mock.ssb.coverStyle">Stile copertina</span>
+                          <span class="ssb-value" data-i18n-text="mock.cover.acquerello">Acquerello</span>
+                        </span>
+                        <svg class="ssb-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                      </div>
+                    </div>
+                    <button type="button" class="gen-cta" tabindex="-1">
+                      <span data-i18n-text="mock.gen.next">Avanti</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 1.3 — STEP 2 SOURCES -->
+                <div class="gen-sub" data-sub-scene="sources">
+                  <div class="sc-pad">
+                    <div class="g-steps" aria-hidden="true">
+                      <span class="g-step is-done"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="g-step-l">Tema</span></span>
+                      <span class="g-step-line is-filled"></span>
+                      <span class="g-step is-active"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm0 2a7 7 0 0 1 6.7 5H14V7l-4 6h3v3z"/></svg></span><span class="g-step-l">Fonti</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="g-step-l">Config</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l">Crea</span></span>
+                    </div>
+                    <div class="topic-preview">
+                      <span class="topic-ico">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z"/></svg>
+                      </span>
+                      <span class="topic-text">La fondazione di Anthropic e Claude</span>
+                    </div>
+                    <div class="gen-section-head">
+                      <div class="gen-section-title" data-i18n-text="mock.sources.title">Fonti per la ricerca</div>
+                      <div class="gen-section-sub" data-i18n-text="mock.sources.subtitle">Lascia all'AI o usa le tue fonti</div>
+                    </div>
+                    <div class="seg-ctrl">
+                      <span class="seg-tab is-active">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.5 7 4 8l4 4-1 6 5-3 5 3-1-6 4-4-5.5-1z"/></svg>
+                        <span data-i18n-text="mock.sources.ai">AI Mode</span>
+                      </span>
+                      <span class="seg-tab">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2V5z"/><path d="M4 17a2 2 0 0 1 2-2h12"/></svg>
+                        <span data-i18n-text="mock.sources.mine">Mie fonti</span>
+                      </span>
+                    </div>
+                    <div class="ai-panel">
+                      <span class="ai-accent" aria-hidden="true"></span>
+                      <div class="ai-content">
+                        <div class="ai-head">
+                          <span class="ai-ico">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 9.5 7 4 8l4 4-1 6 5-3 5 3-1-6 4-4-5.5-1z"/></svg>
+                          </span>
+                          <div class="ai-text">
+                            <div class="ai-title" data-i18n-text="mock.sources.aiTitle">L'AI sceglie le fonti</div>
+                            <div class="ai-desc" data-i18n-text="mock.sources.aiDesc">Tavily cerca nel web in tempo reale e seleziona quelle migliori.</div>
+                          </div>
+                        </div>
+                        <div class="ai-features">
+                          <div class="ai-feat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                            <span data-i18n-text="mock.sources.feat1">Ricerca web real-time</span>
+                          </div>
+                          <div class="ai-feat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4c0 2 1 3 2 4v2h4v-2c1-1 2-2 2-4a4 4 0 0 0-4-4zM10 16h4M11 19h2"/></svg>
+                            <span data-i18n-text="mock.sources.feat2">Filtra per qualità e freschezza</span>
+                          </div>
+                          <div class="ai-feat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                            <span data-i18n-text="mock.sources.feat3">Nessuna configurazione</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="nav-row">
+                      <span class="nav-back">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                      </span>
+                      <button type="button" class="gen-cta nav-next" tabindex="-1">
+                        <span data-i18n-text="mock.gen.next">Avanti</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 1.4 — STEP 3 CONFIG -->
+                <div class="gen-sub" data-sub-scene="config">
+                  <div class="sc-pad">
+                    <div class="g-steps" aria-hidden="true">
+                      <span class="g-step is-done"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="g-step-l">Tema</span></span>
+                      <span class="g-step-line is-filled"></span>
+                      <span class="g-step is-done"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="g-step-l">Fonti</span></span>
+                      <span class="g-step-line is-filled"></span>
+                      <span class="g-step is-active"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="2"/><path d="M9 5h12v2H9zM18 11a2 2 0 1 1-2 2 2 2 0 0 1 2-2zM3 11h12v2H3zM9 17a2 2 0 1 1-2 2 2 2 0 0 1 2-2zM12 17h9v2h-9z"/></svg></span><span class="g-step-l">Config</span></span>
+                      <span class="g-step-line"></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l">Crea</span></span>
+                    </div>
+                    <div class="topic-preview">
+                      <span class="topic-ico">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z"/></svg>
+                      </span>
+                      <span class="topic-text">La fondazione di Anthropic e Claude</span>
+                    </div>
+                    <div class="cfg-card">
+                      <div class="cfg-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        <span data-i18n-text="mock.cfg.duration">Durata</span>
+                      </div>
+                      <div class="cfg-value">5 <span class="cfg-unit">min</span></div>
+                      <div class="cfg-subvalue">~750 parole</div>
+                      <div class="cfg-slider-row">
+                        <span class="cfg-slider-lbl">2</span>
+                        <div class="cfg-slider" style="--c:#FF6B6B; --pct:23%">
+                          <span class="cfg-slider-track"></span>
+                          <span class="cfg-slider-fill"></span>
+                          <span class="cfg-slider-thumb"></span>
+                        </div>
+                        <span class="cfg-slider-lbl">15</span>
+                      </div>
+                    </div>
+                    <div class="cfg-card">
+                      <div class="cfg-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                        <span data-i18n-text="mock.cfg.depth">Profondità ricerca</span>
+                      </div>
+                      <div class="cfg-value" style="color:#7B61FF">6</div>
+                      <div class="cfg-slider-row">
+                        <span class="cfg-slider-lbl" data-i18n-text="mock.cfg.light">Leggera</span>
+                        <div class="cfg-slider" style="--c:#7B61FF; --pct:56%">
+                          <span class="cfg-slider-track"></span>
+                          <span class="cfg-slider-fill"></span>
+                          <span class="cfg-slider-thumb"></span>
+                        </div>
+                        <span class="cfg-slider-lbl" data-i18n-text="mock.cfg.deep">Profonda</span>
+                      </div>
+                    </div>
+                    <div class="ssb">
+                      <span class="ssb-ico" style="--c:#34D399"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></span>
+                      <span class="ssb-info">
+                        <span class="ssb-label" data-i18n-text="mock.cfg.voice">Voce</span>
+                        <span class="ssb-value">Giulia · IT · calda</span>
+                      </span>
+                      <svg class="ssb-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                    </div>
+                    <div class="nav-row">
+                      <span class="nav-back">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                      </span>
+                      <button type="button" class="gen-cta gen-cta-purple nav-next" tabindex="-1">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 9.5 7 4 8l4 4-1 6 5-3 5 3-1-6 4-4-5.5-1z"/></svg>
+                        <span data-i18n-text="mock.cfg.create">Crea podcast</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Scene 2: Onboarding — 3 sub-scenes faithful to OnboardingScreen.tsx / OnboardingHabitsScreen.tsx / OnboardingGoalScreen.tsx -->
+              <div class="scene scene-tune" data-scene="tune">
+
+                <!-- Sub-scene 2.1 — INTERESTS -->
+                <div class="gen-sub is-active" data-sub-scene="interests">
+                  <div class="sc-pad ob-pad">
+                    <!-- StepIndicator: label + 3px progress bar gradient coral (4/6 = 66%) -->
+                    <div class="ob-step-ind">
+                      <div class="ob-step-label"><span data-i18n-text="mock.ob.stepInterests">Interessi</span> · 4/6</div>
+                      <div class="ob-step-track"><span class="ob-step-fill" style="width:66.6%"></span></div>
+                    </div>
+                    <!-- Decorative overlapping circles -->
+                    <div class="ob-circles" aria-hidden="true">
+                      <span class="ob-c c1"></span>
+                      <span class="ob-c c2"></span>
+                      <span class="ob-c c3"></span>
+                    </div>
+                    <div class="ob-title">
+                      <span class="ob-muted" data-i18n-text="mock.ob.whatPassion">Cosa ti</span>
+                      <span class="ob-bold" data-i18n-text="mock.ob.passionBold">appassiona?</span>
+                    </div>
+                    <div class="ob-sub" data-i18n-text="mock.ob.interestsSub">Scegli i temi che vuoi ascoltare. Schelp ne farà podcast.</div>
+                    <div class="ob-counter-pill">
+                      <span data-i18n-text="mock.ob.counter">4 interessi selezionati</span>
+                    </div>
+                    <!-- InterestChips: Ionicons inline + name. Selected = gradient coral + checkmark-circle -->
+                    <div class="ob-chips">
+                      <span class="ic-chip ic-chip-on">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5h13a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M7 9h7M7 12h7M7 15h4" stroke="currentColor" stroke-width="1.6"/></svg>
+                        <span>News</span>
+                        <svg class="ic-chk" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12.5l2 2 4-4.5" stroke="#FF6B6B" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                      <span class="ic-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
+                        <span>Tech</span>
+                      </span>
+                      <span class="ic-chip ic-chip-on">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="7" cy="3" r="1.5"/><circle cx="17" cy="3" r="1.5"/><path d="m7 4.5 4 1.5M17 4.5l-4 1.5"/></svg>
+                        <span>Cinema</span>
+                        <svg class="ic-chk" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12.5l2 2 4-4.5" stroke="#FF6B6B" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                      <span class="ic-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg>
+                        <span>Sport</span>
+                      </span>
+                      <span class="ic-chip ic-chip-on">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13a7 7 0 0 1 14 0v1H5z"/><path d="M3 17h18l-1 3H4z"/><path d="M9 5c0-1 .5-1.5 1-2.5M13 5c0-1 .5-1.5 1-2.5"/></svg>
+                        <span>Cucina</span>
+                        <svg class="ic-chk" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12.5l2 2 4-4.5" stroke="#FF6B6B" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                      <span class="ic-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v6L5 17a4 4 0 0 0 4 5h6a4 4 0 0 0 4-5l-4-8V3"/><path d="M9 3h6"/></svg>
+                        <span>Scienza</span>
+                      </span>
+                      <span class="ic-chip ic-chip-on">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="11" rx="2"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M12 3v4M8 18v3M16 18v3"/></svg>
+                        <span>AI</span>
+                        <svg class="ic-chk" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12.5l2 2 4-4.5" stroke="#FF6B6B" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                      <span class="ic-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                        <span>Musica</span>
+                      </span>
+                      <span class="ic-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8M21 8v6h-6"/></svg>
+                        <span>Economia</span>
+                      </span>
+                      <span class="ic-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+                        <span>Mondo</span>
+                      </span>
+                    </div>
+                    <!-- GlassCard switch -->
+                    <div class="ob-glass ob-glass-switch">
+                      <div class="ob-switch-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+                        <span data-i18n-text="mock.ob.suggestedSources">Usa fonti suggerite</span>
+                        <span class="ob-switch is-on" aria-hidden="true"><span class="ob-switch-thumb"></span></span>
+                      </div>
+                      <div class="ob-switch-hint" data-i18n-text="mock.ob.suggestedHint">Per ogni interesse, Schelp aggiunge i siti più affidabili.</div>
+                    </div>
+                    <!-- AnimatedButton (gradient coral 0→1 horizontal, h:56, radius:16, shadow heavy) -->
+                    <button type="button" class="ob-cta" tabindex="-1">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                      <span data-i18n-text="mock.ob.continue">Continua</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 2.2 — HABITS -->
+                <div class="gen-sub" data-sub-scene="habits">
+                  <div class="sc-pad ob-pad">
+                    <div class="ob-step-ind">
+                      <div class="ob-step-label"><span data-i18n-text="mock.ob.stepHabits">Abitudini</span> · 5/6</div>
+                      <div class="ob-step-track"><span class="ob-step-fill" style="width:83.3%"></span></div>
+                    </div>
+                    <!-- PulsingOrb purple, 80px, time icon 38px, animated ring -->
+                    <div class="ob-orb-wrap" aria-hidden="true">
+                      <span class="ob-orb-ring ob-ring-purple"></span>
+                      <span class="ob-orb ob-orb-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                      </span>
+                    </div>
+                    <div class="ob-title">
+                      <span class="ob-muted" data-i18n-text="mock.ob.whenDo">Quando</span>
+                      <span class="ob-bold" data-i18n-text="mock.ob.listen">ascolti?</span>
+                    </div>
+                    <div class="ob-sub" data-i18n-text="mock.ob.habitsSub">Le finestre della tua giornata in cui Schelp può infilarsi.</div>
+                    <div class="ob-glass">
+                      <div class="ob-glass-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+                        <span data-i18n-text="mock.ob.yourHabits">Le tue abitudini</span>
+                        <span class="ob-glass-count">3</span>
+                      </div>
+                      <div class="ob-habit">
+                        <span class="ob-habit-em">🚗</span>
+                        <div class="ob-habit-info">
+                          <span class="ob-habit-label" data-i18n-text="mock.ob.h1.label">Tragitto al lavoro</span>
+                          <span class="ob-habit-sub" data-i18n-text="mock.ob.h1.sub">Lun – Ven · 07:30 – 08:15</span>
+                        </div>
+                        <span class="ob-habit-x" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.15"/><path d="m9 9 6 6M15 9l-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                        </span>
+                      </div>
+                      <div class="ob-habit">
+                        <span class="ob-habit-em">💪</span>
+                        <div class="ob-habit-info">
+                          <span class="ob-habit-label" data-i18n-text="mock.ob.h2.label">Palestra</span>
+                          <span class="ob-habit-sub" data-i18n-text="mock.ob.h2.sub">Mar, Gio · 18:00 – 19:00</span>
+                        </div>
+                        <span class="ob-habit-x" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.15"/><path d="m9 9 6 6M15 9l-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                        </span>
+                      </div>
+                      <div class="ob-habit">
+                        <span class="ob-habit-em">🌙</span>
+                        <div class="ob-habit-info">
+                          <span class="ob-habit-label" data-i18n-text="mock.ob.h3.label">Prima di dormire</span>
+                          <span class="ob-habit-sub" data-i18n-text="mock.ob.h3.sub">Ogni giorno · 22:00 – 22:30</span>
+                        </div>
+                        <span class="ob-habit-x" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.15"/><path d="m9 9 6 6M15 9l-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                        </span>
+                      </div>
+                      <div class="ob-add">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                        <span data-i18n-text="mock.ob.addHabit">Aggiungi abitudine</span>
+                      </div>
+                    </div>
+                    <button type="button" class="ob-cta" tabindex="-1">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                      <span data-i18n-text="mock.ob.continue">Continua</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 2.3 — GOAL (faithful to real OnboardingGoalScreen.tsx) -->
+                <div class="gen-sub" data-sub-scene="goal">
+                  <div class="sc-pad ob-pad">
+                    <div class="ob-step-ind">
+                      <div class="ob-step-label"><span data-i18n-text="mock.ob.stepGoalLabel">OBIETTIVO</span> · 6/6</div>
+                      <div class="ob-step-track"><span class="ob-step-fill" style="width:100%"></span></div>
+                    </div>
+                    <div class="ob-orb-wrap" aria-hidden="true">
+                      <span class="ob-orb-ring ob-ring-coral"></span>
+                      <span class="ob-orb ob-orb-coral">
+                        <!-- Ionicons "flag" — pennant flag with pole -->
+                        <svg viewBox="0 0 512 512" fill="currentColor">
+                          <path d="M64 496a16 16 0 0 1-16-16V40a24 24 0 0 1 24-24h0a24 24 0 0 1 24 24v440a16 16 0 0 1-16 16z"/>
+                          <path d="M381.49 80.39c-22.94-12.13-44.59-23.58-79.06-23.58-25.27 0-54.43 6.39-92.5 21.74-43.78 17.66-77.99 19.4-101.69 16.21-25.66-3.46-39.36-12.79-39.49-12.88l-9.13-6.34v264.58c14.85 9.27 48.94 23.69 102.04 16.05 45.92-6.6 70.43-19.74 99.92-32 26.97-11.2 53-19.95 86.49-19.95 38.13 0 89.78 14.34 124.91 32 4.16 2.09 13.02 1.61 13.02-8.07V107.74a16.08 16.08 0 0 0-8.51-14.13z"/>
+                        </svg>
+                      </span>
+                    </div>
+                    <div class="ob-title">
+                      <span class="ob-muted" data-i18n-text="mock.ob.yourGoal">Il tuo</span>
+                      <span class="ob-bold" data-i18n-text="mock.ob.goalBold">obiettivo</span>
+                    </div>
+                    <div class="ob-sub" data-i18n-text="mock.ob.goalSubtitle">Descrivi un obiettivo concreto e creeremo un percorso podcast personalizzato</div>
+
+                    <div class="ob-glass">
+                      <span class="ob-field-label" data-i18n-text="mock.ob.describe">Descrivi il tuo obiettivo</span>
+                      <div class="ob-textarea ob-textarea-placeholder" data-i18n-text="mock.ob.goalPlaceholder">Es. Voglio imparare le basi della programmazione Python in 3 mesi...</div>
+                    </div>
+
+                    <div class="ob-glass">
+                      <span class="ob-field-label" data-i18n-text="mock.ob.category">Categoria</span>
+                      <div class="ob-cat-scroll">
+                        <span class="ob-cat">🎯 <span data-i18n-text="mock.ob.cat.skill">Apprendere una competenza</span></span>
+                        <span class="ob-cat">💪 <span data-i18n-text="mock.ob.cat.fitness">Fitness e benessere</span></span>
+                        <span class="ob-cat">📖 <span data-i18n-text="mock.ob.cat.deep">Approfondire una materia</span></span>
+                        <span class="ob-cat">🧠 <span data-i18n-text="mock.ob.cat.self">Migliorare se stessi</span></span>
+                        <span class="ob-cat">📈 <span data-i18n-text="mock.ob.cat.career">Crescita professionale</span></span>
+                        <span class="ob-cat">🌍 <span data-i18n-text="mock.ob.cat.language">Imparare una lingua</span></span>
+                        <span class="ob-cat">🎨 <span data-i18n-text="mock.ob.cat.creativity">Creatività</span></span>
+                        <span class="ob-cat">📚 <span data-i18n-text="mock.ob.cat.culture">Cultura generale</span></span>
+                      </div>
+                    </div>
+
+                    <div class="ob-glass">
+                      <span class="ob-field-label" data-i18n-text="mock.ob.timeframe">Durata del percorso</span>
+                      <div class="ob-tf-row">
+                        <span class="ob-tf">1 <span data-i18n-text="mock.ob.tf.month">mese</span></span>
+                        <span class="ob-tf">2 <span data-i18n-text="mock.ob.tf.months">mesi</span></span>
+                        <span class="ob-tf ob-tf-on">3 <span data-i18n-text="mock.ob.tf.months">mesi</span></span>
+                        <span class="ob-tf">4 <span data-i18n-text="mock.ob.tf.months">mesi</span></span>
+                        <span class="ob-tf">6 <span data-i18n-text="mock.ob.tf.months">mesi</span></span>
+                        <span class="ob-tf">9 <span data-i18n-text="mock.ob.tf.months">mesi</span></span>
+                        <span class="ob-tf">12 <span data-i18n-text="mock.ob.tf.months">mesi</span></span>
+                      </div>
+                      <div class="ob-tf-count" data-i18n-text="mock.ob.tfCount">12 episodi · 1 a settimana</div>
+                    </div>
+
+                    <div class="ob-glass">
+                      <span class="ob-field-label" data-i18n-text="mock.ob.whenListen">Quando vuoi ascoltare?</span>
+                      <div class="ob-sched-row">
+                        <span class="ob-sched ob-sched-on">
+                          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke="#FF6B6B" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+                          <span data-i18n-text="mock.ob.followHabits">Secondo le abitudini</span>
+                        </span>
+                        <span class="ob-sched">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+                          <span data-i18n-text="mock.ob.custom">Personalizzato</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    <button type="button" class="ob-cta" tabindex="-1">
+                      <!-- Ionicons "rocket" — proper rocket with curl exhaust -->
+                      <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
+                        <path d="M461.81 53.81a4.4 4.4 0 0 0-3.3-3.3c-54.38-13.3-180 34.09-248.13 102.17a294.18 294.18 0 0 0-33.09 39.08c-21-1.9-42-.3-59.88 7.5-50.49 22.2-65.18 80.18-69.28 105.07a9 9 0 0 0 9.8 10.4l81.07-8.9a180.29 180.29 0 0 0 1 18.3 18.15 18.15 0 0 0 5.3 11.09l31.39 31.39a18.15 18.15 0 0 0 11.1 5.3 179.91 179.91 0 0 0 18.19 1l-8.89 81a9 9 0 0 0 10.39 9.79c24.9-4 83-18.69 105.07-69.17 7.8-17.9 9.4-38.79 7.6-59.69a294.7 294.7 0 0 0 39.18-33.09c68.28-67.78 115.47-190.86 102.48-247.94zM298.66 213.34a42.66 42.66 0 1 1 60.33 0 42.61 42.61 0 0 1-60.33 0z"/>
+                      </svg>
+                      <span data-i18n-text="mock.ob.createGoal">Crea Obiettivo</span>
+                    </button>
+                    <a class="ob-skip" data-i18n-text="mock.ob.skip">Salta per ora</a>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Scene 3: Calendar — faithful to CalendarScreen.tsx -->
+              <div class="scene scene-plan" data-scene="plan">
+                <div class="sc-pad sc-pad-cal">
+                  <div class="cal-head">
+                    <span class="cal-title" data-i18n-text="mock.plan.header">Calendario</span>
+                  </div>
+                  <div class="cal-filters">
+                    <span class="cal-chip is-active" data-i18n-text="mock.plan.filter.all">Tutti</span>
+                    <span class="cal-chip" data-i18n-text="mock.plan.filter.generated">Generati</span>
+                    <span class="cal-chip" data-i18n-text="mock.plan.filter.scheduled">Programmati</span>
+                    <span class="cal-chip" data-i18n-text="mock.plan.filter.goals">Obiettivi</span>
+                  </div>
+                  <div class="cal-month">
+                    <span class="cal-chev" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+                    </span>
+                    <span class="cal-month-name">Maggio 2026</span>
+                    <span class="cal-chev" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                    </span>
+                  </div>
+                  <div class="cal-card">
+                    <div class="cal-dow">
+                      <span>L</span><span>M</span><span>M</span><span>G</span><span>V</span><span>S</span><span>D</span>
+                    </div>
+                    <div class="cal-grid">
+                      <span class="cal-cell cal-empty"></span><span class="cal-cell cal-empty"></span><span class="cal-cell cal-empty"></span>
+                      <span class="cal-cell">1</span><span class="cal-cell">2</span><span class="cal-cell">3</span><span class="cal-cell">4</span>
+                      <span class="cal-cell">5</span><span class="cal-cell has-event ev-gen">6</span><span class="cal-cell">7</span><span class="cal-cell">8</span><span class="cal-cell">9</span><span class="cal-cell">10</span><span class="cal-cell">11</span>
+                      <span class="cal-cell">12</span><span class="cal-cell has-event ev-sched">13</span><span class="cal-cell">14</span><span class="cal-cell">15</span><span class="cal-cell">16</span><span class="cal-cell">17</span><span class="cal-cell has-event ev-gen">18</span>
+                      <span class="cal-cell is-today">19</span><span class="cal-cell">20</span><span class="cal-cell has-event ev-goal">21</span><span class="cal-cell">22</span><span class="cal-cell has-event ev-sched">23</span><span class="cal-cell">24</span><span class="cal-cell">25</span>
+                      <span class="cal-cell">26</span><span class="cal-cell">27</span><span class="cal-cell">28</span><span class="cal-cell">29</span><span class="cal-cell">30</span><span class="cal-cell">31</span><span class="cal-cell cal-empty"></span>
+                    </div>
+                  </div>
+                  <div class="cal-section">
+                    <div class="cal-section-title">Prossimi</div>
+                    <div class="cal-item">
+                      <img class="cal-thumb" src="assets/podcasts/cont2.png" alt="" loading="lazy">
+                      <span class="cal-item-info">
+                        <span class="cal-item-t">Come il magma forma un vulcano</span>
+                        <span class="cal-item-d">mar 19 mag · 13:00</span>
+                      </span>
+                      <span class="cal-play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="rgba(255,107,107,0.15)"/><path d="M10 8v8l6-4z" fill="#FF6B6B"/></svg>
+                      </span>
+                    </div>
+                    <div class="cal-item">
+                      <img class="cal-thumb" src="assets/podcasts/sug3.png" alt="" loading="lazy">
+                      <span class="cal-item-info">
+                        <span class="cal-item-t">L'evoluzione di Apple, dal garage al colosso</span>
+                        <span class="cal-item-d">mer 21 mag · 18:30</span>
+                      </span>
+                      <span class="cal-play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="rgba(255,107,107,0.15)"/><path d="M10 8v8l6-4z" fill="#FF6B6B"/></svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scene 4: Podcast detail — faithful to PodcastDetailScreen.tsx -->
+              <div class="scene scene-detail" data-scene="detail">
+                <div class="det-bg" aria-hidden="true">
+                  <img src="assets/podcasts/hero.png" alt="">
+                  <span class="det-bg-overlay"></span>
+                </div>
+                <div class="det-topnav">
+                  <span class="det-back" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+                  </span>
+                </div>
+                <div class="det-scroll">
+                  <img class="det-cover" src="assets/podcasts/hero.png" alt="" loading="lazy">
+                  <div class="det-title">La fondazione di Anthropic e Claude</div>
+                  <div class="det-date">19 maggio 2026</div>
+
+                  <div class="det-chips">
+                    <span class="det-chip det-chip-quick">
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                      <span data-i18n-text="mock.det.chip.quick">Quick</span>
+                    </span>
+                    <span class="det-chip det-chip-type">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                      <span data-i18n-text="mock.style.approfondimento">Approfondimento</span>
+                    </span>
+                    <span class="det-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+                      <span>giulia</span>
+                    </span>
+                    <span class="det-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                      <span>5 min</span>
+                    </span>
+                  </div>
+
+                  <button type="button" class="det-play" tabindex="-1">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                    <span data-i18n-text="mock.det.play">Ascolta</span>
+                  </button>
+
+                  <div class="det-divider" aria-hidden="true"></div>
+
+                  <div class="det-section">
+                    <div class="det-section-label" data-i18n-text="mock.det.theme">Tema</div>
+                    <div class="det-prompt">Parlami della società Anthropic, di come è nata e di cosa fa Claude</div>
+                  </div>
+
+                  <div class="det-collap">
+                    <div class="det-collap-head">
+                      <span class="det-collap-ico" style="--c:#FF6B6B">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>
+                      </span>
+                      <span class="det-collap-title" data-i18n-text="mock.det.script">Script</span>
+                      <span class="det-collap-chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="det-collap is-open">
+                    <div class="det-collap-head">
+                      <span class="det-collap-ico" style="--c:#7B61FF">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12M4 9h12M4 13h8"/><path d="M20 5v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5"/></svg>
+                      </span>
+                      <span class="det-collap-title" data-i18n-text="mock.det.sources">Fonti</span>
+                      <span class="det-collap-count">3</span>
+                      <span class="det-collap-chev is-open" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>
+                      </span>
+                    </div>
+                    <div class="det-collap-body">
+                      <div class="det-src">
+                        <span class="det-src-fav" style="background:#5436DA">A</span>
+                        <span class="det-src-info">
+                          <span class="det-src-t">Anthropic — Our mission</span>
+                          <span class="det-src-d">anthropic.com</span>
+                        </span>
+                        <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+                      </div>
+                      <div class="det-src">
+                        <span class="det-src-fav" style="background:#ff7549">w</span>
+                        <span class="det-src-info">
+                          <span class="det-src-t">Anthropic — Wikipedia</span>
+                          <span class="det-src-d">en.wikipedia.org</span>
+                        </span>
+                        <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+                      </div>
+                      <div class="det-src">
+                        <span class="det-src-fav" style="background:#000">T</span>
+                        <span class="det-src-info">
+                          <span class="det-src-t">The Atlantic — The AI safety lab</span>
+                          <span class="det-src-d">theatlantic.com</span>
+                        </span>
+                        <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div>© <span id="year">2026</span> Schelp · Podcasts for your day</div>
+    <div data-i18n-text-template="footer.copyright" data-template-vars="year">© <span id="year">2026</span> Schelp · podcast per la tua giornata</div>
     <div class="legal">
-      <a href="privacy.html">Privacy</a>
+      <a href="privacy.html" data-i18n-text="footer.privacy">Privacy</a>
       <span aria-hidden="true">·</span>
       <a href="mailto:hello@schelp.app">hello@schelp.app</a>
     </div>
     <div class="social">
-      <a href="#" aria-label="Schelp on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-      <a href="#" aria-label="Schelp on X"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 3h3l-7.5 8.6L22 21h-6.5l-5-6.5L4.6 21H2l8-9.2L2 3h6.7l4.5 6L18 3z"/></svg></a>
-      <a href="mailto:hello@schelp.app" aria-label="Email Schelp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+      <a href="#" data-i18n-attr="aria-label:footer.social.instagram" aria-label="Schelp su Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" data-i18n-attr="aria-label:footer.social.x" aria-label="Schelp su X"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 3h3l-7.5 8.6L22 21h-6.5l-5-6.5L4.6 21H2l8-9.2L2 3h6.7l4.5 6L18 3z"/></svg></a>
+      <a href="mailto:hello@schelp.app" data-i18n-attr="aria-label:footer.social.email" aria-label="Scrivi a Schelp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
     </div>
   </footer>
 
   <!-- Cookie banner -->
   <aside id="cookie-banner" class="cookie" role="dialog" aria-live="polite" aria-labelledby="cookie-title">
-    <h4 id="cookie-title">A small ask before we listen.</h4>
-    <p>We'd like to drop one anonymous analytics cookie so we can see what's working on this page. No tracking, no resale, no ads. See our <a href="privacy.html">privacy policy</a>.</p>
+    <h4 id="cookie-title" data-i18n-text="cookie.title">Un piccolo favore prima di ascoltarti.</h4>
+    <p data-i18n-html="cookie.body.html">Vorremmo lasciare un cookie analytics anonimo, così capiamo cosa funziona in questa pagina. Niente tracciamento, niente rivendita, niente pubblicità. Vedi la nostra <a href="privacy.html">informativa privacy</a>.</p>
     <div class="row">
-      <button type="button" class="btn-decline">Decline</button>
-      <button type="button" class="btn-accept">Accept</button>
+      <button type="button" class="btn-decline" data-i18n-text="cookie.decline">Rifiuta</button>
+      <button type="button" class="btn-accept" data-i18n-text="cookie.accept">Accetta</button>
     </div>
   </aside>
 

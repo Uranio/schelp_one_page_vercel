@@ -8,13 +8,16 @@
    ============================================================ */
 
 /* -------------------- Fonts -------------------- */
-/* The app's display face is a tightly-set geometric grotesque
-   with a hint of warmth (rounded apertures, low contrast).
-   Closest open-source match: General Sans / Plus Jakarta Sans.
-   We default to Plus Jakarta Sans (Google Fonts) for portability.
-   Body uses Inter as a neutral pairing.                        */
+/* Three voices on this page:
+   - Plus Jakarta Sans  — geometric grotesque, for most headings + UI chrome
+   - Fraunces (display) — variable serif with editorial opsz, used ONLY on the
+     hero H1 to set a slower, more confident opening voice
+   - Poppins            — for the wordmark "schelp" in the app mockup, matching
+     the brand mark used in the React Native app
+   - Inter              — neutral pairing for body copy
+   - JetBrains Mono     — countdown digits, language toggle, micro-meta        */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* -------------------- Color: Brand -------------------- */
@@ -142,6 +145,8 @@
 
   /* -------------------- Type — families -------------------- */
   --font-display: 'Plus Jakarta Sans', 'SF Pro Display', system-ui, sans-serif;
+  --font-serif:   'Fraunces', 'Iowan Old Style', 'Apple Garamond', Georgia, serif;
+  --font-brand:   'Poppins', 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body:    'Inter', 'SF Pro Text', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 
