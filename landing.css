@@ -2593,10 +2593,11 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
     width: auto; align-self: stretch;
     /* The whole stage is pinned, holding [heading, step-title, subtitle, phone,
        caption] top-aligned. `top` is the margin between the viewport top and the
-       heading; the heading is the stage's first child (moved in by JS). */
-    position: sticky; top: 16px;
-    height: calc(100vh - 16px);
-    height: calc(100svh - 16px);
+       heading (clears the status bar / notch on real phones); the heading is the
+       stage's first child (moved in by JS). */
+    position: sticky; top: max(44px, calc(env(safe-area-inset-top) + 16px));
+    height: calc(100vh - max(44px, calc(env(safe-area-inset-top) + 16px)));
+    height: calc(100svh - max(44px, calc(env(safe-area-inset-top) + 16px)));
     transform: none; margin: 0;
     z-index: 4;
   }
