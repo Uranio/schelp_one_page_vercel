@@ -289,6 +289,19 @@
     });
   }
 
+  // Mobile only: the section heading (.hiw-intro) is pinned at the top while scenes
+  // swap below it. Measure its real height into --hiw-intro-h so the sticky stage can
+  // sit right under it (CSS: top/height use this var). No-op on desktop.
+  function syncHiwIntroHeight() {
+    var intro = document.querySelector('.hiw-intro');
+    if (!intro) return;
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      document.documentElement.style.setProperty('--hiw-intro-h', Math.ceil(intro.getBoundingClientRect().height) + 'px');
+    } else {
+      document.documentElement.style.removeProperty('--hiw-intro-h');
+    }
+  }
+
   function setupScrollytelling() {
     var scrolly = document.querySelector('.hiw-scrolly');
     var phoneWrap = document.querySelector('.hiw-phone-wrap');
@@ -379,12 +392,13 @@
     }
 
     syncHiwSubstepsTop();
-    // Recompute after fonts settle and on viewport changes — head height can
+    syncHiwIntroHeight();
+    // Recompute after fonts settle and on viewport changes — heading height can
     // shift when web fonts load, so a single measurement at init isn't enough.
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(syncHiwSubstepsTop);
+      document.fonts.ready.then(function () { syncHiwSubstepsTop(); syncHiwIntroHeight(); });
     }
-    window.addEventListener('resize', syncHiwSubstepsTop);
+    window.addEventListener('resize', function () { syncHiwSubstepsTop(); syncHiwIntroHeight(); });
 
     var scenes = phoneWrap.querySelectorAll('.scene');
     var genSubs = phoneWrap.querySelectorAll('.gen-sub');

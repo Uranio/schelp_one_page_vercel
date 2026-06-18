@@ -2561,8 +2561,15 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
      .hiw-m-caption in sync with the active scene. No order:-1, no multiple sticky
      contexts, no magic offsets — the phone is the FIRST DOM child (moved by JS) so a
      plain top:0 sticky pins it cleanly; desktop placement is locked via grid-column. */
-  .howitworks { padding: 52px 20px 60px; }
-  .hiw-intro { margin-bottom: 12px; }
+  .howitworks { padding: 22px 20px 60px; }
+  /* The section heading stays PINNED at the top while the scenes swap below it.
+     JS measures its height into --hiw-intro-h so the stage can sit right under it. */
+  .hiw-intro {
+    position: sticky; top: 0; z-index: 6;
+    margin: 0; padding: 6px 0 10px;
+    background: var(--bg-page);
+  }
+  .hiw-intro h2 { margin-top: 10px; }
 
   /* Single column. Phone is the first child → it pins at the top of the section. */
   .hiw-scrolly {
@@ -2581,11 +2588,17 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
      shifts vertically as the text swaps (rock-steady, snappy). --- */
   .hiw-phone-wrap {
     display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    align-items: center; justify-content: flex-start;
     gap: 9px;
+    /* scenes start right under the pinned heading (small gap, as requested) */
+    padding-top: 12px;
     width: auto; align-self: stretch;
-    position: sticky; top: 0;
-    height: 100vh; height: 100svh;
+    /* Pinned just UNDER the sticky section heading (--hiw-intro-h, measured by JS),
+       centered in the remaining viewport height. Small gap = scenes start right
+       below the fixed title. */
+    position: sticky; top: var(--hiw-intro-h, 132px);
+    height: calc(100vh - var(--hiw-intro-h, 132px));
+    height: calc(100svh - var(--hiw-intro-h, 132px));
     transform: none; margin: 0;
     z-index: 4;
   }
@@ -2600,7 +2613,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
      it. transform-origin center + symmetric negative margins = visually centered,
      no leftover layout space, safe on viewports narrower than 360px. */
   .hiw-phone-wrap .phone {
-    --s: 0.54;
+    --s: 0.56;
     transform: scale(var(--s));
     transform-origin: center center;
     margin: calc((var(--s) - 1) * 360px) calc((var(--s) - 1) * 180px);
@@ -2684,6 +2697,15 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   .hiw-step:not(.hiw-step-multi) { min-height: 64svh; position: relative; }
 
   .hiw-dots { display: none; }
+}
+
+/* Shorter phones: the pinned section heading eats ~143px, so scale the mockup down
+   by available HEIGHT (not width) to keep the whole scene on screen under it. */
+@media (max-width: 900px) and (max-height: 760px) {
+  .hiw-phone-wrap .phone { --s: 0.50; }
+}
+@media (max-width: 900px) and (max-height: 700px) {
+  .hiw-phone-wrap .phone { --s: 0.44; }
 }
 
 @media (max-width: 560px) {
