@@ -442,66 +442,6 @@
     }
   }
 
-  // -------------------- Mobile "How it works" --------------------
-  // On <=900px viewports the desktop sticky scrollytelling is hidden. Instead of
-  // scroll-jacking the phone through scenes (fragile: hardcoded sticky offsets,
-  // overlapping titles, content clipped on short viewports), we lay the section
-  // out as a plain vertical flow and clone the phone mockups inline:
-  //   - multi-steps  -> one mini-phone PER substep, each locked to that sub-scene,
-  //                     prepended inside the substep so every app screen is shown;
-  //   - single steps -> one mini-phone appended after the step text.
-  // No IntersectionObserver, no sticky, no magic numbers.
-  function buildMobilePhone(sceneClone, sceneName) {
-    var wrap = document.createElement('div');
-    wrap.className = 'mobile-phone-clone';
-    wrap.setAttribute('data-scene', sceneName);
-    wrap.setAttribute('aria-hidden', 'true');
-    var screen = document.createElement('div');
-    screen.className = 'mp-screen';
-    screen.appendChild(sceneClone);
-    wrap.appendChild(screen);
-    return wrap;
-  }
-
-  // Clone a scene and, if it has .gen-sub sub-scenes, keep only the one matching
-  // `subScene` active (null = leave the clone's default active sub-scene as-is).
-  function cloneScene(src, subScene) {
-    var clone = src.cloneNode(true);
-    clone.classList.add('is-active');
-    if (subScene) {
-      clone.querySelectorAll('.gen-sub').forEach(function (g) {
-        g.classList.toggle('is-active', g.dataset.subScene === subScene);
-      });
-    }
-    return clone;
-  }
-
-  function setupMobileHowItWorks() {
-    if (!window.matchMedia('(max-width: 900px)').matches) return;
-
-    var phoneWrap = document.querySelector('.hiw-phone-wrap');
-    if (!phoneWrap) return;
-
-    // Multi-steps (1, 2): one mini-phone per substep, locked to its sub-scene.
-    document.querySelectorAll('.hiw-step-multi[data-scene]').forEach(function (step) {
-      var sceneName = step.dataset.scene;
-      var src = phoneWrap.querySelector('.scene[data-scene="' + sceneName + '"]');
-      if (!src) return;
-      step.querySelectorAll('.hiw-substep').forEach(function (substep) {
-        var wrap = buildMobilePhone(cloneScene(src, substep.dataset.subScene), sceneName);
-        substep.insertBefore(wrap, substep.firstChild);
-      });
-    });
-
-    // Single steps (3, 4): one mini-phone appended after the step text.
-    document.querySelectorAll('.hiw-step:not(.hiw-step-multi)[data-scene]').forEach(function (step) {
-      var sceneName = step.dataset.scene;
-      var src = phoneWrap.querySelector('.scene[data-scene="' + sceneName + '"]');
-      if (!src) return;
-      step.appendChild(buildMobilePhone(cloneScene(src, null), sceneName));
-    });
-  }
-
   // -------------------- Try-them player --------------------
   // Three demo podcasts in the "Try them" section. We use ONE shared HTMLAudio
   // and swap its src when the user plays a different card — keeps things light
@@ -580,10 +520,18 @@
       if (cur) cur.textContent = '0:00';
     }
 
+    // A seek requested before metadata is ready (clicking the waveform of a
+    // not-yet-loaded card) is stashed here and applied once in the shared
+    // loadedmetadata handler — avoids stacking ad-hoc one-shot listeners that race.
+    var pendingSeekRatio = null;
+
     function bindCard(card) {
       current = card;
       var src = card.getAttribute('data-mp3');
-      if (audio.src && audio.src.indexOf(src) !== -1) return; // already bound
+      // Compare the exact requested src (not a substring of the resolved absolute
+      // URL, which could false-match similarly-named files e.g. p376 vs p3760).
+      if (audio.dataset.boundSrc === src) return; // already bound to this card
+      audio.dataset.boundSrc = src;
       try { audio.pause(); } catch (e) {}
       audio.src = src;
       audio.load();
@@ -642,12 +590,10 @@
           var x = Math.max(0, Math.min(rect.width, clientX - rect.left));
           var ratio = rect.width ? x / rect.width : 0;
           if (current !== card) {
-            // Bind & start playing, then jump
+            // Bind & start playing, then jump once metadata lands (handled by the
+            // shared loadedmetadata listener below).
             playCard(card);
-            audio.addEventListener('loadedmetadata', function once() {
-              audio.removeEventListener('loadedmetadata', once);
-              if (audio.duration) audio.currentTime = ratio * audio.duration;
-            });
+            pendingSeekRatio = ratio;
           } else {
             if (audio.duration) audio.currentTime = ratio * audio.duration;
             paintProgress(card, ratio);
@@ -670,6 +616,11 @@
       if (dEl && isFinite(audio.duration)) {
         dEl.textContent = fmtTime(audio.duration);
         dEl.dataset.locked = '1';
+      }
+      // Apply a seek that was requested before this card's metadata was ready.
+      if (pendingSeekRatio != null && audio.duration) {
+        audio.currentTime = pendingSeekRatio * audio.duration;
+        pendingSeekRatio = null;
       }
     });
     audio.addEventListener('timeupdate', function () {
@@ -713,7 +664,8 @@
       btn.className = 'trythem-dot' + (idx === 0 ? ' is-active' : '');
       btn.setAttribute('aria-label', 'Episode ' + (idx + 1));
       btn.addEventListener('click', function () {
-        cell.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        cell.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
       });
       host.appendChild(btn);
     });
@@ -749,6 +701,8 @@
   // libero, così non si resta mai intrappolati. Solo desktop. Touch/mobile invariati.
   function setupHiwWheelSnap() {
     if (window.matchMedia('(max-width: 900px)').matches) return;
+    // Respect reduced-motion: don't hijack the wheel into smooth scene-snapping.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var section = document.querySelector('.howitworks');
     if (!section) return;
 
@@ -818,7 +772,7 @@
     setupCookies();
     setupScrollytelling();
     setupHiwWheelSnap();
-    // setupMobileHowItWorks() retired — mobile now uses the sticky scrollytelling.
+    // (Mobile uses the same sticky scrollytelling as desktop — see setupScrollytelling.)
     setupTryThemPlayers();
     setupTryThemDots();
   }

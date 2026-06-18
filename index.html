@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title data-i18n-text="meta.title">Schelp — podcast AI pensati per la tua giornata</title>
-<meta name="description" data-i18n-attr="content:meta.description" content="Schelp costruisce podcast su quello che ti interessa davvero. Voci che parlano sul serio, ricerca sul web in tempo reale, episodi che si infilano nella tua giornata. Accesso anticipato per l'estate 2026.">
+<title data-i18n-text="meta.title">Schelp — AI podcasts made for your day</title>
+<meta name="description" data-i18n-attr="content:meta.description" content="Schelp builds podcasts on what you actually care about. Voices that truly speak, real-time web research, episodes that slip into the cracks of your day. Coming soon to iOS and Android.">
 <meta name="theme-color" content="#0A0A0B">
 
 <!-- Canonical & robots -->
@@ -15,28 +15,30 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Schelp">
-<meta property="og:title" data-i18n-attr="content:meta.ogTitle" content="Schelp — podcast AI pensati per la tua giornata">
-<meta property="og:description" data-i18n-attr="content:meta.ogDescription" content="Podcast su quello che ti interessa davvero. Da un prompt, da un link, da una voce o da una foto — con voci che parlano sul serio.">
+<meta property="og:title" data-i18n-attr="content:meta.ogTitle" content="Schelp — AI podcasts made for your day">
+<meta property="og:description" data-i18n-attr="content:meta.ogDescription" content="Podcasts on what you actually care about. From a prompt, a voice or a photo — with voices that actually speak.">
 <meta property="og:url" content="https://schelp.app/">
 <meta property="og:image" content="https://schelp.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" data-i18n-attr="content:meta.ogImageAlt" content="Schelp — podcast pensati per la tua giornata, non per chiunque altro.">
-<meta property="og:locale" data-i18n-attr="content:meta.ogLocale" content="it_IT">
+<meta property="og:image:alt" data-i18n-attr="content:meta.ogImageAlt" content="Schelp — podcasts made for your day, not anyone else's.">
+<meta property="og:locale" data-i18n-attr="content:meta.ogLocale" content="en_US">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" data-i18n-attr="content:meta.ogTitle" content="Schelp — podcast AI pensati per la tua giornata">
-<meta name="twitter:description" data-i18n-attr="content:meta.ogDescription" content="Podcast su quello che ti interessa davvero. Da un prompt, da un link, da una voce o da una foto — con voci che parlano sul serio.">
+<meta name="twitter:title" data-i18n-attr="content:meta.ogTitle" content="Schelp — AI podcasts made for your day">
+<meta name="twitter:description" data-i18n-attr="content:meta.ogDescription" content="Podcasts on what you actually care about. From a prompt, a voice or a photo — with voices that actually speak.">
 <meta name="twitter:image" content="https://schelp.app/og.png">
 
 <!-- Favicons -->
 <link rel="icon" href="logo-schelp.png">
 <link rel="apple-touch-icon" href="logo-schelp.png">
 
-<!-- Fonts: preconnect to mitigate render cost. Self-host if you want to fully GDPR-proof. -->
+<!-- Fonts: preconnect + direct stylesheet link (faster than @import inside CSS).
+     Self-host if you want to fully GDPR-proof. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 
 <!-- Tokens + page styles -->
 <link rel="stylesheet" href="colors_and_type.css">
@@ -56,8 +58,9 @@
   };
 </script>
 
-<!-- i18n dictionary (must load BEFORE landing.js) -->
-<script src="i18n.js"></script>
+<!-- i18n dictionary (must load BEFORE landing.js). defer keeps both off the parser's
+     critical path; defer preserves order so the dict is ready before landing.js runs. -->
+<script src="i18n.js" defer></script>
 
 <!-- Structured data for richer SERPs -->
 <script type="application/ld+json">
@@ -1695,7 +1698,7 @@
   </main>
 
   <footer class="footer">
-    <div data-i18n-text-template="footer.copyright" data-template-vars="year">© <span id="year">2026</span> Schelp · podcast per la tua giornata</div>
+    <div data-i18n-text-template="footer.copyright" data-template-vars="year">© <span id="year">2026</span> Schelp · podcasts for your day</div>
     <div class="legal">
       <a href="privacy.html" data-i18n-text="footer.privacy">Privacy</a>
       <span aria-hidden="true">·</span>
@@ -1708,13 +1711,14 @@
     </div>
   </footer>
 
-  <!-- Cookie banner -->
-  <aside id="cookie-banner" class="cookie" role="dialog" aria-live="polite" aria-labelledby="cookie-title">
-    <h4 id="cookie-title" data-i18n-text="cookie.title">Un piccolo favore prima di ascoltarti.</h4>
-    <p data-i18n-html="cookie.body.html">Vorremmo lasciare un cookie analytics anonimo, così capiamo cosa funziona in questa pagina. Niente tracciamento, niente rivendita, niente pubblicità. Vedi la nostra <a href="privacy.html">informativa privacy</a>.</p>
+  <!-- Cookie banner — a passive consent region (not a modal dialog: it doesn't trap
+       focus), labelled by its title. -->
+  <aside id="cookie-banner" class="cookie" role="region" aria-live="polite" aria-labelledby="cookie-title">
+    <strong id="cookie-title" data-i18n-text="cookie.title">A small ask before we listen.</strong>
+    <p data-i18n-html="cookie.body.html">We'd like to drop one anonymous analytics cookie so we can see what's working on this page. No tracking, no resale, no ads. See our <a href="privacy.html">privacy policy</a>.</p>
     <div class="row">
-      <button type="button" class="btn-decline" data-i18n-text="cookie.decline">Rifiuta</button>
-      <button type="button" class="btn-accept" data-i18n-text="cookie.accept">Accetta</button>
+      <button type="button" class="btn-decline" data-i18n-text="cookie.decline">Decline</button>
+      <button type="button" class="btn-accept" data-i18n-text="cookie.accept">Accept</button>
     </div>
   </aside>
 

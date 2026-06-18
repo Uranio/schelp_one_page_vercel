@@ -7,7 +7,7 @@
 /* overflow-x: clip (not hidden) — keeps horizontal overflow out of view
    WITHOUT creating a scrolling context, which would break `position: sticky`
    on the scrollytelling phone. Supported in Chrome/Edge 90+, Firefox 81+, Safari 16+. */
-html, body { margin: 0; min-height: 100vh; background: var(--bg-page); overflow-x: clip; }
+html, body { margin: 0; min-height: 100vh; min-height: 100svh; background: var(--bg-page); overflow-x: clip; }
 body { font-family: var(--font-body); color: var(--fg-1); position: relative; }
 
 /* ---------- A11y: skip link & focus ---------- */
@@ -47,6 +47,8 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   position: relative; z-index: 5;
   display: flex; justify-content: space-between; align-items: center;
   padding: 28px 40px; max-width: 1440px; margin: 0 auto;
+  /* clear the notch on landscape / cover viewports */
+  padding-top: max(28px, env(safe-area-inset-top));
 }
 .nav .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .nav .brand img { width: 36px; height: 36px; display: block; }
@@ -75,7 +77,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   position: relative; z-index: 4;
   max-width: 1440px; margin: 0 auto;
   padding: 60px 40px 80px;
-  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 64px; align-items: center;
 }
 .badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -2076,7 +2078,10 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 /* ---------- Footer ---------- */
 .footer {
   position: relative; z-index: 3; max-width: 1440px; margin: 0 auto;
-  padding: 24px 40px 32px; border-top: 1px solid var(--border-subtle);
+  padding: 24px 40px 32px;
+  /* keep clear of the iOS home indicator (viewport-fit=cover) */
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border-subtle);
   display: flex; justify-content: space-between; align-items: center;
   color: var(--fg-4); font-size: 13px;
   gap: 20px; flex-wrap: wrap;
@@ -2096,7 +2101,8 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 
 /* ---------- Cookie banner ---------- */
 .cookie {
-  position: fixed; left: 16px; right: 16px; bottom: 16px;
+  position: fixed; left: 16px; right: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
   z-index: 50;
   max-width: 480px; margin: 0 auto;
   background: var(--ink-30); border: 1px solid var(--ink-60);
@@ -2108,7 +2114,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 }
 @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .cookie.is-visible { display: flex; }
-.cookie h4 { font-family: var(--font-display); font-weight: 700; font-size: 15px; margin: 0; color: var(--fg-1); letter-spacing: -0.01em; }
+.cookie strong { display: block; font-family: var(--font-display); font-weight: 700; font-size: 15px; margin: 0; color: var(--fg-1); letter-spacing: -0.01em; }
 .cookie p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--fg-3); }
 .cookie p a { color: var(--coral-500); text-decoration: underline; text-underline-offset: 2px; }
 .cookie .row { display: flex; gap: 8px; }
@@ -2382,7 +2388,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   display: inline-flex; align-items: center; justify-content: center;
   transition: transform 160ms var(--ease-out), color 160ms var(--ease-out);
 }
-.tplayer-skip { width: 36px; height: 36px; }
+.tplayer-skip, .tplayer-rew { width: 40px; height: 40px; }
 .tplayer-skip svg { width: 20px; height: 20px; }
 .tplayer-skip:hover, .tplayer-rew:hover { color: #fff; transform: scale(1.05); }
 .tplayer-skip:active, .tplayer-rew:active, .tplayer-play:active { transform: scale(0.94); }
@@ -2433,6 +2439,9 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 
 /* Tablet — 2 columns, 3rd cell spans full width */
 @media (max-width: 980px) {
+  /* Stack the hero one column early: at 901–980px the 2-col grid (360px phone +
+     64px gap + padding) no longer fits and crushed the text column. */
+  .hero { grid-template-columns: 1fr; gap: 40px; }
   .trythem-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
   .trythem-grid .tplayer-cell:nth-child(3) {
     grid-column: span 2;
@@ -2502,6 +2511,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
     padding: 0 20px;
   }
   .trythem-dot {
+    position: relative;
     width: 7px; height: 7px;
     border-radius: 999px;
     border: 0;
@@ -2512,6 +2522,8 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
       background 220ms var(--ease-out),
       width 280ms var(--ease-out);
   }
+  /* Invisible ~40px tap area so the 7px dot is comfortably touchable. */
+  .trythem-dot::before { content: ""; position: absolute; inset: -16px; }
   .trythem-dot:hover { background: rgba(255,255,255,0.32); }
   .trythem-dot.is-active {
     background: var(--coral-500);
@@ -2562,7 +2574,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
      final scene (explore/playlist) keeps a full pinned dwell before the phone
      releases. (padding-bottom doesn't work — flex sticky is bound to the content
      box, so real flow height is required.) */
-  .hiw-tail-spacer { display: block; height: 22vh; pointer-events: none; }
+  .hiw-tail-spacer { display: block; height: 22svh; pointer-events: none; }
 
   /* --- The pinned stage: step title + phone + caption, centered, held for the
      entire section. Title & caption have fixed min-heights so the phone never
@@ -2651,7 +2663,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   /* --- The text column is now an invisible scroll driver. The negative margin pulls
      it up under the pinned phone so the FIRST scene centers soon after the phone pins
      (cuts the dead "lead-in" scroll at the section start). --- */
-  .hiw-text { display: block; margin-top: -46vh; }
+  .hiw-text { display: block; margin-top: -46svh; }
   .hiw-step {
     min-height: 0; padding: 0;
     opacity: 1; filter: none; transform: none;
@@ -2668,8 +2680,8 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 
   /* Scroll room per scene / sub-scene that drives the observer. Kept compact (64vh)
      so the section feels snappy rather than an endless scroll across 12 scenes. */
-  .substep-spacer { display: block; height: 64vh; pointer-events: none; }
-  .hiw-step:not(.hiw-step-multi) { min-height: 64vh; position: relative; }
+  .substep-spacer { display: block; height: 64svh; pointer-events: none; }
+  .hiw-step:not(.hiw-step-multi) { min-height: 64svh; position: relative; }
 
   .hiw-dots { display: none; }
 }
@@ -2709,64 +2721,6 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   }
 }
 
-/* Mobile phone clone (used inside carousel + inline for non-multi steps).
-   Hidden by default; only revealed via the matchMedia rule below. */
-.mobile-phone-clone { display: none; }
-
-@media (max-width: 900px) {
-  .mobile-phone-clone {
-    display: block;
-    position: relative;
-    width: 200px;
-    height: 400px;
-    margin: 0 auto;
-    background: #000;
-    border-radius: 30px;
-    padding: 4px;
-    box-shadow:
-      0 0 0 1.5px var(--ink-60),
-      0 22px 46px -16px rgba(0,0,0,0.75);
-    flex-shrink: 0;
-  }
-  .mobile-phone-clone::before {
-    /* notch */
-    content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-    width: 58px; height: 15px; background: #000; border-radius: 999px; z-index: 10;
-  }
-  .mobile-phone-clone .mp-screen {
-    background: #0D0D0D;
-    border-radius: 27px;
-    width: 100%; height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-  /* Force-show the cloned .scene. Apply the scale on the SCENE itself (not its
-     children) so the absolute-positioned .gen-sub keep their stacking/opacity. */
-  .mobile-phone-clone .scene {
-    position: absolute;
-    top: 32px; bottom: 0; left: 0;
-    transform: scale(0.58);
-    transform-origin: top left;
-    width: calc(100% / 0.58);
-    height: calc((100% - 32px) / 0.58);
-    opacity: 1; pointer-events: auto;
-  }
-  /* gen-sub children keep their own opacity logic — only .is-active visible.
-     DO NOT override their position/opacity from the desktop rules. */
-  /* Status-bar substitute inside the cloned phone (since we strip the original .status) */
-  .mobile-phone-clone .mp-screen::before {
-    content: "9:41";
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 32px;
-    background: #0D0D0D;
-    color: #fff;
-    z-index: 10;
-    display: flex; align-items: center;
-    padding: 9px 22px 0;
-    font-family: var(--font-display); font-weight: 600; font-size: 11px;
-  }
-}
-
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -2788,7 +2742,6 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 
 /* In-phone text uses the app's display font (Space Grotesk), not the page's marketing font */
 .phone,
-.mobile-phone-clone,
 .tplayer { --font-display: 'Space Grotesk', 'Plus Jakarta Sans', 'SF Pro Display', system-ui, sans-serif; }
 
 /* KPI numbers in JetBrains Mono (matches app DashboardScreen KPI console) */

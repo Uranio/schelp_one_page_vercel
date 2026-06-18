@@ -17,7 +17,8 @@
    - Inter              — neutral pairing for body copy
    - JetBrains Mono     — countdown digits, language toggle, micro-meta        */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fonts are loaded via <link rel="stylesheet"> in the page <head> (index.html /
+   privacy.html) — faster than @import, which serializes behind this stylesheet. */
 
 :root {
   /* -------------------- Color: Brand -------------------- */
