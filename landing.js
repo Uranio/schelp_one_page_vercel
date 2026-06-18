@@ -290,14 +290,93 @@
   }
 
   function setupScrollytelling() {
+    var scrolly = document.querySelector('.hiw-scrolly');
     var phoneWrap = document.querySelector('.hiw-phone-wrap');
     var steps = document.querySelectorAll('.hiw-step');
     // Substeps live INSIDE .substeps-display as absolute overlays. They're
     // not what the observer watches — see `spacers` below.
     var substeps = document.querySelectorAll('.hiw-substep');
     var spacers = document.querySelectorAll('.substep-spacer');
-    if (!phoneWrap || !steps.length) return;
-    if (window.matchMedia('(max-width: 900px)').matches) return;
+    if (!scrolly || !phoneWrap || !steps.length) return;
+    // Runs on ALL viewports now: mobile shares this sticky scrollytelling — the
+    // phone is pinned & scaled and the captions are pinned below it (see the
+    // <=900px CSS). syncHiwSubstepsTop() is a no-op on mobile (desktop offsets).
+
+    // Mobile pins ONE stage (phone + caption) at the top of the section, so the
+    // phone must be the FIRST DOM child for a plain `top:0` sticky to pin it for
+    // the whole section (no order:-1 sticky fragility). Desktop placement is locked
+    // independently of DOM order via grid-column, so this move is safe both ways.
+    if (scrolly.firstElementChild !== phoneWrap) {
+      scrolly.insertBefore(phoneWrap, scrolly.firstElementChild);
+    }
+    // The mobile pinned stage shows: macro-step TITLE above the phone (mirrors the
+    // desktop step heading) + a detail CAPTION below it. Both are shown only <=900px
+    // (CSS) and synced to the active scene by setActive() below.
+    var phoneEl = phoneWrap.querySelector('.phone');
+    // Build the above-phone header (title + subtitle) and the below-phone caption.
+    function ensureEl(cls, where) {
+      var el = phoneWrap.querySelector('.' + cls);
+      if (!el) {
+        el = document.createElement('div');
+        el.className = cls;
+        el.setAttribute('aria-hidden', 'true');
+        if (where === 'above') phoneWrap.insertBefore(el, phoneEl || phoneWrap.firstChild);
+        else phoneWrap.appendChild(el);
+      }
+      return el;
+    }
+    // Order matters: title then subtitle, both ABOVE the phone; caption BELOW.
+    var mobileTitle = ensureEl('hiw-m-title', 'above');
+    var mobileSubtitle = ensureEl('hiw-m-subtitle', 'above');
+    // Keep subtitle right after the title (ensureEl inserts before the phone; if both
+    // were just created, title is first, subtitle second — already correct).
+    if (mobileTitle.nextElementSibling !== mobileSubtitle) {
+      phoneWrap.insertBefore(mobileSubtitle, mobileTitle.nextElementSibling);
+    }
+    var mobileCaption = ensureEl('hiw-m-caption', 'below');
+
+    // Sources are the (now display:none) in-flow markup; innerHTML is readable even
+    // while hidden.
+    //   title    = the step's <h3>            (e.g. "Start from a spark")
+    //   subtitle = the step's intro <p>        (the macro description, like desktop)
+    //   caption  = substep detail (h4 + p) for multi-steps; empty for single steps
+    //              (whose body already shows as the subtitle above).
+    function stepEl(sceneName) {
+      return document.querySelector('.hiw-step[data-scene="' + sceneName + '"]');
+    }
+    function mobileTitleText(sceneName) {
+      var step = stepEl(sceneName);
+      var h3 = step && step.querySelector('h3');
+      return h3 ? h3.textContent : '';
+    }
+    function mobileSubtitleText(sceneName) {
+      var step = stepEl(sceneName);
+      var p = step && step.querySelector('.hiw-step-head > p, .hiw-step-cap > p');
+      return p ? p.textContent : '';
+    }
+    function mobileCaptionHTML(sceneName, subSceneName) {
+      if (subSceneName) {
+        var sub = document.querySelector('.hiw-substep[data-sub-scene="' + subSceneName + '"] .hiw-sub-content');
+        return sub ? sub.innerHTML : '';
+      }
+      // Single steps have no sub-scene: the body is the subtitle above, so the slot
+      // below shows the step's tag chips (mirrors desktop's bullet pills).
+      var ul = document.querySelector('.hiw-step[data-scene="' + sceneName + '"] .hiw-bullets');
+      return ul ? ul.outerHTML : '';
+    }
+    function fadeSwap(el, html, key, isText) {
+      if (key === el._key) return;                 // unchanged → don't re-trigger the fade
+      el._key = key;
+      if (isText) el.textContent = html; else el.innerHTML = html;
+      el.classList.remove('is-fade');
+      void el.offsetWidth;                         // reflow so the fade restarts every swap
+      el.classList.add('is-fade');
+    }
+    function updateMobileCaption(sceneName, subSceneName) {
+      fadeSwap(mobileTitle, mobileTitleText(sceneName), 't:' + sceneName, true);
+      fadeSwap(mobileSubtitle, mobileSubtitleText(sceneName), 's:' + sceneName, true);
+      fadeSwap(mobileCaption, mobileCaptionHTML(sceneName, subSceneName), 'c:' + sceneName + '/' + (subSceneName || '-'), false);
+    }
 
     syncHiwSubstepsTop();
     // Recompute after fonts settle and on viewport changes — head height can
@@ -328,6 +407,9 @@
       if (subSceneName) {
         genSubs.forEach(function (g) { g.classList.toggle('is-active', g.dataset.subScene === subSceneName); });
       }
+
+      // Keep the mobile pinned-stage caption in sync (no-op visually on desktop).
+      updateMobileCaption(sceneName, subSceneName);
     }
 
     var observer = new IntersectionObserver(function (entries) {
@@ -736,7 +818,7 @@
     setupCookies();
     setupScrollytelling();
     setupHiwWheelSnap();
-    setupMobileHowItWorks();
+    // setupMobileHowItWorks() retired — mobile now uses the sticky scrollytelling.
     setupTryThemPlayers();
     setupTryThemDots();
   }

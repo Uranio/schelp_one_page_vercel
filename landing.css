@@ -692,6 +692,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 
 .hiw-text {
   display: flex; flex-direction: column;
+  grid-column: 1; grid-row: 1;
 }
 
 .hiw-step {
@@ -872,6 +873,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   position: sticky; top: max(40px, calc(50vh - 360px));
   width: 360px; height: 720px;
   align-self: start;
+  grid-column: 2; grid-row: 1;
 }
 .hiw-phone-wrap::before {
   content: ""; position: absolute; inset: -15% -25%;
@@ -890,6 +892,18 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 .hiw-phone-wrap[data-scene="detail"]   { --scene-tint: rgba(52,211,153,0.24); }
 
 .hiw-phone-wrap .phone { margin: 0; }
+
+/* Mobile-only macro-step title + caption slots inside the pinned stage (see
+   <=900px block). Hidden on desktop, where the rail's own text carries the story. */
+.hiw-m-title { display: none; }
+.hiw-m-subtitle { display: none; }
+.hiw-m-caption { display: none; }
+/* Mobile-only trailing scroll spacer (see <=900px block). */
+.hiw-tail-spacer { display: none; }
+@keyframes hiwCapIn {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* Scenes (overlapping in the .screen) */
 .scene {
@@ -2527,135 +2541,136 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
     margin-bottom: calc(-720px * 0.12);
   }
 
-  /* Scrollytelling: collapse to single column, hide sticky phone (no scroll-driven on touch) */
-  .howitworks { padding: 60px 24px 80px; }
-  .hiw-intro { margin-bottom: 40px; }
-  .hiw-scrolly { grid-template-columns: 1fr; gap: 24px; }
-  .hiw-phone-wrap { display: none; }
-  .hiw-step {
-    min-height: auto; padding: 36px 0;
-    opacity: 1; filter: none; transform: none;
+  /* ===== How it works — mobile: ONE pinned stage that swaps scenes on scroll =====
+     A single full-height sticky "stage" holds the phone + a caption slot, centered
+     and held for the whole section. The text column beneath becomes an invisible
+     scroll driver: its step / .substep-spacer heights move the same
+     IntersectionObserver (setupScrollytelling runs on every viewport), and JS keeps
+     .hiw-m-caption in sync with the active scene. No order:-1, no multiple sticky
+     contexts, no magic offsets — the phone is the FIRST DOM child (moved by JS) so a
+     plain top:0 sticky pins it cleanly; desktop placement is locked via grid-column. */
+  .howitworks { padding: 52px 20px 60px; }
+  .hiw-intro { margin-bottom: 12px; }
+
+  /* Single column. Phone is the first child → it pins at the top of the section. */
+  .hiw-scrolly {
+    display: flex; flex-direction: column;
+    grid-template-columns: none;
+    gap: 0; position: relative;
   }
-  .hiw-step-num { font-size: 56px; margin-bottom: 12px; }
+  /* Trailing in-flow spacer extends the sticky's travel past the LAST driver so the
+     final scene (explore/playlist) keeps a full pinned dwell before the phone
+     releases. (padding-bottom doesn't work — flex sticky is bound to the content
+     box, so real flow height is required.) */
+  .hiw-tail-spacer { display: block; height: 22vh; pointer-events: none; }
 
-  /* ===== How it works — mobile: plain static vertical flow =====
-     Desktop keeps the scroll-driven sticky scrollytelling; on touch / narrow
-     viewports we drop ALL of it (no sticky stack, no hardcoded top offsets, no
-     IntersectionObserver) and lay each step out as a normal vertical block:
-     number -> heading -> body -> bullets -> phone mockup(s). Multi-steps render
-     one mini-phone per substep so every app screen is shown, no scroll-jacking. */
-  .hiw-step-multi { padding-top: 8px; position: static; display: block; }
-  .hiw-step-head { display: block; position: static; top: auto; padding: 0; z-index: auto; isolation: auto; }
-  /* Neutralise the desktop sticky shield on mobile: the head is static here, so
-     this absolute ::before would escape its box and paint a big opaque rectangle
-     over the substeps (hiding their captions). Not needed in the static flow. */
-  .hiw-step-head::before { display: none; }
-  .hiw-substeps { margin-top: 28px; position: static; }
-  .substep-spacer { display: none; }
+  /* --- The pinned stage: step title + phone + caption, centered, held for the
+     entire section. Title & caption have fixed min-heights so the phone never
+     shifts vertically as the text swaps (rock-steady, snappy). --- */
+  .hiw-phone-wrap {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 9px;
+    width: auto; align-self: stretch;
+    position: sticky; top: 0;
+    height: 100vh; height: 100svh;
+    transform: none; margin: 0;
+    z-index: 4;
+  }
+  /* Constrain the ambient glow to a halo behind the phone (the desktop inset would
+     blow up to viewport size here). */
+  .hiw-phone-wrap::before {
+    inset: auto; top: 50%; left: 50%;
+    width: 300px; height: 380px;
+    transform: translate(-50%, -62%);
+  }
+  /* Shrink the 360x720 mockup and collapse its box (both axes) so the caption hugs
+     it. transform-origin center + symmetric negative margins = visually centered,
+     no leftover layout space, safe on viewports narrower than 360px. */
+  .hiw-phone-wrap .phone {
+    --s: 0.54;
+    transform: scale(var(--s));
+    transform-origin: center center;
+    margin: calc((var(--s) - 1) * 360px) calc((var(--s) - 1) * 180px);
+  }
 
-  /* Number + heading: fully static. No sticky, no solid bg fill, no z-index —
-     so body copy can never bleed through a gap between a pinned number and a
-     pinned heading (the old overlap bug). */
-  .hiw-step .hiw-step-num {
-    position: static;
-    background: none;
-    font-size: 46px;
-    margin: 0 0 8px;
-    padding: 0;
-    width: auto;
+  /* Macro-step TITLE above the phone (e.g. "Start from a spark") — the step heading,
+     mirroring desktop. Populated by JS; changes only between the 5 steps. */
+  .hiw-m-title {
+    display: flex; align-items: flex-end; justify-content: center;
+    width: min(88vw, 360px);
+    min-height: 30px;
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 19px; line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--fg-1);
+  }
+  .hiw-m-title.is-fade { animation: hiwCapIn 280ms var(--ease-out); }
+
+  /* SUBTITLE under the title (the step's intro paragraph) — clamped to 2 lines and a
+     fixed min-height so the phone never shifts as the text swaps. */
+  .hiw-m-subtitle {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+    overflow: hidden;
+    width: min(86vw, 340px);
+    min-height: 38px;
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-body); font-size: 13px; line-height: 1.45;
+    color: var(--fg-3);
+  }
+  .hiw-m-subtitle.is-fade { animation: hiwCapIn 280ms var(--ease-out); }
+
+  /* Caption slot BELOW the phone — substep detail (multi-steps) or tag chips (single
+     steps). Fixed min-height keeps the phone from shifting on swaps. */
+  .hiw-m-caption {
+    display: block;
+    width: min(86vw, 340px);
+    min-height: 74px;
+    text-align: center;
+  }
+  .hiw-m-caption.is-fade { animation: hiwCapIn 280ms var(--ease-out); }
+  .hiw-m-caption h3,
+  .hiw-m-caption h4 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 17px; line-height: 1.2; letter-spacing: -0.015em;
+    color: rgba(255,255,255,0.96); margin: 0 0 5px;
+  }
+  .hiw-m-caption p {
+    font-family: var(--font-body); font-size: 13px; line-height: 1.5;
+    color: var(--fg-3); margin: 0 auto; max-width: 320px;
+  }
+  /* Single-step tag chips, centered under the phone (the .hiw-bullets pill list). */
+  .hiw-m-caption .hiw-bullets {
+    margin: 2px 0 0; justify-content: center; gap: 7px;
+  }
+  .hiw-m-caption .hiw-step-num,
+  .hiw-m-caption .hiw-sub-tag { display: none; }
+
+  /* --- The text column is now an invisible scroll driver. The negative margin pulls
+     it up under the pinned phone so the FIRST scene centers soon after the phone pins
+     (cuts the dead "lead-in" scroll at the section start). --- */
+  .hiw-text { display: block; margin-top: -46vh; }
+  .hiw-step {
+    min-height: 0; padding: 0;
+    opacity: 1; filter: none; transform: none;
     display: block;
   }
-  .hiw-step .hiw-step-head h3,
-  .hiw-step > h3 {
-    position: static;
-    background: none;
-    font-size: 24px;
-    line-height: 1.14;
-    margin: 0 0 14px;
-    padding: 0;
-    width: auto;
-  }
-  .hiw-step .hiw-step-head p,
-  .hiw-step > p {
-    position: static;
-    z-index: auto;
-    margin: 0 0 16px;
-  }
-  .hiw-step .hiw-bullets {
-    position: static;
-    z-index: auto;
-    margin: 0 0 4px;
-  }
+  .hiw-step-multi { padding: 0; position: static; display: block; }
+  .hiw-substeps { margin: 0; position: static; }
+  /* Hide every in-flow caption/header — the pinned .hiw-m-caption carries the text.
+     (display:none elements still expose innerHTML, so JS can read them as the source.) */
+  .hiw-step-head,
+  .hiw-step-head::before,
+  .substeps-display,
+  .hiw-step .hiw-step-cap { display: none; }
 
-  /* Phone clone: centered, in normal flow. For multi-steps the JS prepends one
-     mini-phone inside each substep (locked to that sub-scene). Keep `relative`
-     (NOT static) so the absolutely-positioned notch `::before` stays anchored to
-     the clone instead of escaping to the top of the section. */
-  .hiw-step-multi .mobile-phone-clone {
-    position: relative;
-    margin: 0 auto;
-  }
+  /* Scroll room per scene / sub-scene that drives the observer. Kept compact (64vh)
+     so the section feels snappy rather than an endless scroll across 12 scenes. */
+  .substep-spacer { display: block; height: 64vh; pointer-events: none; }
+  .hiw-step:not(.hiw-step-multi) { min-height: 64vh; position: relative; }
 
-  /* Substeps slot: a plain vertical stack of cards, all visible at once. */
-  .hiw-step-multi .substeps-display {
-    position: static;
-    top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    min-height: 0;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    background: none;
-    border-radius: 0;
-  }
-
-  /* Each substep = phone (prepended by JS) + tag + title/desc, stacked & centered. */
-  .hiw-step-multi .hiw-substep {
-    position: static;
-    inset: auto;
-    top: auto; left: auto; right: auto; bottom: auto;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    gap: 16px;
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
-    transition: none;
-  }
-  .hiw-step-multi .hiw-substep .hiw-sub-content {
-    text-align: center;
-    align-items: center;
-  }
-  .hiw-step-multi .hiw-substep .hiw-sub-content h4 {
-    font-size: 19px;
-    margin: 0;
-  }
-  .hiw-step-multi .hiw-substep .hiw-sub-content p {
-    margin: 0 auto;
-    font-size: 14px;
-    line-height: 1.5;
-    max-width: 340px;
-  }
-
-  /* Each clone is locked to a single sub-scene in JS — show only that one. */
-  .mobile-phone-clone .gen-sub {
-    opacity: 0;
-    transition: opacity 400ms var(--ease-out);
-  }
-  .mobile-phone-clone .gen-sub.is-active { opacity: 1; }
-
-  /* Non-multi steps: phone sits inline below the step text. */
-  .hiw-step:not(.hiw-step-multi) .mobile-phone-clone {
-    margin: 24px auto 0;
-  }
-
-  /* Dots no longer needed */
   .hiw-dots { display: none; }
 }
 

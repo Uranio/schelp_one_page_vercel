@@ -487,6 +487,7 @@
             </div>
           </article>
           <article class="hiw-step" data-scene="plan">
+            <div class="hiw-step-cap">
             <div class="hiw-step-num" aria-hidden="true">03</div>
             <h3 data-i18n-text="hiw.step3.title">Mettilo nei buchi della tua giornata</h3>
             <p data-i18n-text="hiw.step3.body">Dimmi quando hai tempo: il tragitto, la palestra, la pausa, prima di dormire. Schelp pianifica gli episodi nelle finestre giuste e ti aspetta lì.</p>
@@ -496,8 +497,10 @@
               <li data-i18n-text="hiw.step3.b3">Pausa</li>
               <li data-i18n-text="hiw.step3.b4">Prima di dormire</li>
             </ul>
+            </div>
           </article>
           <article class="hiw-step" data-scene="detail">
+            <div class="hiw-step-cap">
             <div class="hiw-step-num" aria-hidden="true">04</div>
             <h3 data-i18n-text="hiw.step4.title">Apri il dietro le quinte</h3>
             <p data-i18n-text="hiw.step4.body">Ogni episodio ha la sua scheda: lo script integrale, le fonti citate, i parametri di generazione, la durata, la voce. Vedi cosa ha letto Schelp e da dove ha preso le notizie.</p>
@@ -506,6 +509,7 @@
               <li data-i18n-text="hiw.step4.b2">Fonti</li>
               <li data-i18n-text="hiw.step4.b3">Parametri</li>
             </ul>
+            </div>
           </article>
           <article class="hiw-step hiw-step-multi" data-scene="explore" data-sub-scene="discover">
             <div class="hiw-step-head">
@@ -548,6 +552,9 @@
               <div class="substep-spacer" data-scene="explore" data-sub-scene="playlist" aria-hidden="true"></div>
             </div>
           </article>
+          <!-- Mobile-only trailing spacer: keeps the phone pinned long enough for the
+               last scene to get a full dwell before release (no-op on desktop). -->
+          <div class="hiw-tail-spacer" aria-hidden="true"></div>
         </div>
 
         <div class="hiw-phone-wrap" data-scene="generate" aria-hidden="true">
