@@ -2561,15 +2561,15 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
      .hiw-m-caption in sync with the active scene. No order:-1, no multiple sticky
      contexts, no magic offsets — the phone is the FIRST DOM child (moved by JS) so a
      plain top:0 sticky pins it cleanly; desktop placement is locked via grid-column. */
-  .howitworks { padding: 22px 20px 60px; }
-  /* The section heading stays PINNED at the top while the scenes swap below it.
-     JS measures its height into --hiw-intro-h so the stage can sit right under it. */
+  .howitworks { padding: 18px 20px 56px; }
+  /* The section heading is moved (by JS) to the TOP of the pinned stage, so it stays
+     fixed above the swapping scenes and scrolls off first at the section end. No
+     background — it sits over the page wash like the rest of the section. */
   .hiw-intro {
-    position: sticky; top: 0; z-index: 6;
-    margin: 0; padding: 6px 0 10px;
-    background: var(--bg-page);
+    margin: 0; padding: 0;
+    max-width: min(92vw, 360px);
   }
-  .hiw-intro h2 { margin-top: 10px; }
+  .hiw-intro h2 { margin-top: 8px; }
 
   /* Single column. Phone is the first child → it pins at the top of the section. */
   .hiw-scrolly {
@@ -2590,15 +2590,13 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
     display: flex; flex-direction: column;
     align-items: center; justify-content: flex-start;
     gap: 9px;
-    /* scenes start right under the pinned heading (small gap, as requested) */
-    padding-top: 12px;
     width: auto; align-self: stretch;
-    /* Pinned just UNDER the sticky section heading (--hiw-intro-h, measured by JS),
-       centered in the remaining viewport height. Small gap = scenes start right
-       below the fixed title. */
-    position: sticky; top: var(--hiw-intro-h, 132px);
-    height: calc(100vh - var(--hiw-intro-h, 132px));
-    height: calc(100svh - var(--hiw-intro-h, 132px));
+    /* The whole stage is pinned, holding [heading, step-title, subtitle, phone,
+       caption] top-aligned. `top` is the margin between the viewport top and the
+       heading; the heading is the stage's first child (moved in by JS). */
+    position: sticky; top: 16px;
+    height: calc(100vh - 16px);
+    height: calc(100svh - 16px);
     transform: none; margin: 0;
     z-index: 4;
   }

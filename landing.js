@@ -289,16 +289,19 @@
     });
   }
 
-  // Mobile only: the section heading (.hiw-intro) is pinned at the top while scenes
-  // swap below it. Measure its real height into --hiw-intro-h so the sticky stage can
-  // sit right under it (CSS: top/height use this var). No-op on desktop.
-  function syncHiwIntroHeight() {
+  // The section heading stays fixed above the swapping scenes. On mobile we move it
+  // INTO the pinned stage as its top element, so it (a) stays put while scenes change
+  // and (b) scrolls off FIRST when the stage releases at the section end. On desktop
+  // it lives back at the top of .howitworks (the centered section header).
+  function placeHiwIntro() {
     var intro = document.querySelector('.hiw-intro');
-    if (!intro) return;
+    var how = document.querySelector('.howitworks');
+    var phoneWrap = document.querySelector('.hiw-phone-wrap');
+    if (!intro || !how || !phoneWrap) return;
     if (window.matchMedia('(max-width: 900px)').matches) {
-      document.documentElement.style.setProperty('--hiw-intro-h', Math.ceil(intro.getBoundingClientRect().height) + 'px');
+      if (phoneWrap.firstElementChild !== intro) phoneWrap.insertBefore(intro, phoneWrap.firstChild);
     } else {
-      document.documentElement.style.removeProperty('--hiw-intro-h');
+      if (how.firstElementChild !== intro) how.insertBefore(intro, how.firstChild);
     }
   }
 
@@ -392,13 +395,12 @@
     }
 
     syncHiwSubstepsTop();
-    syncHiwIntroHeight();
-    // Recompute after fonts settle and on viewport changes — heading height can
-    // shift when web fonts load, so a single measurement at init isn't enough.
+    placeHiwIntro();
+    // Recompute after fonts settle and on viewport changes.
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () { syncHiwSubstepsTop(); syncHiwIntroHeight(); });
+      document.fonts.ready.then(function () { syncHiwSubstepsTop(); });
     }
-    window.addEventListener('resize', function () { syncHiwSubstepsTop(); syncHiwIntroHeight(); });
+    window.addEventListener('resize', function () { syncHiwSubstepsTop(); placeHiwIntro(); });
 
     var scenes = phoneWrap.querySelectorAll('.scene');
     var genSubs = phoneWrap.querySelectorAll('.gen-sub');
