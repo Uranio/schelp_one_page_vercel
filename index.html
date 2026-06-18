@@ -125,8 +125,8 @@
 
       <div class="phone-wrap" aria-hidden="true">
         <div class="phone-halo"></div>
-        <svg class="ring ring-1" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#FE6B6B" stroke-width="0.4"/></svg>
-        <svg class="ring ring-2" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#7B62FF" stroke-width="0.4"/></svg>
+        <svg class="ring ring-1" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#FF6B6B" stroke-width="0.4"/></svg>
+        <svg class="ring ring-2" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="#7B61FF" stroke-width="0.4"/></svg>
 
         <div class="phone">
           <div class="screen">
@@ -147,6 +147,13 @@
 
                   <span class="hp-wordmark">Schelp</span>
                   <span class="hp-spacer"></span>
+                  <span class="hp-bell" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+                      <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+                    </svg>
+                    <span class="hp-bell-badge">3</span>
+                  </span>
                   <span class="hp-avatar" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="9" r="3.2"/>
@@ -165,8 +172,8 @@
                     <span class="l" data-i18n-text="mock.kpi2.label">STREAK</span>
                   </div>
                   <div class="cell">
-                    <span class="v">3</span>
-                    <span class="l" data-i18n-text="mock.kpi3.label">NUOVI</span>
+                    <span class="v hp-kpi-time">10:00</span>
+                    <span class="l" data-i18n-text="mock.kpi3.label">PROSSIMO</span>
                   </div>
                 </div>
                 <div class="hp-cta">
@@ -178,6 +185,27 @@
                   </div>
                   <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
                 </div>
+              </div>
+
+              <!-- Goal hero card (faithful to GoalHeroCard.tsx: progress ring + category + next) -->
+              <div class="goalcard">
+                <div class="goalcard-ringwrap" aria-hidden="true">
+                  <svg viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
+                    <circle cx="18" cy="18" r="15.5" fill="none" stroke="url(#gc-grad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="97.4" stroke-dashoffset="73" transform="rotate(-90 18 18)"/>
+                    <defs><linearGradient id="gc-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B6B"/><stop offset="1" stop-color="#7B61FF"/></linearGradient></defs>
+                  </svg>
+                  <span class="goalcard-ringnum">3<i>/12</i></span>
+                </div>
+                <div class="goalcard-info">
+                  <div class="goalcard-eyebrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V4M4 4h13l-2 4 2 4H4"/></svg>
+                    <span data-i18n-text="mock.goal.eyebrow">PERCORSO OBIETTIVO</span>
+                  </div>
+                  <div class="goalcard-title" data-i18n-text="mock.goal.title">Imparare le basi di Python</div>
+                  <div class="goalcard-sub" data-i18n-text="mock.goal.sub">Apprendere · 3 mesi · Prossimo gio 10:00</div>
+                </div>
+                <svg class="goalcard-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
               </div>
 
               <!-- Suggerimenti della settimana -->
@@ -214,16 +242,18 @@
                 </div>
               </div>
 
-              <!-- La tua giornata -->
-              <div class="day-section">
+              <!-- La tua giornata — 24h timeline (faithful to TimelineRow.tsx: hour slots + state dots) -->
+              <div class="tl-section">
                 <div class="sec-label" data-i18n-text="mock.dayStrip.label">La tua giornata</div>
-                <div class="day-row">
-                  <div class="day-cell past done"><span class="n">14</span><span class="dot"></span></div>
-                  <div class="day-cell past done"><span class="n">15</span><span class="dot"></span></div>
-                  <div class="day-cell past"><span class="n">16</span><span class="dot"></span></div>
-                  <div class="day-cell today"><span class="n">17</span><span class="dot"></span></div>
-                  <div class="day-cell future"><span class="n">18</span><span class="dot"></span></div>
-                  <div class="day-cell future"><span class="n">19</span><span class="dot"></span></div>
+                <div class="tl-row">
+                  <div class="tl-slot tl-done"><span class="tl-h">08</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot tl-done"><span class="tl-h">10</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot"><span class="tl-h">12</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot tl-now"><span class="tl-h">13</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot"><span class="tl-h">15</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot tl-sched"><span class="tl-h">18</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot"><span class="tl-h">20</span><span class="tl-dot"></span></div>
+                  <div class="tl-slot tl-sched"><span class="tl-h">22</span><span class="tl-dot"></span></div>
                 </div>
               </div>
 
@@ -242,6 +272,28 @@
                   <div class="cl-card">
                     <div class="cov"><img src="assets/podcasts/cont3.png" alt="" loading="lazy"><i class="prog" style="width:88%"></i></div>
                     <div class="t" data-i18n-text="mock.podcasts.cont3.title">Tecniche di persuasione nella vendita</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dalla community (CommunityRail) -->
+              <div class="comm-section">
+                <div class="sec-label" data-i18n-text="mock.community.label">Dalla community</div>
+                <div class="comm-row">
+                  <div class="comm-card">
+                    <div class="cov"><img src="assets/podcasts/sug2.png" alt="" loading="lazy"></div>
+                    <div class="t" data-i18n-text="mock.podcasts.sug2.title">Come il magma forma un vulcano</div>
+                    <div class="by" data-i18n-text="mock.community.by1">di lucia.dev</div>
+                  </div>
+                  <div class="comm-card">
+                    <div class="cov"><img src="assets/podcasts/cont3.png" alt="" loading="lazy"></div>
+                    <div class="t" data-i18n-text="mock.podcasts.cont3.title">Tecniche di persuasione nella vendita</div>
+                    <div class="by" data-i18n-text="mock.community.by2">di marco_p</div>
+                  </div>
+                  <div class="comm-card">
+                    <div class="cov"><img src="assets/podcasts/sug1.png" alt="" loading="lazy"></div>
+                    <div class="t" data-i18n-text="mock.podcasts.sug1.title">La notte in cui Jeff Buckley annegò</div>
+                    <div class="by" data-i18n-text="mock.community.by3">di sara_k</div>
                   </div>
                 </div>
               </div>
@@ -283,7 +335,7 @@
               <div class="tab active" aria-label="Home">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
               </div>
-              <div class="tab" aria-label="Library">
+              <div class="tab" aria-label="Listen">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>
               </div>
               <div class="tab fab-slot" aria-hidden="true">
@@ -293,7 +345,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
               </div>
               <div class="tab" aria-label="Goals">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M5 6H3a2 2 0 0 0 2 4M19 6h2a2 2 0 0 1-2 4M9 14v3h6v-3M8 20h8"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4a1 1 0 0 1-.92-1.38l1.31-2.62A2 2 0 0 1 6.18 7H9M12 15v5a1 1 0 0 0 1.38.92l2.62-1.31A2 2 0 0 0 17 17.82V15"/></svg>
               </div>
             </div>
 
@@ -455,6 +507,47 @@
               <li data-i18n-text="hiw.step4.b3">Parametri</li>
             </ul>
           </article>
+          <article class="hiw-step hiw-step-multi" data-scene="explore" data-sub-scene="discover">
+            <div class="hiw-step-head">
+              <div class="hiw-step-num" aria-hidden="true">05</div>
+              <h3 data-i18n-text="hiw.step5.title">E intorno, una community</h3>
+              <p data-i18n-text="hiw.step5.body">Schelp non è solo i tuoi podcast. Scopri quelli degli altri, segui chi ti ispira e organizza tutto in playlist.</p>
+              <ul class="hiw-bullets">
+                <li data-i18n-text="hiw.step5.b1">Scopri</li>
+                <li data-i18n-text="hiw.step5.b2">Seguiti</li>
+                <li data-i18n-text="hiw.step5.b4">Serie</li>
+              </ul>
+            </div>
+
+            <div class="hiw-substeps">
+              <div class="substeps-display">
+                <div class="hiw-substep is-active" data-sub-scene="discover">
+                  <span class="hiw-sub-tag">5.1</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.discover.title">Scopri nuovi episodi</h4>
+                    <p data-i18n-text="hiw.sub.discover.body">Scelti della settimana, podcast sui tuoi interessi, le serie della community. Cerca persone, temi e serie da un'unica schermata.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="following">
+                  <span class="hiw-sub-tag">5.2</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.following.title">Segui chi ti ispira</h4>
+                    <p data-i18n-text="hiw.sub.following.body">Profili, follower e seguiti: trova i creator che ami, guarda chi seguono i tuoi amici e non perderti i loro nuovi episodi.</p>
+                  </div>
+                </div>
+                <div class="hiw-substep" data-sub-scene="playlist">
+                  <span class="hiw-sub-tag">5.3</span>
+                  <div class="hiw-sub-content">
+                    <h4 data-i18n-text="hiw.sub.playlist.title">Apri una serie</h4>
+                    <p data-i18n-text="hiw.sub.playlist.body">Le serie pubblicate in Scopri sono percorsi di più episodi: aprile e ascolta dal primo all'ultimo, con i progressi sempre salvati.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="substep-spacer" data-scene="explore" data-sub-scene="discover" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="explore" data-sub-scene="following" aria-hidden="true"></div>
+              <div class="substep-spacer" data-scene="explore" data-sub-scene="playlist" aria-hidden="true"></div>
+            </div>
+          </article>
         </div>
 
         <div class="hiw-phone-wrap" data-scene="generate" aria-hidden="true">
@@ -482,7 +575,7 @@
                       <span class="g-step-line"></span>
                       <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.config">Config</span></span>
                       <span class="g-step-line"></span>
-                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a9 9 0 0 0 0 12"/><path d="M18 6a9 9 0 0 1 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
                     </div>
                     <div class="imt-wrap">
                       <div class="imt-tab is-active"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.quick">Veloce</span><span class="imt-dot" aria-hidden="true"></span></div>
@@ -499,9 +592,9 @@
                     <div class="qm-panel">
                       <div class="qm-header"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><span data-i18n-text="mock.qm.heading">Parametri quick mode</span></div>
                       <div class="qm-chips">
-                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M3 12h3M18 12h3M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="2.4"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.sources">Fonti</span><span class="qm-chip-v" data-i18n-text="mock.qm.aimode">AI Mode</span></div>
+                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 4.7 4.7 1.7-4.7 1.7L12 15.3l-1.7-4.7L5.6 8.9l4.7-1.7z"/><path d="M18.6 13.4l.85 2.25 2.25.85-2.25.85-.85 2.25-.85-2.25-2.25-.85 2.25-.85z"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.sources">Fonti</span><span class="qm-chip-v" data-i18n-text="mock.qm.aimode">AI Mode</span></div>
                         <span class="qm-sep"></span>
-                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"/><path d="m4 8 16-3M9 14h.01M15 14h.01"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.style">Stile</span><span class="qm-chip-v" data-i18n-text="mock.qm.auto">Auto</span></div>
+                        <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a9 9 0 0 0 0 12"/><path d="M18 6a9 9 0 0 1 0 12"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.style">Stile</span><span class="qm-chip-v" data-i18n-text="mock.qm.auto">Auto</span></div>
                         <span class="qm-sep"></span>
                         <div class="qm-chip"><span class="qm-chip-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="qm-chip-l" data-i18n-text="mock.qm.duration">Durata</span><span class="qm-chip-v">5 min</span></div>
                       </div>
@@ -523,7 +616,7 @@
                       <span class="g-step-line"></span>
                       <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.config">Config</span></span>
                       <span class="g-step-line"></span>
-                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a9 9 0 0 0 0 12"/><path d="M18 6a9 9 0 0 1 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
                     </div>
                     <div class="imt-wrap">
                       <div class="imt-tab"><span class="imt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="imt-text" data-i18n-text="mock.gen.tab.quick">Veloce</span></div>
@@ -539,7 +632,7 @@
                     </div>
                     <div class="ssb-row">
                       <div class="ssb">
-                        <span class="ssb-ico" style="--c:#FF6B6B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"/><path d="m4 8 16-3M9 14h.01M15 14h.01"/></svg></span>
+                        <span class="ssb-ico" style="--c:#FF6B6B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a9 9 0 0 0 0 12"/><path d="M18 6a9 9 0 0 1 0 12"/></svg></span>
                         <span class="ssb-info">
                           <span class="ssb-label" data-i18n-text="mock.ssb.podcastStyle">Stile podcast</span>
                           <span class="ssb-value" data-i18n-text="mock.style.approfondimento">Approfondimento</span>
@@ -572,7 +665,7 @@
                       <span class="g-step-line"></span>
                       <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.config">Config</span></span>
                       <span class="g-step-line"></span>
-                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a9 9 0 0 0 0 12"/><path d="M18 6a9 9 0 0 1 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
                     </div>
                     <div class="topic-preview">
                       <span class="topic-ico">
@@ -586,11 +679,11 @@
                     </div>
                     <div class="seg-ctrl">
                       <span class="seg-tab is-active">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.5 7 4 8l4 4-1 6 5-3 5 3-1-6 4-4-5.5-1z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 4.7 4.7 1.7-4.7 1.7L12 15.3l-1.7-4.7L5.6 8.9l4.7-1.7z"/><path d="M18.6 13.4l.85 2.25 2.25.85-2.25.85-.85 2.25-.85-2.25-2.25-.85 2.25-.85z"/></svg>
                         <span data-i18n-text="mock.sources.ai">AI Mode</span>
                       </span>
                       <span class="seg-tab">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h12a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2V5z"/><path d="M4 17a2 2 0 0 1 2-2h12"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="4.2" height="16" rx="1"/><rect x="10" y="4" width="4.2" height="16" rx="1"/><rect x="16" y="4" width="4" height="16" rx="1"/></svg>
                         <span data-i18n-text="mock.sources.mine">Mie fonti</span>
                       </span>
                     </div>
@@ -599,7 +692,7 @@
                       <div class="ai-content">
                         <div class="ai-head">
                           <span class="ai-ico">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 9.5 7 4 8l4 4-1 6 5-3 5 3-1-6 4-4-5.5-1z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 4.7 4.7 1.7-4.7 1.7L12 15.3l-1.7-4.7L5.6 8.9l4.7-1.7z"/><path d="M18.6 13.4l.85 2.25 2.25.85-2.25.85-.85 2.25-.85-2.25-2.25-.85 2.25-.85z"/></svg>
                           </span>
                           <div class="ai-text">
                             <div class="ai-title" data-i18n-text="mock.sources.aiTitle">L'AI sceglie le fonti</div>
@@ -644,7 +737,7 @@
                       <span class="g-step-line is-filled"></span>
                       <span class="g-step is-active"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="2"/><path d="M9 5h12v2H9zM18 11a2 2 0 1 1-2 2 2 2 0 0 1 2-2zM3 11h12v2H3zM9 17a2 2 0 1 1-2 2 2 2 0 0 1 2-2zM12 17h9v2h-9z"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.config">Config</span></span>
                       <span class="g-step-line"></span>
-                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5 8c-3.5 4-3.5 8 0 12M19 8c3.5 4 3.5 8 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
+                      <span class="g-step"><span class="g-step-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a9 9 0 0 0 0 12"/><path d="M18 6a9 9 0 0 1 0 12"/></svg></span><span class="g-step-l" data-i18n-text="mock.gstep.create">Crea</span></span>
                     </div>
                     <div class="topic-preview">
                       <span class="topic-ico">
@@ -691,6 +784,7 @@
                         <span class="ssb-label" data-i18n-text="mock.cfg.voice">Voce</span>
                         <span class="ssb-value" data-i18n-text="mock.cfg.voiceValue">Giulia · IT · calda</span>
                       </span>
+                      <span class="ssb-pill" data-i18n-text="mock.cfg.voiceCount">100+</span>
                       <svg class="ssb-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
                     </div>
                     <div class="nav-row">
@@ -698,7 +792,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
                       </span>
                       <button type="button" class="gen-cta gen-cta-purple nav-next" tabindex="-1">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 9.5 7 4 8l4 4-1 6 5-3 5 3-1-6 4-4-5.5-1z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l1.7 4.7 4.7 1.7-4.7 1.7L12 15.3l-1.7-4.7L5.6 8.9l4.7-1.7z"/><path d="M18.6 13.4l.85 2.25 2.25.85-2.25.85-.85 2.25-.85-2.25-2.25-.85 2.25-.85z"/></svg>
                         <span data-i18n-text="mock.cfg.create">Crea podcast</span>
                       </button>
                     </div>
@@ -762,8 +856,8 @@
                         <span data-i18n-text="mock.interest.scienza">Scienza</span>
                       </span>
                       <span class="ic-chip ic-chip-on">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="11" rx="2"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M12 3v4M8 18v3M16 18v3"/></svg>
-                        <span data-i18n-text="mock.interest.ai">AI</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg>
+                        <span data-i18n-text="mock.interest.salute">Salute</span>
                         <svg class="ic-chk" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 12.5l2 2 4-4.5" stroke="#FF6B6B" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       </span>
                       <span class="ic-chip">
@@ -775,8 +869,8 @@
                         <span data-i18n-text="mock.interest.economia">Economia</span>
                       </span>
                       <span class="ic-chip">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-                        <span data-i18n-text="mock.interest.mondo">Mondo</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        <span data-i18n-text="mock.interest.viaggi">Viaggi</span>
                       </span>
                     </div>
                     <!-- GlassCard switch -->
@@ -950,12 +1044,11 @@
               <div class="scene scene-plan" data-scene="plan">
                 <div class="sc-pad sc-pad-cal">
                   <div class="cal-head">
-                    <span class="cal-title" data-i18n-text="mock.plan.header">Calendario</span>
+                    <span class="cal-title" data-i18n-text="mock.cal.title">Calendario</span>
                   </div>
                   <div class="cal-filters">
                     <span class="cal-chip is-active" data-i18n-text="mock.plan.filter.all">Tutti</span>
                     <span class="cal-chip" data-i18n-text="mock.plan.filter.generated">Generati</span>
-                    <span class="cal-chip" data-i18n-text="mock.plan.filter.scheduled">Programmati</span>
                     <span class="cal-chip" data-i18n-text="mock.plan.filter.goals">Obiettivi</span>
                   </div>
                   <div class="cal-month">
@@ -975,8 +1068,8 @@
                       <span class="cal-cell cal-empty"></span><span class="cal-cell cal-empty"></span><span class="cal-cell cal-empty"></span>
                       <span class="cal-cell">1</span><span class="cal-cell">2</span><span class="cal-cell">3</span><span class="cal-cell">4</span>
                       <span class="cal-cell">5</span><span class="cal-cell has-event ev-gen">6</span><span class="cal-cell">7</span><span class="cal-cell">8</span><span class="cal-cell">9</span><span class="cal-cell">10</span><span class="cal-cell">11</span>
-                      <span class="cal-cell">12</span><span class="cal-cell has-event ev-sched">13</span><span class="cal-cell">14</span><span class="cal-cell">15</span><span class="cal-cell">16</span><span class="cal-cell">17</span><span class="cal-cell has-event ev-gen">18</span>
-                      <span class="cal-cell is-today">19</span><span class="cal-cell">20</span><span class="cal-cell has-event ev-goal">21</span><span class="cal-cell">22</span><span class="cal-cell has-event ev-sched">23</span><span class="cal-cell">24</span><span class="cal-cell">25</span>
+                      <span class="cal-cell">12</span><span class="cal-cell has-event ev-goal">13</span><span class="cal-cell">14</span><span class="cal-cell">15</span><span class="cal-cell">16</span><span class="cal-cell">17</span><span class="cal-cell has-event ev-gen">18</span>
+                      <span class="cal-cell is-today">19</span><span class="cal-cell">20</span><span class="cal-cell has-event ev-goal">21</span><span class="cal-cell">22</span><span class="cal-cell has-event ev-gen">23</span><span class="cal-cell">24</span><span class="cal-cell">25</span>
                       <span class="cal-cell">26</span><span class="cal-cell">27</span><span class="cal-cell">28</span><span class="cal-cell">29</span><span class="cal-cell">30</span><span class="cal-cell">31</span><span class="cal-cell cal-empty"></span>
                     </div>
                   </div>
@@ -1009,7 +1102,7 @@
               <!-- Scene 4: Podcast detail — faithful to PodcastDetailScreen.tsx -->
               <div class="scene scene-detail" data-scene="detail">
                 <div class="det-bg" aria-hidden="true">
-                  <img src="assets/podcasts/hero.png" alt="">
+                  <img src="assets/podcasts/examples/p376.png" alt="">
                   <span class="det-bg-overlay"></span>
                 </div>
                 <div class="det-topnav">
@@ -1018,14 +1111,14 @@
                   </span>
                 </div>
                 <div class="det-scroll">
-                  <img class="det-cover" src="assets/podcasts/hero.png" alt="" loading="lazy">
-                  <div class="det-title" data-i18n-text="mock.podcasts.hero.title">La fondazione di Anthropic e Claude</div>
-                  <div class="det-date" data-i18n-text="mock.det.date">19 maggio 2026</div>
+                  <img class="det-cover" src="assets/podcasts/examples/p376.png" alt="" loading="lazy">
+                  <div class="det-title" data-i18n-text="mock.det.podTitle">Senna: vita e leggenda in pista</div>
+                  <div class="det-date" data-i18n-text="mock.det.date">5 giugno 2026</div>
 
                   <div class="det-chips">
-                    <span class="det-chip det-chip-quick">
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-                      <span data-i18n-text="mock.det.chip.quick">Quick</span>
+                    <span class="det-chip det-chip-type">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><path d="M9 6h12"/><circle cx="18" cy="12" r="2"/><path d="M3 12h12"/><circle cx="9" cy="18" r="2"/><path d="M12 18h9"/></svg>
+                      <span data-i18n-text="mock.det.chipMode">Avanzato</span>
                     </span>
                     <span class="det-chip det-chip-type">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1033,11 +1126,11 @@
                     </span>
                     <span class="det-chip">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
-                      <span>giulia</span>
+                      <span>Bella</span>
                     </span>
                     <span class="det-chip">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                      <span>5 min</span>
+                      <span>2 min</span>
                     </span>
                   </div>
 
@@ -1050,7 +1143,7 @@
 
                   <div class="det-section">
                     <div class="det-section-label" data-i18n-text="mock.det.theme">Tema</div>
-                    <div class="det-prompt" data-i18n-text="mock.det.promptText">Parlami della società Anthropic, di come è nata e di cosa fa Claude</div>
+                    <div class="det-prompt" data-i18n-text="mock.det.promptText">La vita di Ayrton Senna</div>
                   </div>
 
                   <div class="det-collap">
@@ -1078,32 +1171,312 @@
                     </div>
                     <div class="det-collap-body">
                       <div class="det-src">
-                        <span class="det-src-fav" style="background:#5436DA">A</span>
+                        <span class="det-src-fav" style="background:#333">W</span>
                         <span class="det-src-info">
-                          <span class="det-src-t">Anthropic — Our mission</span>
-                          <span class="det-src-d">anthropic.com</span>
-                        </span>
-                        <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
-                      </div>
-                      <div class="det-src">
-                        <span class="det-src-fav" style="background:#ff7549">w</span>
-                        <span class="det-src-info">
-                          <span class="det-src-t">Anthropic — Wikipedia</span>
+                          <span class="det-src-t">Ayrton Senna — Wikipedia</span>
                           <span class="det-src-d">en.wikipedia.org</span>
                         </span>
                         <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
                       </div>
                       <div class="det-src">
-                        <span class="det-src-fav" style="background:#000">T</span>
+                        <span class="det-src-fav" style="background:#E10600">F</span>
                         <span class="det-src-info">
-                          <span class="det-src-t">The Atlantic — The AI safety lab</span>
-                          <span class="det-src-d">theatlantic.com</span>
+                          <span class="det-src-t">Ayrton Senna — Formula 1</span>
+                          <span class="det-src-d">formula1.com</span>
+                        </span>
+                        <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+                      </div>
+                      <div class="det-src">
+                        <span class="det-src-fav" style="background:#15577a">B</span>
+                        <span class="det-src-info">
+                          <span class="det-src-t">Ayrton Senna — Britannica</span>
+                          <span class="det-src-d">britannica.com</span>
                         </span>
                         <svg class="det-src-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <!-- Scene 5: Explore — Scopri / Seguiti / Notifiche / Playlist (faithful to AscoltaScreen, UserProfile, NotificationsPanel, ListsScreen) -->
+              <div class="scene scene-explore" data-scene="explore">
+
+                <!-- Sub-scene 5.1 — DISCOVER (Scopri) -->
+                <div class="gen-sub is-active" data-sub-scene="discover">
+                  <div class="sc-pad sc-pad-disc">
+                    <div class="disc-seg">
+                      <span class="disc-seg-tab" data-i18n-text="mock.disc.segMine">I miei Podcast</span>
+                      <span class="disc-seg-tab is-active" data-i18n-text="mock.disc.segDiscover">Scopri</span>
+                      <span class="disc-seg-tab" data-i18n-text="mock.disc.segLists">Playlist</span>
+                      <span class="disc-seg-tab" data-i18n-text="mock.disc.segFollowing">Seguiti</span>
+                    </div>
+                    <div class="disc-search">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                      <span data-i18n-text="mock.disc.search">Cerca podcast, autori, interessi…</span>
+                    </div>
+
+                    <!-- In evidenza (CollectionHeroCard) -->
+                    <div class="disc-hero">
+                      <img class="disc-hero-bg" src="assets/podcasts/sug3.png" alt="" loading="lazy">
+                      <span class="disc-hero-scrim" aria-hidden="true"></span>
+                      <div class="disc-hero-content">
+                        <span class="disc-hero-eyebrow"><i class="disc-hero-dot"></i><span data-i18n-text="mock.disc.featured">IN EVIDENZA</span></span>
+                        <span class="disc-hero-title" data-i18n-text="mock.disc.heroTitle">I migliori della settimana</span>
+                        <span class="disc-hero-sub" data-i18n-text="mock.disc.heroSub">Una selezione dalla redazione di Schelp</span>
+                        <div class="disc-hero-cta">
+                          <span class="disc-hero-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span data-i18n-text="mock.disc.listen">Ascolta</span></span>
+                          <span class="disc-hero-count" data-i18n-text="mock.disc.heroCount">8 podcast</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Rail collezione: Scelti della settimana -->
+                    <div class="disc-rail">
+                      <div class="disc-rail-head">
+                        <span data-i18n-text="mock.disc.weekly">Scelti della settimana</span>
+                        <span class="disc-rail-all"><span data-i18n-text="mock.disc.viewAll">Vedi tutti</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+                      </div>
+                      <div class="disc-rail-row">
+                        <div class="disc-card">
+                          <div class="cov">
+                            <img src="assets/podcasts/sug1.png" alt="" loading="lazy">
+                            <span class="disc-card-grad" aria-hidden="true"></span>
+                            <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                            <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                          </div>
+                          <div class="t" data-i18n-text="mock.podcasts.sug1.title">La notte in cui Jeff Buckley annegò</div>
+                          <div class="disc-card-sub" data-i18n-text="mock.disc.cs1">Tech · 12 min</div>
+                          <div class="disc-card-by"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg><span data-i18n-text="mock.disc.au1">@marco_p</span></div>
+                        </div>
+                        <div class="disc-card">
+                          <div class="cov">
+                            <img src="assets/podcasts/sug3.png" alt="" loading="lazy">
+                            <span class="disc-card-grad" aria-hidden="true"></span>
+                            <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                            <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                          </div>
+                          <div class="t" data-i18n-text="mock.podcasts.sug3.title">L'evoluzione di Apple</div>
+                          <div class="disc-card-sub" data-i18n-text="mock.disc.cs2">Musica · 9 min</div>
+                          <div class="disc-card-by"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg><span data-i18n-text="mock.disc.au2">@lucia.dev</span></div>
+                        </div>
+                        <div class="disc-card">
+                          <div class="cov">
+                            <img src="assets/podcasts/cont2.png" alt="" loading="lazy">
+                            <span class="disc-card-grad" aria-hidden="true"></span>
+                            <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                            <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                          </div>
+                          <div class="t" data-i18n-text="mock.podcasts.cont2.title">La storia di Truxz</div>
+                          <div class="disc-card-sub" data-i18n-text="mock.disc.cs3">Storia · 6 min</div>
+                          <div class="disc-card-by"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg><span data-i18n-text="mock.disc.au3">@sara_k</span></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Rail interesse: Tecnologia -->
+                    <div class="disc-rail">
+                      <div class="disc-rail-head">
+                        <span data-i18n-text="mock.disc.interest">Tecnologia</span>
+                        <span class="disc-rail-all"><span data-i18n-text="mock.disc.viewAll">Vedi tutti</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+                      </div>
+                      <div class="disc-rail-row">
+                        <div class="disc-card">
+                          <div class="cov">
+                            <img src="assets/podcasts/disc1.png" alt="" loading="lazy">
+                            <span class="disc-card-grad" aria-hidden="true"></span>
+                            <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                            <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                          </div>
+                          <div class="t" data-i18n-text="mock.disc.tt1">Fable 5 ritirato: il futuro dell'AI</div>
+                          <div class="disc-card-sub" data-i18n-text="mock.disc.cs4">Tecnologia · 2 min</div>
+                          <div class="disc-card-by"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg><span data-i18n-text="mock.disc.auc">@corrado</span></div>
+                        </div>
+                        <div class="disc-card">
+                          <div class="cov">
+                            <img src="assets/podcasts/disc2.png" alt="" loading="lazy">
+                            <span class="disc-card-grad" aria-hidden="true"></span>
+                            <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                            <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                          </div>
+                          <div class="t" data-i18n-text="mock.disc.tt2">Computer quantistici: la prossima frontiera</div>
+                          <div class="disc-card-sub" data-i18n-text="mock.disc.cs5">Tecnologia · 2 min</div>
+                          <div class="disc-card-by"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg><span data-i18n-text="mock.disc.auc">@corrado</span></div>
+                        </div>
+                        <div class="disc-card">
+                          <div class="cov">
+                            <img src="assets/podcasts/disc3.png" alt="" loading="lazy">
+                            <span class="disc-card-grad" aria-hidden="true"></span>
+                            <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                            <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                          </div>
+                          <div class="t" data-i18n-text="mock.disc.tt3">IA generativa: oltre ChatGPT</div>
+                          <div class="disc-card-sub" data-i18n-text="mock.disc.cs6">Tecnologia · 18 min</div>
+                          <div class="disc-card-by"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg><span data-i18n-text="mock.disc.auc">@corrado</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 5.2 — FOLLOWING / profilo utente (Seguiti) -->
+                <div class="gen-sub" data-sub-scene="following">
+                  <div class="sc-pad sc-pad-prof">
+                    <div class="prof-hero">
+                      <img class="prof-hero-bg" src="assets/podcasts/sug2.png" alt="" loading="lazy">
+                      <span class="prof-hero-scrim" aria-hidden="true"></span>
+                      <div class="prof-hero-inner">
+                        <span class="prof-avatar2">SK</span>
+                        <span class="prof-name2" data-i18n-text="mock.prof.name">@sara_k</span>
+                        <span class="prof-member" data-i18n-text="mock.prof.member">Membro dal 2024</span>
+                        <span class="prof-followbtn">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                          <span data-i18n-text="mock.prof.follow">Segui</span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prof-stats">
+                      <div class="prof-stat"><span class="n">128</span><span class="l" data-i18n-text="mock.prof.podcasts">Podcast</span></div>
+                      <div class="prof-stat"><span class="n">12</span><span class="l" data-i18n-text="mock.prof.series">Serie</span></div>
+                      <div class="prof-stat"><span class="n">2.4k</span><span class="l" data-i18n-text="mock.prof.followers">Follower</span></div>
+                      <div class="prof-stat"><span class="n">312</span><span class="l" data-i18n-text="mock.prof.following">Seguiti</span></div>
+                    </div>
+                    <div class="prof-mutual">
+                      <span class="prof-mutual-avs" aria-hidden="true"><i></i><i></i><i></i></span>
+                      <span class="prof-mutual-txt" data-i18n-text="mock.prof.mutual">Seguito anche da @marco_p, @lucia e altri 2</span>
+                    </div>
+                    <div class="disc-seg prof-seg">
+                      <span class="disc-seg-tab is-active" data-i18n-text="mock.prof.segSingoli">Singoli 24</span>
+                      <span class="disc-seg-tab" data-i18n-text="mock.prof.segSerie">Serie 3</span>
+                    </div>
+                    <div class="prof-grid">
+                      <div class="disc-card">
+                        <div class="cov">
+                          <img src="assets/podcasts/sara1.png" alt="" loading="lazy">
+                          <span class="disc-card-grad" aria-hidden="true"></span>
+                          <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                          <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                        <div class="t" data-i18n-text="mock.sara.t1">Roma antica dalla fondazione all'impero</div>
+                        <div class="disc-card-sub" data-i18n-text="mock.sara.s1">Storia · 5 min</div>
+                      </div>
+                      <div class="disc-card">
+                        <div class="cov">
+                          <img src="assets/podcasts/sara2.png" alt="" loading="lazy">
+                          <span class="disc-card-grad" aria-hidden="true"></span>
+                          <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                          <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                        <div class="t" data-i18n-text="mock.sara.t2">La Chimera: il cinema di Alice Rohrwacher</div>
+                        <div class="disc-card-sub" data-i18n-text="mock.sara.s2">Cinema · 10 min</div>
+                      </div>
+                      <div class="disc-card">
+                        <div class="cov">
+                          <img src="assets/podcasts/sara3.png" alt="" loading="lazy">
+                          <span class="disc-card-grad" aria-hidden="true"></span>
+                          <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                          <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                        <div class="t" data-i18n-text="mock.sara.t3">Senna: vita e leggenda in pista</div>
+                        <div class="disc-card-sub" data-i18n-text="mock.sara.s3">Sport · 2 min</div>
+                      </div>
+                      <div class="disc-card">
+                        <div class="cov">
+                          <img src="assets/podcasts/sara4.png" alt="" loading="lazy">
+                          <span class="disc-card-grad" aria-hidden="true"></span>
+                          <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                          <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                        <div class="t" data-i18n-text="mock.sara.t4">La storia del caffè espresso italiano</div>
+                        <div class="disc-card-sub" data-i18n-text="mock.sara.s4">Cucina · 3 min</div>
+                      </div>
+                      <div class="disc-card">
+                        <div class="cov">
+                          <img src="assets/podcasts/sara5.png" alt="" loading="lazy">
+                          <span class="disc-card-grad" aria-hidden="true"></span>
+                          <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                          <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                        <div class="t" data-i18n-text="mock.sara.t5">La storia del supercomputer Colossus di Musk</div>
+                        <div class="disc-card-sub" data-i18n-text="mock.sara.s5">Tecnologia · 2 min</div>
+                      </div>
+                      <div class="disc-card">
+                        <div class="cov">
+                          <img src="assets/podcasts/sara6.png" alt="" loading="lazy">
+                          <span class="disc-card-grad" aria-hidden="true"></span>
+                          <span class="disc-card-acts" aria-hidden="true"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg></i></span>
+                          <span class="disc-card-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                        </div>
+                        <div class="t" data-i18n-text="mock.sara.t6">Geronimo Stilton: storia di un topo iconico</div>
+                        <div class="disc-card-sub" data-i18n-text="mock.sara.s6">Letteratura · 2 min</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sub-scene 5.3 — SERIE da Scopri (SeriesScreen: banner + lista episodi) -->
+                <div class="gen-sub" data-sub-scene="playlist">
+                  <div class="ser-scene">
+                    <div class="ser-banner">
+                      <img class="ser-banner-bg" src="assets/podcasts/ser_ep2.png" alt="" loading="lazy">
+                      <span class="ser-banner-scrim" aria-hidden="true"></span>
+                      <span class="ser-back" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></span>
+                      <div class="ser-banner-inner">
+                        <span class="ser-pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></svg><span data-i18n-text="mock.ser.pill">SERIE</span></span>
+                        <span class="ser-title" data-i18n-text="mock.ser.title">Cucina mediterranea: i rudimenti</span>
+                        <span class="ser-desc" data-i18n-text="mock.ser.desc">I rudimenti e i sapori della cucina mediterranea, passo dopo passo.</span>
+                        <span class="ser-meta"><span data-i18n-text="mock.ser.meta">4 episodi · 40 min · Salute</span> · <b data-i18n-text="mock.ser.author">@giucag</b></span>
+                      </div>
+                    </div>
+                    <div class="ser-cta-row">
+                      <span class="ser-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span data-i18n-text="mock.ser.play">Riproduci</span></span>
+                    </div>
+                    <div class="ser-list-head">
+                      <span data-i18n-text="mock.ser.episodes">Episodi</span>
+                      <span class="ser-list-count">4</span>
+                    </div>
+                    <div class="ser-eps">
+                      <div class="ser-ep">
+                        <span class="ser-ep-num"><span class="dot-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></span>
+                        <img class="ser-ep-thumb" src="assets/podcasts/ser_ep1.png" alt="" loading="lazy">
+                        <div class="ser-ep-mid">
+                          <span class="ser-ep-t" data-i18n-text="mock.ser.ep1">Introduzione alla cucina mediterranea</span>
+                          <span class="ser-ep-status s-done"><i class="dot"></i><span data-i18n-text="mock.ser.done">Ascoltato</span><span class="mut"> · 10 min</span></span>
+                        </div>
+                        <span class="ser-ep-acts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg><span class="ser-ep-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+                      </div>
+                      <div class="ser-ep">
+                        <span class="ser-ep-num"><span class="dot-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></span>
+                        <img class="ser-ep-thumb" src="assets/podcasts/ser_ep2.png" alt="" loading="lazy">
+                        <div class="ser-ep-mid">
+                          <span class="ser-ep-t" data-i18n-text="mock.ser.ep2">Ingredienti fondamentali</span>
+                          <span class="ser-ep-status s-done"><i class="dot"></i><span data-i18n-text="mock.ser.done">Ascoltato</span><span class="mut"> · 10 min</span></span>
+                        </div>
+                        <span class="ser-ep-acts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg><span class="ser-ep-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+                      </div>
+                      <div class="ser-ep ser-ep-cur">
+                        <span class="ser-ep-num is-prog">3</span>
+                        <img class="ser-ep-thumb" src="assets/podcasts/ser_ep3.png" alt="" loading="lazy">
+                        <div class="ser-ep-mid">
+                          <span class="ser-ep-t" data-i18n-text="mock.ser.ep3">Tecniche di cottura</span>
+                          <span class="ser-ep-status s-prog"><i class="dot"></i><span data-i18n-text="mock.ser.inprogress">In corso</span><span class="mut"> · 10 min</span></span>
+                          <span class="ser-ep-bar"><i style="width:42%"></i></span>
+                        </div>
+                        <span class="ser-ep-acts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg><span class="ser-ep-play"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M19 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></span>
+                      </div>
+                      <div class="ser-ep">
+                        <span class="ser-ep-num">4</span>
+                        <img class="ser-ep-thumb" src="assets/podcasts/ser_ep4.png" alt="" loading="lazy">
+                        <div class="ser-ep-mid">
+                          <span class="ser-ep-t" data-i18n-text="mock.ser.ep4">Creazioni salutari</span>
+                          <span class="ser-ep-status"><i class="dot"></i><span data-i18n-text="mock.ser.todo">Da ascoltare</span><span class="mut"> · 10 min</span></span>
+                        </div>
+                        <span class="ser-ep-acts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3.5 13.5 3.5 9.5A4 4 0 0 1 12 7a4 4 0 0 1 8.5 2.5c0 4-3.5 7.5-8.5 11.5z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg><span class="ser-ep-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

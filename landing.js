@@ -659,6 +659,74 @@
     }
   }
 
+  // -------------------- Snap "per scena" in How it works (stile fullPage) --------------------
+  // Lo scroll-snap CSS (mandatory) + spacer 100vh + elementi sticky si blocca con la
+  // rotella veloce. Qui intercettiamo la rotella SOLO dentro lo scrollytelling: ogni
+  // gesto avanza di UNA scena (smooth scroll esatto sul punto in cui il telefono cambia
+  // schermata). Fuori dalla sezione e ai bordi (prima/ultima scena) lo scroll resta
+  // libero, così non si resta mai intrappolati. Solo desktop. Touch/mobile invariati.
+  function setupHiwWheelSnap() {
+    if (window.matchMedia('(max-width: 900px)').matches) return;
+    var section = document.querySelector('.howitworks');
+    if (!section) return;
+
+    // Posizioni-scena (scrollY assoluto in cui ogni scena è "centrata") = stessi
+    // trigger dell'IntersectionObserver: gli spacer delle sub-scene + gli step singoli.
+    var cache = null;
+    function build() {
+      var els = Array.prototype.slice.call(
+        document.querySelectorAll('.substep-spacer, .hiw-step:not(.hiw-step-multi)')
+      );
+      var vh = window.innerHeight;
+      var ys = [];
+      els.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        ys.push(Math.round(window.scrollY + r.top + r.height / 2 - vh / 2));
+      });
+      ys.sort(function (a, b) { return a - b; });
+      return ys;
+    }
+    function targets() { if (!cache) cache = build(); return cache; }
+    function invalidate() { cache = null; }
+    window.addEventListener('resize', invalidate);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(invalidate);
+
+    var animating = false;
+
+    window.addEventListener('wheel', function (e) {
+      if (window.matchMedia('(max-width: 900px)').matches) return;
+      var ys = targets();
+      if (!ys.length) return;
+      var y = window.scrollY;
+      var first = ys[0], last = ys[ys.length - 1];
+      if (y < first - 6 || y > last + 6) return;             // fuori dalle scene → scroll libero
+      var dir = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
+      if (!dir) return;
+
+      // scena più vicina
+      var ni = 0, bd = Infinity, i, d;
+      for (i = 0; i < ys.length; i++) { d = Math.abs(ys[i] - y); if (d < bd) { bd = d; ni = i; } }
+
+      var targetY = null;
+      if (bd > 6) {
+        // non allineato → prima scena nella direzione del gesto
+        if (dir > 0) { for (i = 0; i < ys.length; i++) { if (ys[i] > y) { targetY = ys[i]; break; } } }
+        else { for (i = ys.length - 1; i >= 0; i--) { if (ys[i] < y) { targetY = ys[i]; break; } } }
+      } else {
+        // allineato a una scena → avanza di una
+        var idx = ni + dir;
+        if (idx >= 0 && idx < ys.length) targetY = ys[idx];
+      }
+      if (targetY == null) return;                           // bordo → esci con scroll normale
+
+      e.preventDefault();
+      if (animating) return;
+      animating = true;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+      setTimeout(function () { animating = false; }, 480);
+    }, { passive: false });
+  }
+
   // -------------------- Init --------------------
   function init() {
     applyLanguage(detectInitialLang());
@@ -667,6 +735,7 @@
     setupForm();
     setupCookies();
     setupScrollytelling();
+    setupHiwWheelSnap();
     setupMobileHowItWorks();
     setupTryThemPlayers();
     setupTryThemDots();

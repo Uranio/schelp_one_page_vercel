@@ -17,7 +17,7 @@
    - Inter              — neutral pairing for body copy
    - JetBrains Mono     — countdown digits, language toggle, micro-meta        */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* -------------------- Color: Brand -------------------- */
@@ -26,7 +26,7 @@
   --coral-200: #FFB3B9;
   --coral-300: #FF8C95;
   --coral-400: #FF6E78;   /* hover / lighter */
-  --coral-500: #FE6B6B;   /* PRIMARY — FAB, active icons, key dates */
+  --coral-500: #FF6B6B;   /* PRIMARY — FAB, active icons, key dates (matches app colors.ts primary) */
   --coral-600: #F25060;   /* logo darker stop */
   --coral-700: #D63A4D;   /* press */
   --coral-800: #A82839;
@@ -37,7 +37,7 @@
   --violet-200: #B6A3FF;
   --violet-300: #9A85FF;
   --violet-400: #8A70FF;
-  --violet-500: #7B62FF;   /* SECONDARY — category tags ("Cinema", "Economia") */
+  --violet-500: #7B61FF;   /* SECONDARY — category tags ("Cinema", "Economia") (matches app colors.ts secondary) */
   --violet-600: #6450E0;
   --violet-700: #4B3CB8;
 
