@@ -2588,16 +2588,21 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
      shifts vertically as the text swaps (rock-steady, snappy). --- */
   .hiw-phone-wrap {
     display: flex; flex-direction: column;
-    align-items: center; justify-content: flex-start;
+    align-items: center; justify-content: center;
     gap: 9px;
     width: auto; align-self: stretch;
     /* The whole stage is pinned, holding [heading, step-title, subtitle, phone,
-       caption] top-aligned. `top` is the margin between the viewport top and the
-       heading (clears the status bar / notch on real phones); the heading is the
-       stage's first child (moved in by JS). */
-    position: sticky; top: max(44px, calc(env(safe-area-inset-top) + 16px));
-    height: calc(100vh - max(44px, calc(env(safe-area-inset-top) + 16px)));
-    height: calc(100svh - max(44px, calc(env(safe-area-inset-top) + 16px)));
+       caption] CENTERED in the available height (so tall screens don't leave a big
+       gap below). `top` keeps a margin above / clears the status bar / notch on real
+       phones; the heading is the stage's first child (moved in by JS), so it still
+       scrolls off first when the stage releases. */
+    position: sticky; top: 0;
+    height: 100vh; height: 100svh;
+    /* center within the safe area: on notched phones the content centers below the
+       notch (border-box → padding is inside the height); elsewhere it's centered in
+       the full viewport. */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
     transform: none; margin: 0;
     z-index: 4;
   }
@@ -2704,7 +2709,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   .hiw-phone-wrap .phone { --s: 0.50; }
 }
 @media (max-width: 900px) and (max-height: 700px) {
-  .hiw-phone-wrap .phone { --s: 0.44; }
+  .hiw-phone-wrap .phone { --s: 0.42; }
 }
 
 @media (max-width: 560px) {
