@@ -13,8 +13,14 @@
   "use strict";
 
   var AUTHOR = "schelp";
-  var DATA_URL = "assets/podcasts/schelp/podcasts.json";
-  var ALL = []; // dataset caricato una volta, filtrato lato client
+  // Sorgente live: endpoint pubblico no-auth del backend (auto-aggiornante).
+  var API_BASE = "https://api.apipodcast.org";
+  // Fallback statico same-origin: episodi di esempio della redazione, mostrati
+  // finché l'endpoint live non restituisce podcast pubblicati (o se irraggiungibile).
+  var STATIC_URL = "assets/podcasts/schelp/podcasts.json";
+
+  var MODE = "live"; // "live" | "static"
+  var ALL = []; // dataset statico (solo quando MODE === "static")
 
   // ---------------- i18n (mirror di landing.js) ----------------
   var DICT = window.SchelpI18n || { it: {}, en: {} };
@@ -76,10 +82,21 @@
   }
 
   // ---------------- data ----------------
-  function fetchData() {
-    return fetch(DATA_URL, { headers: { Accept: "application/json" }, cache: "no-cache" })
+  function apiGet(path) {
+    return fetch(API_BASE + path, { headers: { Accept: "application/json" } })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+  }
+  function loadStaticData() {
+    return fetch(STATIC_URL, { headers: { Accept: "application/json" }, cache: "no-cache" })
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(function (rows) { ALL = Array.isArray(rows) ? rows : ((rows && rows.podcasts) || []); });
+  }
+  function useStatic() {
+    MODE = "static";
+    return loadStaticData().then(function () {
+      loadFacetsStatic();
+      loadList();
+    }).catch(function () { showState("empty"); updateCount(0); });
   }
 
   // ---------------- filtri ----------------
@@ -95,7 +112,13 @@
       sel.appendChild(o);
     });
   }
-  function loadFacets() {
+  function loadFacetsLive() {
+    return apiGet("/public/author/" + AUTHOR + "/facets").then(function (f) {
+      fillSelect(langSel, (f.languages || []).slice().sort(), langLabel);
+      fillSelect(intSel, (f.interests || []).slice().sort(), null);
+    });
+  }
+  function loadFacetsStatic() {
     var langs = {}, ints = {};
     ALL.forEach(function (p) { if (p.language) langs[p.language] = 1; if (p.interest) ints[p.interest] = 1; });
     fillSelect(langSel, Object.keys(langs).sort(), langLabel);
@@ -104,10 +127,20 @@
 
   // ---------------- lista ----------------
   function loadList() {
+    if (MODE === "live") {
+      var q = ["per_page=50"];
+      if (langSel.value) q.push("language=" + encodeURIComponent(langSel.value));
+      if (intSel.value) q.push("interest=" + encodeURIComponent(intSel.value));
+      showState("loading");
+      return apiGet("/public/author/" + AUTHOR + "?" + q.join("&"))
+        .then(function (d) { render((d && d.podcasts) || []); })
+        .catch(function () { showState("error"); updateCount(0); });
+    }
     var rows = ALL.filter(function (p) {
       return (!langSel.value || p.language === langSel.value) && (!intSel.value || p.interest === intSel.value);
     });
     render(rows);
+    return Promise.resolve();
   }
 
   function render(pods) {
@@ -312,9 +345,20 @@
     }
 
     showState("loading");
-    fetchData()
-      .then(function () { loadFacets(); loadList(); })
-      .catch(function () { showState("error"); updateCount(0); });
+    // Prova la sorgente live; se non ci sono podcast pubblicati (o è irraggiungibile)
+    // ricade sugli episodi di esempio statici così la vetrina non resta vuota.
+    apiGet("/public/author/" + AUTHOR + "?per_page=50")
+      .then(function (d) {
+        var pods = (d && d.podcasts) || [];
+        if (pods.length) {
+          MODE = "live";
+          render(pods);
+          loadFacetsLive().catch(function () {});
+        } else {
+          return useStatic();
+        }
+      })
+      .catch(function () { return useStatic(); });
   }
 
   if (document.readyState !== "loading") init();
