@@ -412,7 +412,27 @@ window.SchelpI18n = {
     "form.submitting": "Invio in corso…",
 
     // Footer year-stamp tagline (gets dynamic year)
-    "footer.copyright": "© {year} Schelp · podcast per la tua giornata"
+    "footer.copyright": "© {year} Schelp · podcast per la tua giornata",
+
+    // Discover page (vetrina della redazione)
+    "nav.home": "Home",
+    "nav.discover": "Scopri",
+    "discover.meta.title": "Schelp — Scopri i podcast della redazione",
+    "discover.meta.description": "Ascolta i podcast della redazione Schelp. Episodi veri, voci che parlano sul serio — filtra per lingua e per argomento.",
+    "discover.eyebrow": "La redazione",
+    "discover.title": "Scopri",
+    "discover.subtitle": "Gli episodi prodotti dalla redazione di Schelp. Premi play — e filtra per lingua o argomento.",
+    "discover.filter.language": "Lingua",
+    "discover.filter.interest": "Argomento",
+    "discover.filter.all": "Tutti",
+    "discover.count.one": "episodio",
+    "discover.count.many": "episodi",
+    "discover.loading": "Carico gli episodi…",
+    "discover.empty.title": "Nuovi episodi in arrivo",
+    "discover.empty.sub": "La redazione di Schelp non ha ancora pubblicato nulla qui. Torna presto.",
+    "discover.error.title": "Impossibile caricare gli episodi",
+    "discover.error.sub": "Qualcosa è andato storto nel contattare il server. Riprova più tardi.",
+    "discover.player.close": "Chiudi il player"
   },
 
   en: {
@@ -810,6 +830,26 @@ window.SchelpI18n = {
     "form.error": "Something went wrong. Try again in a moment.",
     "form.submitting": "Submitting…",
 
-    "footer.copyright": "© {year} Schelp · podcasts for your day"
+    "footer.copyright": "© {year} Schelp · podcasts for your day",
+
+    // Discover page (newsroom showcase)
+    "nav.home": "Home",
+    "nav.discover": "Discover",
+    "discover.meta.title": "Schelp — Discover the newsroom podcasts",
+    "discover.meta.description": "Listen to the podcasts from the Schelp newsroom. Real episodes, lifelike voices — filter by language and topic.",
+    "discover.eyebrow": "The newsroom",
+    "discover.title": "Discover",
+    "discover.subtitle": "The episodes produced by the Schelp newsroom. Press play — and filter by language or topic.",
+    "discover.filter.language": "Language",
+    "discover.filter.interest": "Topic",
+    "discover.filter.all": "All",
+    "discover.count.one": "episode",
+    "discover.count.many": "episodes",
+    "discover.loading": "Loading episodes…",
+    "discover.empty.title": "New episodes on the way",
+    "discover.empty.sub": "The Schelp newsroom hasn't published anything here yet. Check back soon.",
+    "discover.error.title": "Couldn't load episodes",
+    "discover.error.sub": "Something went wrong reaching the server. Please try again later.",
+    "discover.player.close": "Close player"
   }
 };

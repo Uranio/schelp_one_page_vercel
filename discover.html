@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-i18n-text="discover.meta.title">Schelp — Discover the newsroom podcasts</title>
+<meta name="description" data-i18n-attr="content:discover.meta.description" content="Listen to the podcasts from the Schelp newsroom. Real episodes, lifelike voices — filter by language and topic.">
+<meta name="theme-color" content="#0A0A0B">
+
+<link rel="canonical" href="https://schelp.app/discover">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Schelp">
+<meta property="og:title" data-i18n-attr="content:discover.meta.title" content="Schelp — Discover the newsroom podcasts">
+<meta property="og:description" data-i18n-attr="content:discover.meta.description" content="Listen to the podcasts from the Schelp newsroom.">
+<meta property="og:url" content="https://schelp.app/discover">
+<meta property="og:image" content="https://schelp.app/og.png">
+
+<!-- Favicons -->
+<link rel="icon" href="logo-schelp.png">
+<link rel="apple-touch-icon" href="logo-schelp.png">
+
+<!-- Fonts (same set as the landing) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<!-- Tokens + page styles -->
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="discover.css">
+
+<!-- i18n dictionary (load before discover.js) -->
+<script src="i18n.js" defer></script>
+<script src="discover.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n-text="a11y.skipLink">Vai al contenuto</a>
+  <div class="bg-wash" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" data-i18n-attr="aria-label:nav.brand.aria" aria-label="Schelp — home">
+        <img src="logo-schelp.png" alt="" width="36" height="36">
+        <span>schelp</span>
+      </a>
+      <div class="links">
+        <a href="/" data-i18n-text="nav.home">Home</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="discover">
+    <section class="dsc-intro">
+      <div class="eyebrow" data-i18n-text="discover.eyebrow">The newsroom</div>
+      <h1 class="dsc-title" data-i18n-text="discover.title">Discover</h1>
+      <p class="dsc-sub" data-i18n-text="discover.subtitle">The episodes produced by the Schelp newsroom. Press play — and filter by language or topic.</p>
+    </section>
+
+    <section class="dsc-filters" aria-label="Filters">
+      <label class="dsc-field">
+        <span data-i18n-text="discover.filter.language">Language</span>
+        <select id="filter-language" class="dsc-select">
+          <option value="" data-i18n-text="discover.filter.all">All</option>
+        </select>
+      </label>
+      <label class="dsc-field">
+        <span data-i18n-text="discover.filter.interest">Topic</span>
+        <select id="filter-interest" class="dsc-select">
+          <option value="" data-i18n-text="discover.filter.all">All</option>
+        </select>
+      </label>
+      <span class="dsc-count" id="dsc-count" aria-live="polite"></span>
+    </section>
+
+    <section class="dsc-results">
+      <div class="dsc-grid" id="discover-grid" hidden></div>
+
+      <div class="dsc-state" id="discover-loading">
+        <div class="dsc-spinner" aria-hidden="true"></div>
+        <p class="dsc-state-sub" data-i18n-text="discover.loading">Loading episodes…</p>
+      </div>
+
+      <div class="dsc-state" id="discover-empty" hidden>
+        <div class="dsc-state-icon" aria-hidden="true">🎙️</div>
+        <p class="dsc-state-title" data-i18n-text="discover.empty.title">New episodes on the way</p>
+        <p class="dsc-state-sub" data-i18n-text="discover.empty.sub">The Schelp newsroom hasn't published anything here yet. Check back soon.</p>
+      </div>
+
+      <div class="dsc-state" id="discover-error" hidden>
+        <div class="dsc-state-icon" aria-hidden="true">⚠️</div>
+        <p class="dsc-state-title" data-i18n-text="discover.error.title">Couldn't load episodes</p>
+        <p class="dsc-state-sub" data-i18n-text="discover.error.sub">Something went wrong reaching the server. Please try again later.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div data-i18n-text-template="footer.copyright" data-template-vars="year">© <span id="year">2026</span> Schelp · podcasts for your day</div>
+    <div class="legal">
+      <a href="privacy.html" data-i18n-text="footer.privacy">Privacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="mailto:hello@schelp.app">hello@schelp.app</a>
+    </div>
+  </footer>
+
+  <!-- Player modal (filled by discover.js) -->
+  <div class="dsc-modal" id="player-modal" role="dialog" aria-modal="true" aria-label="Podcast player" hidden>
+    <div class="dsc-modal-backdrop" data-close></div>
+    <div class="dsc-modal-body">
+      <button type="button" class="dsc-modal-close" data-close data-i18n-attr="aria-label:discover.player.close" aria-label="Close player">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <div id="player-mount"></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 376,
+    "title": "Senna's Life and Racing Legacy",
+    "audio_url": "assets/podcasts/examples/p376.mp3",
+    "image_url": "assets/podcasts/examples/p376.png",
+    "duration_minutes": 3,
+    "podcast_type": "Deep dive",
+    "interest": "Sport",
+    "author": "schelp",
+    "language": "en",
+    "waveform_peaks": [0.05,1,0.735,0.641,0.934,0.668,0.61,0.587,0.738,0.743,0.292,0.412,0.286,0.561,0.319,0.219,0.252,0.549,0.683,0.218,0.528,0.469,0.372,0.405,0.602,0.487,0.31,0.347,0.462,0.354,0.367,0.35,0.214,0.585,0.3,0.52,0.422,0.507,0.05,0.91]
+  },
+  {
+    "id": 378,
+    "title": "Never Get Lost in the Woods",
+    "audio_url": "assets/podcasts/examples/p378.mp3",
+    "image_url": "assets/podcasts/examples/p378.png",
+    "duration_minutes": 2,
+    "podcast_type": "Educational",
+    "interest": "Outdoors",
+    "author": "schelp",
+    "language": "en",
+    "waveform_peaks": [0.05,0.22,0.587,0.544,0.431,0.759,0.565,0.606,0.498,0.503,0.491,0.59,0.627,0.5,0.385,0.385,0.437,0.392,0.556,0.539,0.488,0.309,0.571,0.505,0.535,0.418,0.48,0.576,0.362,0.481,0.553,0.432,0.496,0.609,0.538,0.457,1,0.538,0.05,0.163]
+  },
+  {
+    "id": 381,
+    "title": "The Mona Lisa & Gardner Museum Heists",
+    "audio_url": "assets/podcasts/examples/p381.mp3",
+    "image_url": "assets/podcasts/examples/p381.png",
+    "duration_minutes": 3,
+    "podcast_type": "Narrative",
+    "interest": "Art",
+    "author": "schelp",
+    "language": "en",
+    "waveform_peaks": [0.133,0.144,0.289,0.684,0.321,0.218,1,0.531,0.565,0.918,0.416,0.457,0.466,0.128,0.355,0.439,0.129,0.274,0.315,0.138,0.135,0.174,0.175,0.127,0.225,0.194,0.165,0.198,0.187,0.141,0.211,0.081,0.05,0.464,0.084,0.191,0.384,0.103,0.069,0.109]
+  }
+]
