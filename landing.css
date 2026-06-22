@@ -3175,3 +3175,17 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 .ser-ep-acts > svg { width: 15px; height: 15px; color: rgba(255,255,255,0.5); }
 .ser-ep-play { width: 28px; height: 28px; border-radius: 999px; background: #fff; display: flex; align-items: center; justify-content: center; flex: 0 0 28px; }
 .ser-ep-play svg { width: 13px; height: 13px; color: #0D0D0D; margin-left: 1px; }
+
+/* "Scopri" nav entry — always visible (anche su mobile, fuori da .links) */
+.nav .nav-discover {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--fg-1); text-decoration: none;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.16));
+  background: rgba(255,255,255,0.06);
+  transition: background 140ms var(--ease-out), border-color 140ms var(--ease-out), transform 140ms var(--ease-out);
+}
+.nav .nav-discover:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
+.nav .nav-discover:active { transform: scale(0.97); }
