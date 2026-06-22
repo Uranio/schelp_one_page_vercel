@@ -432,7 +432,9 @@ window.SchelpI18n = {
     "discover.empty.sub": "La redazione di Schelp non ha ancora pubblicato nulla qui. Torna presto.",
     "discover.error.title": "Impossibile caricare gli episodi",
     "discover.error.sub": "Qualcosa è andato storto nel contattare il server. Riprova più tardi.",
-    "discover.player.close": "Chiudi il player"
+    "discover.player.close": "Chiudi il player",
+    "discover.player.share": "Condividi",
+    "discover.share.copied": "Link copiato"
   },
 
   en: {
@@ -850,6 +852,8 @@ window.SchelpI18n = {
     "discover.empty.sub": "The Schelp newsroom hasn't published anything here yet. Check back soon.",
     "discover.error.title": "Couldn't load episodes",
     "discover.error.sub": "Something went wrong reaching the server. Please try again later.",
-    "discover.player.close": "Close player"
+    "discover.player.close": "Close player",
+    "discover.player.share": "Share",
+    "discover.share.copied": "Link copied"
   }
 };

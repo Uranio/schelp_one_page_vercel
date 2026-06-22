@@ -69,6 +69,39 @@
 
   // ---------------- DOM refs ----------------
   var grid, loadingEl, emptyEl, errorEl, countEl, langSel, intSel, modal, mount;
+  var rendered = {}; // id -> podcast (per deep-link/condivisione)
+
+  // ---------------- deep-link & condivisione ----------------
+  function deepLinkId() {
+    var m = location.pathname.match(/^\/discover\/(\d+)/);
+    if (m) return m[1];
+    var q = new URLSearchParams(location.search).get("p");
+    return q && /^\d+$/.test(q) ? q : null;
+  }
+  function openById(id, push) {
+    if (rendered[id]) { openPlayer(rendered[id], push); return; }
+    apiGet("/public/podcast/" + id)
+      .then(function (p) { if (p && p.id != null) openPlayer(p, push); })
+      .catch(function () {});
+  }
+  function showToast(msg) {
+    var el = document.createElement("div");
+    el.textContent = msg;
+    el.setAttribute("style", "position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:rgba(20,20,25,0.96);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;z-index:300;border:1px solid rgba(255,255,255,0.12);");
+    document.body.appendChild(el);
+    setTimeout(function () { el.remove(); }, 2200);
+  }
+  function sharePodcast(p) {
+    if (!p || p.id == null) return;
+    var url = location.origin + "/p/" + p.id;
+    var title = p.title || "Schelp";
+    if (navigator.share) { navigator.share({ title: title, url: url }).catch(function () {}); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { showToast(t("discover.share.copied")); }).catch(function () { window.prompt("Link:", url); });
+      return;
+    }
+    window.prompt("Link:", url);
+  }
 
   function showState(which) {
     if (loadingEl) loadingEl.hidden = which !== "loading";
@@ -145,10 +178,11 @@
 
   function render(pods) {
     grid.innerHTML = "";
+    rendered = {};
     if (!pods.length) { showState("empty"); updateCount(0); return; }
     showState("grid");
     updateCount(pods.length);
-    pods.forEach(function (p, i) { grid.appendChild(card(p, i)); });
+    pods.forEach(function (p, i) { if (p && p.id != null) rendered[p.id] = p; grid.appendChild(card(p, i)); });
   }
 
   function card(p, i) {
@@ -200,6 +234,7 @@
             '<span class="tplayer-artist">Schelp</span>' +
             '<h3 class="tplayer-title">' + escapeHtml(p.title || "Podcast") + '</h3>' +
           '</div>' +
+          '<button type="button" class="tplayer-share" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>' +
           '<span class="tplayer-vol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg></span></div>' +
           '<div class="tplayer-wave" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="tplayer-bars"></div></div>' +
           '<div class="tplayer-time"><span class="tplayer-cur">0:00</span><span class="tplayer-dur">0:00</span></div>' +
@@ -253,12 +288,14 @@
 
   var active = null; // teardown del player aperto
 
-  function openPlayer(p) {
-    closePlayer();
+  function openPlayer(p, push) {
+    closePlayer(false);
     mount.innerHTML = buildPlayerHTML(p);
     var card = mount.querySelector(".tplayer");
     if (p.image_url) card.querySelector(".tplayer-cover").style.backgroundImage = "url('" + p.image_url + "')";
     buildBars(card, card.getAttribute("data-peaks"));
+    var shareBtn = card.querySelector(".tplayer-share");
+    if (shareBtn) shareBtn.addEventListener("click", function () { sharePodcast(p); });
 
     var preDur = parseFloat(card.getAttribute("data-duration"));
     if (isFinite(preDur) && preDur > 0) card.querySelector(".tplayer-dur").textContent = fmtTime(preDur);
@@ -313,14 +350,21 @@
 
     modal.hidden = false;
     document.body.style.overflow = "hidden";
+    if (push !== false && p && p.id != null) {
+      var path = "/discover/" + p.id;
+      if (location.pathname !== path) history.pushState({ pid: p.id }, "", path);
+    }
     toggle(); // autoplay
   }
 
-  function closePlayer() {
+  function closePlayer(push) {
     if (active) { active.teardown(); active = null; }
     if (modal) modal.hidden = true;
     if (mount) mount.innerHTML = "";
     document.body.style.overflow = "";
+    if (push !== false && /^\/discover\/\d+/.test(location.pathname)) {
+      history.pushState({}, "", "/discover");
+    }
   }
 
   // ---------------- init ----------------
@@ -340,9 +384,15 @@
     if (intSel) intSel.addEventListener("change", loadList);
 
     if (modal) {
-      modal.querySelectorAll("[data-close]").forEach(function (b) { b.addEventListener("click", closePlayer); });
-      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closePlayer(); });
+      modal.querySelectorAll("[data-close]").forEach(function (b) { b.addEventListener("click", function () { closePlayer(true); }); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closePlayer(true); });
     }
+
+    // Back/forward del browser: apri o chiudi in base all'URL.
+    window.addEventListener("popstate", function () {
+      var id = deepLinkId();
+      if (id) openById(id, false); else closePlayer(false);
+    });
 
     showState("loading");
     // Prova la sorgente live; se non ci sono podcast pubblicati (o è irraggiungibile)
@@ -358,7 +408,12 @@
           return useStatic();
         }
       })
-      .catch(function () { return useStatic(); });
+      .catch(function () { return useStatic(); })
+      .then(function () {
+        // Deep-link: se l'URL punta a un episodio, aprilo (senza ri-pushare).
+        var id = deepLinkId();
+        if (id) openById(id, false);
+      });
   }
 
   if (document.readyState !== "loading") init();

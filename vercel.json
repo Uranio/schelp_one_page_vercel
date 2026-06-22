@@ -1,6 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/discover", "destination": "/discover.html" }
+    { "source": "/discover", "destination": "/discover.html" },
+    { "source": "/discover/:id", "destination": "/discover.html" },
+    { "source": "/p/:id", "destination": "https://api.apipodcast.org/public/share/:id" }
   ]
 }
