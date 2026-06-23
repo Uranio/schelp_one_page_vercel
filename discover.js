@@ -55,6 +55,25 @@
   var LANG_LABELS = { it: "Italiano", en: "English", es: "Español", fr: "Français", de: "Deutsch", pt: "Português" };
   function langLabel(code) { return LANG_LABELS[code] || (code || "").toUpperCase(); }
 
+  // Tassonomia backend in italiano -> etichette inglesi (il sito è EN-first).
+  // Se in futuro LANG === "it" si mostrano i valori originali.
+  var INTEREST_EN = {
+    "Notizie": "News", "Tecnologia": "Technology", "Sport": "Sport", "Cinema": "Cinema",
+    "Economia": "Economy", "Scienza": "Science", "Salute": "Health", "Musica": "Music",
+    "Viaggi": "Travel", "Arte": "Art", "Storia": "History", "Cucina": "Food", "Moda": "Fashion",
+    "Gaming": "Gaming", "Ambiente": "Environment", "Fotografia": "Photography", "Politica": "Politics",
+    "Filosofia": "Philosophy", "Psicologia": "Psychology", "Astronomia": "Astronomy",
+    "Architettura": "Architecture", "Letteratura": "Literature", "Automobile": "Automotive",
+    "Fitness": "Fitness", "Animali": "Animals", "Design": "Design", "Calcio": "Football",
+    "Podcast": "Podcast", "Startup": "Startup", "Matematica": "Math", "Lingue": "Languages"
+  };
+  var PTYPE_EN = {
+    "giornalistico": "News", "narrativo": "Narrative", "approfondimento": "Deep dive",
+    "didattica": "Educational", "dibattito": "Debate", "generico": "General"
+  };
+  function interestEn(v) { if (LANG === "it") return v || ""; return INTEREST_EN[v] || v || ""; }
+  function ptypeEn(v) { if (!v) return ""; if (LANG === "it") return v; return PTYPE_EN[(v + "").toLowerCase()] || v; }
+
   // ---------------- utils ----------------
   function fmtTime(sec) {
     if (!isFinite(sec) || sec < 0) sec = 0;
@@ -148,14 +167,14 @@
   function loadFacetsLive() {
     return apiGet("/public/author/" + AUTHOR + "/facets").then(function (f) {
       fillSelect(langSel, (f.languages || []).slice().sort(), langLabel);
-      fillSelect(intSel, (f.interests || []).slice().sort(), null);
+      fillSelect(intSel, (f.interests || []).slice().sort(), interestEn);
     });
   }
   function loadFacetsStatic() {
     var langs = {}, ints = {};
     ALL.forEach(function (p) { if (p.language) langs[p.language] = 1; if (p.interest) ints[p.interest] = 1; });
     fillSelect(langSel, Object.keys(langs).sort(), langLabel);
-    fillSelect(intSel, Object.keys(ints).sort(), null);
+    fillSelect(intSel, Object.keys(ints).sort(), interestEn);
   }
 
   // ---------------- lista ----------------
@@ -192,7 +211,7 @@
     c.style.animationDelay = (i * 50) + "ms";
 
     var metaBits = [];
-    if (p.interest) metaBits.push(escapeHtml(p.interest));
+    if (p.interest) metaBits.push(escapeHtml(interestEn(p.interest)));
     if (p.duration_minutes) metaBits.push(p.duration_minutes + " min");
 
     c.innerHTML =
@@ -219,7 +238,7 @@
 
   // ---------------- player (markup .tplayer riusato da landing.css) ----------------
   function buildPlayerHTML(p) {
-    var chip = p.podcast_type || p.interest || "Podcast";
+    var chip = ptypeEn(p.podcast_type) || interestEn(p.interest) || "Podcast";
     var dur = p.duration_minutes ? (p.duration_minutes * 60) : "";
     var peaks = p.waveform_peaks ? JSON.stringify(p.waveform_peaks) : "[]";
     return '' +
