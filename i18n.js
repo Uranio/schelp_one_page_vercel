@@ -434,7 +434,12 @@ window.SchelpI18n = {
     "discover.error.sub": "Qualcosa è andato storto nel contattare il server. Riprova più tardi.",
     "discover.player.close": "Chiudi il player",
     "discover.player.share": "Condividi",
-    "discover.share.copied": "Link copiato"
+    "discover.share.copied": "Link copiato",
+    "discover.search.label": "Cerca",
+    "discover.search.placeholder": "Cerca un episodio…",
+    "discover.categories.title": "Categorie",
+    "discover.noresults.title": "Nessun risultato",
+    "discover.noresults.sub": "Nessun episodio corrisponde alla ricerca o ai filtri. Prova con altri termini."
   },
 
   en: {
@@ -854,6 +859,11 @@ window.SchelpI18n = {
     "discover.error.sub": "Something went wrong reaching the server. Please try again later.",
     "discover.player.close": "Close player",
     "discover.player.share": "Share",
-    "discover.share.copied": "Link copied"
+    "discover.share.copied": "Link copied",
+    "discover.search.label": "Search",
+    "discover.search.placeholder": "Search an episode…",
+    "discover.categories.title": "Categories",
+    "discover.noresults.title": "No results",
+    "discover.noresults.sub": "No episodes match your search or filters. Try different terms."
   }
 };

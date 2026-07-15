@@ -87,8 +87,10 @@
   }
 
   // ---------------- DOM refs ----------------
-  var grid, loadingEl, emptyEl, errorEl, countEl, langSel, intSel, modal, mount;
+  var grid, loadingEl, emptyEl, errorEl, countEl, langSel, searchInput, sideList, modal, mount;
   var rendered = {}; // id -> podcast (per deep-link/condivisione)
+  var currentInterest = ""; // categoria attiva nella sidebar ("" = tutte)
+  var CURRENT_ROWS = []; // ultime righe caricate (lingua+categoria), pre-ricerca
 
   // ---------------- deep-link & condivisione ----------------
   function deepLinkId() {
@@ -167,38 +169,80 @@
   function loadFacetsLive() {
     return apiGet("/public/author/" + AUTHOR + "/facets").then(function (f) {
       fillSelect(langSel, (f.languages || []).slice().sort(), langLabel);
-      fillSelect(intSel, (f.interests || []).slice().sort(), interestEn);
+      buildCategories((f.interests || []).slice().sort());
     });
   }
   function loadFacetsStatic() {
     var langs = {}, ints = {};
     ALL.forEach(function (p) { if (p.language) langs[p.language] = 1; if (p.interest) ints[p.interest] = 1; });
     fillSelect(langSel, Object.keys(langs).sort(), langLabel);
-    fillSelect(intSel, Object.keys(ints).sort(), interestEn);
+    buildCategories(Object.keys(ints).sort());
+  }
+
+  // ---------------- sidebar categorie ----------------
+  function buildCategories(values) {
+    if (!sideList) return;
+    sideList.innerHTML = "";
+    function mk(val, label) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "dsc-side-item" + (val === currentInterest ? " is-active" : "");
+      b.textContent = label;
+      b.addEventListener("click", function () {
+        if (currentInterest === val) return;
+        currentInterest = val;
+        sideList.querySelectorAll(".dsc-side-item").forEach(function (x) { x.classList.remove("is-active"); });
+        b.classList.add("is-active");
+        loadList();
+      });
+      sideList.appendChild(b);
+    }
+    mk("", t("discover.filter.all"));
+    (values || []).forEach(function (v) { mk(v, interestEn(v)); });
   }
 
   // ---------------- lista ----------------
+  function matchesSearch(p, q) {
+    if (!q) return true;
+    var hay = [p.title, p.author, p.interest, interestEn(p.interest), ptypeEn(p.podcast_type)]
+      .join(" ").toLowerCase();
+    return hay.indexOf(q.toLowerCase()) !== -1;
+  }
+  // Ri-applica solo la ricerca alle righe già caricate (nessuna nuova fetch).
+  function renderWithSearch() {
+    var q = searchInput ? searchInput.value.trim() : "";
+    render(CURRENT_ROWS.filter(function (p) { return matchesSearch(p, q); }));
+  }
   function loadList() {
     if (MODE === "live") {
       var q = ["per_page=50"];
       if (langSel.value) q.push("language=" + encodeURIComponent(langSel.value));
-      if (intSel.value) q.push("interest=" + encodeURIComponent(intSel.value));
+      if (currentInterest) q.push("interest=" + encodeURIComponent(currentInterest));
       showState("loading");
       return apiGet("/public/author/" + AUTHOR + "?" + q.join("&"))
-        .then(function (d) { render((d && d.podcasts) || []); })
+        .then(function (d) { CURRENT_ROWS = (d && d.podcasts) || []; renderWithSearch(); })
         .catch(function () { showState("error"); updateCount(0); });
     }
-    var rows = ALL.filter(function (p) {
-      return (!langSel.value || p.language === langSel.value) && (!intSel.value || p.interest === intSel.value);
+    CURRENT_ROWS = ALL.filter(function (p) {
+      return (!langSel.value || p.language === langSel.value) && (!currentInterest || p.interest === currentInterest);
     });
-    render(rows);
+    renderWithSearch();
     return Promise.resolve();
   }
 
   function render(pods) {
     grid.innerHTML = "";
     rendered = {};
-    if (!pods.length) { showState("empty"); updateCount(0); return; }
+    if (!pods.length) {
+      // Se ci sono filtri/ricerca attivi il vuoto è "nessun risultato", non "niente pubblicato".
+      var filtering = (searchInput && searchInput.value.trim()) || currentInterest || (langSel && langSel.value);
+      if (emptyEl) {
+        var et = emptyEl.querySelector(".dsc-state-title"), es = emptyEl.querySelector(".dsc-state-sub");
+        if (et) et.textContent = t(filtering ? "discover.noresults.title" : "discover.empty.title");
+        if (es) es.textContent = t(filtering ? "discover.noresults.sub" : "discover.empty.sub");
+      }
+      showState("empty"); updateCount(0); return;
+    }
     showState("grid");
     updateCount(pods.length);
     pods.forEach(function (p, i) { if (p && p.id != null) rendered[p.id] = p; grid.appendChild(card(p, i)); });
@@ -395,12 +439,20 @@
     errorEl = document.getElementById("discover-error");
     countEl = document.getElementById("dsc-count");
     langSel = document.getElementById("filter-language");
-    intSel = document.getElementById("filter-interest");
+    searchInput = document.getElementById("filter-search");
+    sideList = document.getElementById("dsc-side-list");
     modal = document.getElementById("player-modal");
     mount = document.getElementById("player-mount");
 
     if (langSel) langSel.addEventListener("change", loadList);
-    if (intSel) intSel.addEventListener("change", loadList);
+    if (searchInput) {
+      var searchTimer = null;
+      searchInput.addEventListener("input", function () {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(renderWithSearch, 150);
+      });
+    }
+    buildCategories([]); // subito "All"; le categorie vere arrivano con i facets
 
     if (modal) {
       modal.querySelectorAll("[data-close]").forEach(function (b) { b.addEventListener("click", function () { closePlayer(true); }); });
@@ -421,7 +473,8 @@
         var pods = (d && d.podcasts) || [];
         if (pods.length) {
           MODE = "live";
-          render(pods);
+          CURRENT_ROWS = pods;
+          renderWithSearch();
           loadFacetsLive().catch(function () {});
         } else {
           return useStatic();

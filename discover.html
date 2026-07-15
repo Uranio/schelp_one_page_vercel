@@ -62,41 +62,47 @@
     </section>
 
     <section class="dsc-filters" aria-label="Filters">
+      <label class="dsc-field dsc-field-search">
+        <span data-i18n-text="discover.search.label">Search</span>
+        <input type="search" id="filter-search" class="dsc-search" autocomplete="off"
+               data-i18n-attr="placeholder:discover.search.placeholder" placeholder="Search an episode…">
+      </label>
       <label class="dsc-field">
         <span data-i18n-text="discover.filter.language">Language</span>
         <select id="filter-language" class="dsc-select">
           <option value="" data-i18n-text="discover.filter.all">All</option>
         </select>
       </label>
-      <label class="dsc-field">
-        <span data-i18n-text="discover.filter.interest">Topic</span>
-        <select id="filter-interest" class="dsc-select">
-          <option value="" data-i18n-text="discover.filter.all">All</option>
-        </select>
-      </label>
       <span class="dsc-count" id="dsc-count" aria-live="polite"></span>
     </section>
 
-    <section class="dsc-results">
-      <div class="dsc-grid" id="discover-grid" hidden></div>
+    <div class="dsc-layout">
+      <aside class="dsc-sidebar" data-i18n-attr="aria-label:discover.categories.title" aria-label="Categories">
+        <h2 class="dsc-side-title" data-i18n-text="discover.categories.title">Categories</h2>
+        <nav class="dsc-side-list" id="dsc-side-list"></nav>
+      </aside>
 
-      <div class="dsc-state" id="discover-loading">
-        <div class="dsc-spinner" aria-hidden="true"></div>
-        <p class="dsc-state-sub" data-i18n-text="discover.loading">Loading episodes…</p>
-      </div>
+      <section class="dsc-results">
+        <div class="dsc-grid" id="discover-grid" hidden></div>
 
-      <div class="dsc-state" id="discover-empty" hidden>
-        <div class="dsc-state-icon" aria-hidden="true">🎙️</div>
-        <p class="dsc-state-title" data-i18n-text="discover.empty.title">New episodes on the way</p>
-        <p class="dsc-state-sub" data-i18n-text="discover.empty.sub">The Schelp newsroom hasn't published anything here yet. Check back soon.</p>
-      </div>
+        <div class="dsc-state" id="discover-loading">
+          <div class="dsc-spinner" aria-hidden="true"></div>
+          <p class="dsc-state-sub" data-i18n-text="discover.loading">Loading episodes…</p>
+        </div>
 
-      <div class="dsc-state" id="discover-error" hidden>
-        <div class="dsc-state-icon" aria-hidden="true">⚠️</div>
-        <p class="dsc-state-title" data-i18n-text="discover.error.title">Couldn't load episodes</p>
-        <p class="dsc-state-sub" data-i18n-text="discover.error.sub">Something went wrong reaching the server. Please try again later.</p>
-      </div>
-    </section>
+        <div class="dsc-state" id="discover-empty" hidden>
+          <div class="dsc-state-icon" aria-hidden="true">🎙️</div>
+          <p class="dsc-state-title" data-i18n-text="discover.empty.title">New episodes on the way</p>
+          <p class="dsc-state-sub" data-i18n-text="discover.empty.sub">The Schelp newsroom hasn't published anything here yet. Check back soon.</p>
+        </div>
+
+        <div class="dsc-state" id="discover-error" hidden>
+          <div class="dsc-state-icon" aria-hidden="true">⚠️</div>
+          <p class="dsc-state-title" data-i18n-text="discover.error.title">Couldn't load episodes</p>
+          <p class="dsc-state-sub" data-i18n-text="discover.error.sub">Something went wrong reaching the server. Please try again later.</p>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="footer">
