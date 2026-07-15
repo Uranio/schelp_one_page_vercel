@@ -52,9 +52,6 @@
     });
   }
 
-  var LANG_LABELS = { it: "Italiano", en: "English", es: "Español", fr: "Français", de: "Deutsch", pt: "Português" };
-  function langLabel(code) { return LANG_LABELS[code] || (code || "").toUpperCase(); }
-
   // Tassonomia backend in italiano -> etichette inglesi (il sito è EN-first).
   // Se in futuro LANG === "it" si mostrano i valori originali.
   var INTEREST_EN = {
@@ -87,10 +84,10 @@
   }
 
   // ---------------- DOM refs ----------------
-  var grid, loadingEl, emptyEl, errorEl, countEl, langSel, searchInput, sideList, modal, mount;
+  var grid, loadingEl, emptyEl, errorEl, pitchEl, countEl, searchInput, sideList, modal, mount;
   var rendered = {}; // id -> podcast (per deep-link/condivisione)
   var currentInterest = ""; // categoria attiva nella sidebar ("" = tutte)
-  var CURRENT_ROWS = []; // ultime righe caricate (lingua+categoria), pre-ricerca
+  var CURRENT_ROWS = []; // ultime righe caricate (per categoria), pre-ricerca
 
   // ---------------- deep-link & condivisione ----------------
   function deepLinkId() {
@@ -128,6 +125,7 @@
     if (loadingEl) loadingEl.hidden = which !== "loading";
     if (emptyEl) emptyEl.hidden = which !== "empty";
     if (errorEl) errorEl.hidden = which !== "error";
+    if (pitchEl) pitchEl.hidden = which !== "pitch";
     if (grid) grid.hidden = which !== "grid";
   }
   function updateCount(n) {
@@ -154,28 +152,14 @@
   }
 
   // ---------------- filtri ----------------
-  function fillSelect(sel, values, labelFn) {
-    if (!sel) return;
-    var keep = sel.querySelector('option[value=""]');
-    sel.innerHTML = "";
-    if (keep) sel.appendChild(keep);
-    (values || []).forEach(function (v) {
-      var o = document.createElement("option");
-      o.value = v;
-      o.textContent = labelFn ? labelFn(v) : v;
-      sel.appendChild(o);
-    });
-  }
   function loadFacetsLive() {
     return apiGet("/public/author/" + AUTHOR + "/facets").then(function (f) {
-      fillSelect(langSel, (f.languages || []).slice().sort(), langLabel);
       buildCategories((f.interests || []).slice().sort());
     });
   }
   function loadFacetsStatic() {
-    var langs = {}, ints = {};
-    ALL.forEach(function (p) { if (p.language) langs[p.language] = 1; if (p.interest) ints[p.interest] = 1; });
-    fillSelect(langSel, Object.keys(langs).sort(), langLabel);
+    var ints = {};
+    ALL.forEach(function (p) { if (p.interest) ints[p.interest] = 1; });
     buildCategories(Object.keys(ints).sort());
   }
 
@@ -216,7 +200,6 @@
   function loadList() {
     if (MODE === "live") {
       var q = ["per_page=50"];
-      if (langSel.value) q.push("language=" + encodeURIComponent(langSel.value));
       if (currentInterest) q.push("interest=" + encodeURIComponent(currentInterest));
       showState("loading");
       return apiGet("/public/author/" + AUTHOR + "?" + q.join("&"))
@@ -224,7 +207,7 @@
         .catch(function () { showState("error"); updateCount(0); });
     }
     CURRENT_ROWS = ALL.filter(function (p) {
-      return (!langSel.value || p.language === langSel.value) && (!currentInterest || p.interest === currentInterest);
+      return !currentInterest || p.interest === currentInterest;
     });
     renderWithSearch();
     return Promise.resolve();
@@ -234,12 +217,16 @@
     grid.innerHTML = "";
     rendered = {};
     if (!pods.length) {
-      // Se ci sono filtri/ricerca attivi il vuoto è "nessun risultato", non "niente pubblicato".
-      var filtering = (searchInput && searchInput.value.trim()) || currentInterest || (langSel && langSel.value);
-      if (emptyEl) {
-        var et = emptyEl.querySelector(".dsc-state-title"), es = emptyEl.querySelector(".dsc-state-sub");
-        if (et) et.textContent = t(filtering ? "discover.noresults.title" : "discover.empty.title");
-        if (es) es.textContent = t(filtering ? "discover.noresults.sub" : "discover.empty.sub");
+      // Ricerca/filtri attivi e zero risultati → pitch "generalo tu con l'AI";
+      // dataset davvero vuoto → messaggio "niente pubblicato".
+      var q = searchInput ? searchInput.value.trim() : "";
+      if ((q || currentInterest) && pitchEl) {
+        var pp = document.getElementById("pitch-prompt");
+        if (pp) {
+          pp.textContent = q || t("mock.gen.placeholder");
+          pp.classList.toggle("is-typed", !!q);
+        }
+        showState("pitch"); updateCount(0); return;
       }
       showState("empty"); updateCount(0); return;
     }
@@ -430,6 +417,49 @@
     }
   }
 
+  // ---------------- invite form (mirror del form della landing) ----------------
+  function setupInviteForm() {
+    var form = document.getElementById("invite-form");
+    if (!form) return;
+    var input = document.getElementById("invite-email");
+    var button = form.querySelector("button");
+    var messageEl = document.getElementById("invite-message");
+    var helpEl = document.getElementById("invite-help");
+    var ENDPOINT = (window.SchelpConfig && window.SchelpConfig.formEndpoint) || "";
+
+    function showMessage(key, type) {
+      if (!messageEl) return;
+      messageEl.textContent = t(key);
+      messageEl.className = "dsc-invite-message is-visible is-" + type;
+      if (helpEl) helpEl.style.display = type === "success" ? "none" : "";
+    }
+    function done(ok) {
+      button.disabled = false;
+      if (ok) { form.reset(); showMessage("discover.pitch.success", "success"); }
+      else showMessage("discover.pitch.error", "error");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = (input.value || "").trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMessage("discover.pitch.invalid", "error");
+        input.focus();
+        return;
+      }
+      button.disabled = true;
+      if (!ENDPOINT) { // preview mode: nessun ESP configurato, simula successo
+        setTimeout(function () { done(true); }, 600);
+        return;
+      }
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ email: email, source: "discover", _subject: "New Schelp signup" })
+      }).then(function (r) { done(r.ok); }).catch(function () { done(false); });
+    });
+  }
+
   // ---------------- init ----------------
   function init() {
     applyI18n(document);
@@ -438,13 +468,13 @@
     emptyEl = document.getElementById("discover-empty");
     errorEl = document.getElementById("discover-error");
     countEl = document.getElementById("dsc-count");
-    langSel = document.getElementById("filter-language");
+    pitchEl = document.getElementById("discover-pitch");
     searchInput = document.getElementById("filter-search");
     sideList = document.getElementById("dsc-side-list");
     modal = document.getElementById("player-modal");
     mount = document.getElementById("player-mount");
 
-    if (langSel) langSel.addEventListener("change", loadList);
+    setupInviteForm();
     if (searchInput) {
       var searchTimer = null;
       searchInput.addEventListener("input", function () {

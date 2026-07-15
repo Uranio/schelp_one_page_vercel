@@ -80,7 +80,7 @@
 }
 
 /* ---- Ricerca ---- */
-.dsc-field-search { flex: 1 1 240px; min-width: 190px; max-width: 380px; }
+.dsc-field-search { flex: 1 1 auto; min-width: 190px; }
 .dsc-search {
   appearance: none; -webkit-appearance: none;
   width: 100%;
@@ -261,6 +261,104 @@
   animation: dscSpin .8s linear infinite;
 }
 @keyframes dscSpin { to { transform: rotate(360deg); } }
+
+/* ---- Pitch "nessun risultato → generalo con l'AI" ---- */
+.dsc-pitch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 4vw, 44px);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.dsc-pitch[hidden] { display: none; }
+.dsc-pitch-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--fg-1);
+  margin: 0 0 12px;
+}
+.dsc-pitch-sub {
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fg-3, rgba(255,255,255,0.66));
+  max-width: 46ch;
+  margin: 0 0 22px;
+}
+.dsc-invite { display: flex; gap: 10px; flex-wrap: wrap; max-width: 440px; }
+.dsc-invite input {
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+  font-size: 14px;
+  transition: border-color 160ms var(--ease-out);
+}
+.dsc-invite input::placeholder { color: rgba(255,255,255,0.35); }
+.dsc-invite input:focus-visible { outline: none; border-color: var(--coral-500); }
+.dsc-invite button {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 22px;
+  height: 46px;
+  border: 0; border-radius: 12px;
+  background: linear-gradient(135deg, #FF8E8E 0%, #FF6B6B 60%, #F25060 100%);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255,107,107,0.35);
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), opacity 160ms;
+}
+.dsc-invite button:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(255,107,107,0.45); }
+.dsc-invite button:disabled { opacity: 0.6; cursor: default; transform: none; }
+.dsc-invite-message {
+  display: none;
+  margin-top: 12px;
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+  font-size: 13px;
+}
+.dsc-invite-message.is-visible { display: block; }
+.dsc-invite-message.is-success { color: #34D399; }
+.dsc-invite-message.is-error { color: #FF6B6B; }
+.dsc-invite-help {
+  margin-top: 12px;
+  font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.4);
+  max-width: 44ch;
+}
+
+/* Il telefono riusa .phone/.screen di landing.css (360x720) ma qui è più basso
+   e scalato, così il pitch resta compatto. */
+.dsc-pitch-phone .phone {
+  --s: 0.78;
+  height: 560px;
+  transform: scale(var(--s));
+  transform-origin: center center;
+  margin: calc((var(--s) - 1) * 280px) calc((var(--s) - 1) * 180px);
+}
+.dsc-pitch-phone .screen { justify-content: flex-start; }
+.dsc-pitch-pad { padding-top: 40px; }
+.gen-prompt-text.is-typed { color: rgba(255,255,255,0.92); }
+
+@media (max-width: 900px) {
+  .dsc-pitch { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .dsc-pitch-copy { display: flex; flex-direction: column; align-items: center; }
+  .dsc-invite { justify-content: center; }
+}
 
 /* ---- Modale player ---- */
 .dsc-modal {

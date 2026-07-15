@@ -418,10 +418,10 @@ window.SchelpI18n = {
     "nav.home": "Home",
     "nav.discover": "Scopri",
     "discover.meta.title": "Schelp — Scopri i podcast della redazione",
-    "discover.meta.description": "Ascolta i podcast della redazione Schelp. Episodi veri, voci che parlano sul serio — filtra per lingua e per argomento.",
+    "discover.meta.description": "Ascolta i podcast della redazione Schelp. Episodi veri, voci che parlano sul serio — cerca ed esplora per categoria.",
     "discover.eyebrow": "La redazione",
     "discover.title": "Scopri",
-    "discover.subtitle": "Gli episodi prodotti dalla redazione di Schelp. Premi play — e filtra per lingua o argomento.",
+    "discover.subtitle": "Gli episodi prodotti dalla redazione di Schelp. Premi play — cerca, o esplora per categoria.",
     "discover.filter.language": "Lingua",
     "discover.filter.interest": "Argomento",
     "discover.filter.all": "Tutti",
@@ -438,8 +438,14 @@ window.SchelpI18n = {
     "discover.search.label": "Cerca",
     "discover.search.placeholder": "Cerca un episodio…",
     "discover.categories.title": "Categorie",
-    "discover.noresults.title": "Nessun risultato",
-    "discover.noresults.sub": "Nessun episodio corrisponde alla ricerca o ai filtri. Prova con altri termini."
+    "discover.pitch.title": "Quell'episodio non esiste — ancora",
+    "discover.pitch.sub": "Schelp è un'app per ascoltare podcast — e per generarli con l'AI. Scrivi un prompt, proprio come quello che hai appena cercato, e Schelp lo trasforma in un episodio vero.",
+    "discover.pitch.emailPlaceholder": "tu@email.com",
+    "discover.pitch.cta": "Ricevi l'invito",
+    "discover.pitch.help": "Niente spam — ti scriviamo solo per mandarti l'invito quando Schelp è pronta.",
+    "discover.pitch.success": "Sei in lista! Ti mandiamo l'invito appena possibile.",
+    "discover.pitch.invalid": "Inserisci un indirizzo email valido.",
+    "discover.pitch.error": "Qualcosa è andato storto. Riprova tra poco."
   },
 
   en: {
@@ -843,10 +849,10 @@ window.SchelpI18n = {
     "nav.home": "Home",
     "nav.discover": "Discover",
     "discover.meta.title": "Schelp — Discover the newsroom podcasts",
-    "discover.meta.description": "Listen to the podcasts from the Schelp newsroom. Real episodes, lifelike voices — filter by language and topic.",
+    "discover.meta.description": "Listen to the podcasts from the Schelp newsroom. Real episodes, lifelike voices — search and browse by category.",
     "discover.eyebrow": "The newsroom",
     "discover.title": "Discover",
-    "discover.subtitle": "The episodes produced by the Schelp newsroom. Press play — and filter by language or topic.",
+    "discover.subtitle": "The episodes produced by the Schelp newsroom. Press play — search, or browse by category.",
     "discover.filter.language": "Language",
     "discover.filter.interest": "Topic",
     "discover.filter.all": "All",
@@ -863,7 +869,13 @@ window.SchelpI18n = {
     "discover.search.label": "Search",
     "discover.search.placeholder": "Search an episode…",
     "discover.categories.title": "Categories",
-    "discover.noresults.title": "No results",
-    "discover.noresults.sub": "No episodes match your search or filters. Try different terms."
+    "discover.pitch.title": "No episode for that — yet",
+    "discover.pitch.sub": "Schelp is an app to listen to podcasts — and to generate them with AI. Type any prompt, exactly like the one you just searched, and Schelp turns it into a real episode.",
+    "discover.pitch.emailPlaceholder": "you@email.com",
+    "discover.pitch.cta": "Get invite",
+    "discover.pitch.help": "No spam — we'll only write to send your invite when Schelp is ready.",
+    "discover.pitch.success": "You're on the list! We'll send your invite soon.",
+    "discover.pitch.invalid": "Please enter a valid email address.",
+    "discover.pitch.error": "Something went wrong. Please try again shortly."
   }
 };
