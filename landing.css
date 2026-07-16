@@ -2717,6 +2717,7 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
   .form { flex-direction: column; padding: 8px; border-radius: 20px; }
   .form input { padding: 12px 14px; }
   .form button { width: 100%; justify-content: center; height: 48px; }
+  .hero-discover-cta { width: 100%; justify-content: center; box-sizing: border-box; min-height: 48px; margin-top: 10px; }
   .form-help { padding-left: 4px; }
   .form-message { width: 100%; justify-content: center; }
   .badge { font-size: 11px; }
