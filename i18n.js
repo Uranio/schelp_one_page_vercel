@@ -34,6 +34,7 @@ window.SchelpI18n = {
     "hero.emailLabel": "Indirizzo email",
     "hero.emailPlaceholder": "tu@email.com",
     "hero.cta": "Entra in anteprima",
+    "hero.discoverCta": "Ascolta un episodio vero",
     "hero.comingSoon": "L'app è in arrivo — coming soon.",
     "hero.formHelp.html": "<b>Niente spam.</b> Ti scriviamo solo quando Schelp è pronto per te. Iscrivendoti accetti la nostra <a href=\"privacy.html\">informativa privacy</a>.",
 
@@ -493,6 +494,7 @@ window.SchelpI18n = {
     "hero.emailLabel": "Email address",
     "hero.emailPlaceholder": "you@email.com",
     "hero.cta": "Get early access",
+    "hero.discoverCta": "Listen to a real episode",
     "hero.comingSoon": "The app is on its way — coming soon.",
     "hero.formHelp.html": "<b>No spam.</b> We'll only email when Schelp is ready for you. By signing up you agree to our <a href=\"privacy.html\">privacy policy</a>.",
 

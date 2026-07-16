@@ -3189,3 +3189,25 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 }
 .nav .nav-discover:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
 .nav .nav-discover:active { transform: scale(0.97); }
+
+/* Hero — CTA secondaria verso Discover (ascolta prima di iscriverti) */
+.hero-discover-cta {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 14px;
+  padding: 10px 16px 10px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border-default);
+  color: var(--fg-1); font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  text-decoration: none;
+  transition: border-color .2s var(--ease-out), background .2s var(--ease-out), transform .12s var(--ease-out);
+}
+.hero-discover-cta:hover { border-color: var(--coral-500); background: rgba(255,107,107,0.06); }
+.hero-discover-cta:active { transform: scale(0.98); }
+.hero-discover-cta .hdc-play {
+  width: 26px; height: 26px; border-radius: 50%; background: var(--coral-500);
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px -2px rgba(255,107,107,0.6);
+}
+.hero-discover-cta .hdc-play svg { width: 11px; height: 11px; fill: #fff; margin-left: 1px; }
+.hero-discover-cta .hdc-new {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: var(--coral-300);
+  border: 1px solid rgba(255,107,107,0.35); border-radius: 999px; padding: 2px 7px;
+}

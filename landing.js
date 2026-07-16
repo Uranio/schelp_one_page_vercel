@@ -14,6 +14,43 @@
   var ANALYTICS_DOMAIN = CFG.analyticsDomain || ""; // Plausible domain
   var ANALYTICS_SRC = CFG.analyticsSrc || "https://plausible.io/js/script.js";
 
+  // -------------------- Funnel tracking (backend, con UTM) --------------------
+  // Eventi del conversion funnel verso /public/landing/event, segmentabili per
+  // utm_source. Best-effort (keepalive), non blocca nulla.
+  var LANDING_API = /^(localhost|127\.0\.0\.1|::1|\[::1\])$/.test(location.hostname) ? "" : "https://api.apipodcast.org";
+  var SID_KEY = "schelp_sid_v1", UTM_KEY = "schelp_utm_v1";
+  function getSid() {
+    try {
+      var v = localStorage.getItem(SID_KEY);
+      if (v) return v;
+      v = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ("s" + Date.now().toString(36) + Math.random().toString(16).slice(2));
+      localStorage.setItem(SID_KEY, v);
+      return v;
+    } catch (e) { return null; }
+  }
+  function getUtm() {
+    try {
+      var qs = new URLSearchParams(location.search), cur = {};
+      ["source", "medium", "campaign"].forEach(function (k) { var v = qs.get("utm_" + k); if (v) cur[k] = v.slice(0, 120); });
+      if (Object.keys(cur).length) { localStorage.setItem(UTM_KEY, JSON.stringify(cur)); return cur; } // first-touch persistente
+      return JSON.parse(localStorage.getItem(UTM_KEY) || "{}");
+    } catch (e) { return {}; }
+  }
+  function trackLanding(eventType, extra) {
+    try {
+      var u = getUtm();
+      var body = {
+        event_type: eventType, session_id: getSid(), page: "landing", lang: currentLang,
+        utm_source: u.source || null, utm_medium: u.medium || null, utm_campaign: u.campaign || null
+      };
+      if (extra) for (var k in extra) body[k] = extra[k];
+      fetch(LANDING_API + "/public/landing/event", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body), keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   // -------------------- i18n --------------------
   var LANG_KEY = "schelp_lang_v1";
   var DICT = window.SchelpI18n || { it: {}, en: {} };
@@ -207,7 +244,8 @@
         showMessage("form.success", "success");
         form.reset();
         track("Signup (preview)");
-        if (window.SchelpSurvey) window.SchelpSurvey.open({ context: "landing", email: email, source: "landing", lang: currentLang });
+        trackLanding("signup");
+        if (window.SchelpSurvey) window.SchelpSurvey.open({ context: "landing", email: email, source: "landing", lang: currentLang, onDone: function () { trackLanding("survey_complete"); } });
         return;
       }
 
@@ -222,7 +260,8 @@
         showMessage("form.success", "success");
         form.reset();
         track("Signup");
-        if (window.SchelpSurvey) window.SchelpSurvey.open({ context: "landing", email: email, source: "landing", lang: currentLang });
+        trackLanding("signup");
+        if (window.SchelpSurvey) window.SchelpSurvey.open({ context: "landing", email: email, source: "landing", lang: currentLang, onDone: function () { trackLanding("survey_complete"); } });
       } catch (err) {
         console.error("[schelp] signup failed", err);
         setLoading(false);
@@ -784,6 +823,9 @@
   // -------------------- Init --------------------
   function init() {
     applyLanguage(detectInitialLang());
+    trackLanding("page_view");
+    var dcta = document.getElementById("hero-discover-cta");
+    if (dcta) dcta.addEventListener("click", function () { trackLanding("discover_cta"); });
     setupLanguageToggle();
     startCountdown();
     setupForm();
