@@ -33,6 +33,7 @@
 <!-- Favicons -->
 <link rel="icon" href="logo-schelp.png">
 <link rel="apple-touch-icon" href="logo-schelp.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <!-- Fonts: preconnect + direct stylesheet link (faster than @import inside CSS).
      Self-host if you want to fully GDPR-proof. -->
@@ -74,6 +75,29 @@
   "description": "AI podcast app that turns any spark — a prompt, a voice, a photo — into personalised episodes with lifelike voices and live web research.",
   "url": "https://schelp.app/",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://schelp.app/#org",
+      "name": "Schelp",
+      "url": "https://schelp.app/",
+      "logo": "https://schelp.app/logo-schelp.png",
+      "sameAs": []
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://schelp.app/#website",
+      "name": "Schelp",
+      "url": "https://schelp.app/",
+      "publisher": { "@id": "https://schelp.app/#org" },
+      "inLanguage": "en"
+    }
+  ]
 }
 </script>
 </head>

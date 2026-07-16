@@ -22,6 +22,7 @@
 <!-- Favicons -->
 <link rel="icon" href="/logo-schelp.png">
 <link rel="apple-touch-icon" href="/logo-schelp.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <!-- Fonts (same set as the landing) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +44,19 @@
 <script src="/i18n.js" defer></script>
 <script src="/survey.js" defer></script>
 <script src="/discover.js" defer></script>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Discover — Schelp",
+  "description": "Listen to the podcasts from the Schelp newsroom. Real episodes, lifelike voices — search and browse by category.",
+  "url": "https://schelp.app/discover",
+  "inLanguage": "en",
+  "isPartOf": { "@type": "WebSite", "name": "Schelp", "url": "https://schelp.app/" }
+}
+</script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n-text="a11y.skipLink">Skip to content</a>
