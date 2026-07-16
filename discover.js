@@ -411,8 +411,14 @@
     if (fbBtn && isSurveyDone(pid)) fbBtn.classList.add("is-done");
     function openSurvey(auto) {
       if (!window.SchelpSurvey) return;
-      if (isSurveyDone(pid)) { if (fbBtn) fbBtn.classList.add("is-done"); return; }
-      if (auto) { if (autoFired) return; autoFired = true; }
+      // Auto-trigger (40s / fine episodio): max una volta e solo se non hai già
+      // risposto per questo episodio, per non essere invadenti.
+      // Bottone manuale "Leave feedback": riapre SEMPRE (puoi aggiornare la risposta;
+      // il backend fa upsert per persona+podcast).
+      if (auto) {
+        if (autoFired || isSurveyDone(pid)) return;
+        autoFired = true;
+      }
       window.SchelpSurvey.open({
         context: SURVEY_CTX, podcastId: pid, anonId: getAnonId(),
         source: "discover", lang: LANG,
