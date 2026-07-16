@@ -207,6 +207,7 @@
         showMessage("form.success", "success");
         form.reset();
         track("Signup (preview)");
+        if (window.SchelpSurvey) window.SchelpSurvey.open({ context: "landing", email: email, source: "landing", lang: currentLang });
         return;
       }
 
@@ -221,6 +222,7 @@
         showMessage("form.success", "success");
         form.reset();
         track("Signup");
+        if (window.SchelpSurvey) window.SchelpSurvey.open({ context: "landing", email: email, source: "landing", lang: currentLang });
       } catch (err) {
         console.error("[schelp] signup failed", err);
         setLoading(false);

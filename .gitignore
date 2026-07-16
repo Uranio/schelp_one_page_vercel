@@ -1,0 +1,6 @@
+# Python cache (dal dev-server locale dev.py)
+__pycache__/
+*.pyc
+
+# Dipendenze / build
+node_modules/

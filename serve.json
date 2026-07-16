@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/serve.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/discover", "destination": "/discover.html" },
+    { "source": "/discover/:id", "destination": "/discover.html" }
+  ]
+}

@@ -14,13 +14,48 @@
 
   var AUTHOR = "schelp";
   // Sorgente live: endpoint pubblico no-auth del backend (auto-aggiornante).
-  var API_BASE = "https://api.apipodcast.org";
+  // In locale (dev.py) usa path same-origin -> il dev-server proxya a produzione
+  // (niente CORS -> stessi dati live di schelp.app). In produzione: URL assoluto.
+  var API_BASE = /^(localhost|127\.0\.0\.1|::1|\[::1\])$/.test(location.hostname)
+    ? "" : "https://api.apipodcast.org";
   // Fallback statico same-origin: episodi di esempio della redazione, mostrati
   // finché l'endpoint live non restituisce podcast pubblicati (o se irraggiungibile).
   var STATIC_URL = "assets/podcasts/schelp/podcasts.json";
 
   var MODE = "live"; // "live" | "static"
   var ALL = []; // dataset statico (solo quando MODE === "static")
+
+  // ---------------- survey (feedback all'ascolto) ----------------
+  // Tre trigger: dopo N secondi d'ascolto, a fine episodio, e col bottone
+  // "Feedback" nel player. Ognuno apre al massimo una volta per episodio, e
+  // mai se l'utente ha già risposto per quel podcast (memorizzato in locale).
+  var SURVEY_CTX = "discover";
+  var SURVEY_SECONDS = 40;               // trigger automatico dopo N secondi
+  var ANON_KEY = "schelp_anon_v1";       // id anonimo stabile (no email)
+  var SURVEY_DONE_KEY = "schelp_survey_done_v1"; // podcast_id già valutati
+  function getAnonId() {
+    try {
+      var v = localStorage.getItem(ANON_KEY);
+      if (v) return v;
+      var id = (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : ("a" + Date.now().toString(36) + Math.random().toString(16).slice(2));
+      localStorage.setItem(ANON_KEY, id);
+      return id;
+    } catch (e) { return null; }
+  }
+  function surveyDoneSet() {
+    try { return new Set(JSON.parse(localStorage.getItem(SURVEY_DONE_KEY) || "[]")); }
+    catch (e) { return new Set(); }
+  }
+  function isSurveyDone(pid) { return pid != null && surveyDoneSet().has(pid); }
+  function markSurveyDone(pid) {
+    if (pid == null) return;
+    try {
+      var s = surveyDoneSet(); s.add(pid);
+      localStorage.setItem(SURVEY_DONE_KEY, JSON.stringify(Array.from(s)));
+    } catch (e) {}
+  }
 
   // ---------------- i18n (mirror di landing.js) ----------------
   var DICT = window.SchelpI18n || { it: {}, en: {} };
@@ -295,6 +330,9 @@
             '<button type="button" class="tplayer-rew" data-skip="10" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1l6 6-6 6V9a5 5 0 1 0 5 5h2a7 7 0 1 1-7-9z"/></svg><span class="tplayer-skip-num">10</span></button>' +
             '<button type="button" class="tplayer-skip" data-skip="15" aria-label="Skip forward 15 seconds"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM4 4l10.5 8L4 20z"/></svg></button>' +
           '</div>' +
+          '<div class="tplayer-fbrow">' +
+            '<button type="button" class="tplayer-fb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>' + escapeHtml(t("survey.fbButton")) + '</span></button>' +
+          '</div>' +
         '</div></div>' +
       '</article>';
   }
@@ -350,6 +388,23 @@
     var preDur = parseFloat(card.getAttribute("data-duration"));
     if (isFinite(preDur) && preDur > 0) card.querySelector(".tplayer-dur").textContent = fmtTime(preDur);
 
+    // --- survey feedback: bottone + trigger automatici ---
+    var pid = (p && p.id != null) ? p.id : null;
+    var fbBtn = card.querySelector(".tplayer-fb");
+    var autoFired = false;
+    if (fbBtn && isSurveyDone(pid)) fbBtn.classList.add("is-done");
+    function openSurvey(auto) {
+      if (!window.SchelpSurvey) return;
+      if (isSurveyDone(pid)) { if (fbBtn) fbBtn.classList.add("is-done"); return; }
+      if (auto) { if (autoFired) return; autoFired = true; }
+      window.SchelpSurvey.open({
+        context: SURVEY_CTX, podcastId: pid, anonId: getAnonId(),
+        source: "discover", lang: LANG,
+        onDone: function () { markSurveyDone(pid); if (fbBtn) fbBtn.classList.add("is-done"); }
+      });
+    }
+    if (fbBtn) fbBtn.addEventListener("click", function () { openSurvey(false); });
+
     var audio = new Audio();
     audio.preload = "metadata";
     audio.src = p.audio_url || "";
@@ -389,11 +444,12 @@
       if (!audio.duration) return;
       paintProgress(card, audio.currentTime / audio.duration);
       card.querySelector(".tplayer-cur").textContent = fmtTime(audio.currentTime);
+      if (!autoFired && audio.currentTime >= SURVEY_SECONDS) openSurvey(true);
     });
     audio.addEventListener("playing", function () { setState("playing"); });
     audio.addEventListener("pause", function () { setState("idle"); });
     audio.addEventListener("waiting", function () { setState("loading"); });
-    audio.addEventListener("ended", function () { paintProgress(card, 1); setState("idle"); });
+    audio.addEventListener("ended", function () { paintProgress(card, 1); setState("idle"); openSurvey(true); });
     audio.addEventListener("error", function () { setState("idle"); });
 
     active = { teardown: function () { try { audio.pause(); } catch (e) {} audio.src = ""; } };

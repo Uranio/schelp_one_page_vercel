@@ -411,6 +411,25 @@ window.SchelpI18n = {
     "form.error": "Qualcosa è andato storto. Riprova tra un momento.",
     "form.submitting": "Invio in corso…",
 
+    // Survey (dopo il signup)
+    "survey.eyebrow": "Aiutaci a costruirla",
+    "survey.progress": "Domanda {n} di {total}",
+    "survey.optional": "facoltativa",
+    "survey.skip": "Salta per ora",
+    "survey.back": "Indietro",
+    "survey.next": "Avanti",
+    "survey.submit": "Invia",
+    "survey.textPlaceholder": "Scrivi qui…",
+    "survey.multiHint": "Scegli tutte quelle che vuoi",
+    "survey.scaleLow": "Per niente",
+    "survey.scaleHigh": "Moltissimo",
+    "survey.thanksTitle": "Grazie di cuore",
+    "survey.thanksSub": "Le tue risposte ci aiutano a costruire Schelp per te.",
+    "survey.done": "Chiudi",
+    "survey.error": "Invio non riuscito. Riprova tra un momento.",
+    "survey.emailPlaceholder": "tu@email.com",
+    "survey.fbButton": "Lascia un feedback",
+
     // Footer year-stamp tagline (gets dynamic year)
     "footer.copyright": "© {year} Schelp · podcast per la tua giornata",
 
@@ -842,6 +861,25 @@ window.SchelpI18n = {
     "form.success": "You're on the list. We'll be in touch.",
     "form.error": "Something went wrong. Try again in a moment.",
     "form.submitting": "Submitting…",
+
+    // Survey (after signup)
+    "survey.eyebrow": "Help us build it",
+    "survey.progress": "Question {n} of {total}",
+    "survey.optional": "optional",
+    "survey.skip": "Skip for now",
+    "survey.back": "Back",
+    "survey.next": "Next",
+    "survey.submit": "Send",
+    "survey.textPlaceholder": "Type here…",
+    "survey.multiHint": "Pick any that apply",
+    "survey.scaleLow": "Not at all",
+    "survey.scaleHigh": "Absolutely",
+    "survey.thanksTitle": "Thank you",
+    "survey.thanksSub": "Your answers help us build Schelp for you.",
+    "survey.done": "Close",
+    "survey.error": "Couldn't send. Try again in a moment.",
+    "survey.emailPlaceholder": "you@email.com",
+    "survey.fbButton": "Leave feedback",
 
     "footer.copyright": "© {year} Schelp · podcasts for your day",
 
