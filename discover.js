@@ -57,6 +57,22 @@
     } catch (e) {}
   }
 
+  // ---------------- tracking ascolti (play/progress/complete) ----------------
+  // Best-effort: keepalive fetch, non blocca né rompe la riproduzione.
+  function trackDiscover(pid, type, extra) {
+    if (pid == null) return;
+    try {
+      var body = { podcast_id: pid, event_type: type, anon_id: getAnonId(), lang: LANG, source: "discover" };
+      if (extra) for (var k in extra) body[k] = extra[k];
+      fetch(API_BASE + "/public/discover/event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        keepalive: true,
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   // ---------------- i18n (mirror di landing.js) ----------------
   var DICT = window.SchelpI18n || { it: {}, en: {} };
   var LANG = "en"; // il sito è EN-first per ora (vedi landing.js)
@@ -405,6 +421,9 @@
     }
     if (fbBtn) fbBtn.addEventListener("click", function () { openSurvey(false); });
 
+    // --- tracking: play (una volta) + milestones 25/50/75 + complete ---
+    var playSent = false, milestones = {};
+
     var audio = new Audio();
     audio.preload = "metadata";
     audio.src = p.audio_url || "";
@@ -445,11 +464,26 @@
       paintProgress(card, audio.currentTime / audio.duration);
       card.querySelector(".tplayer-cur").textContent = fmtTime(audio.currentTime);
       if (!autoFired && audio.currentTime >= SURVEY_SECONDS) openSurvey(true);
+      // milestones di ascolto 25/50/75
+      var pct = (audio.currentTime / audio.duration) * 100;
+      [25, 50, 75].forEach(function (m) {
+        if (pct >= m && !milestones[m]) {
+          milestones[m] = 1;
+          trackDiscover(pid, "progress", { percent: m, position_seconds: audio.currentTime, duration_seconds: audio.duration });
+        }
+      });
     });
-    audio.addEventListener("playing", function () { setState("playing"); });
+    audio.addEventListener("playing", function () {
+      setState("playing");
+      if (!playSent) { playSent = true; trackDiscover(pid, "play", { duration_seconds: audio.duration || preDur || null }); }
+    });
     audio.addEventListener("pause", function () { setState("idle"); });
     audio.addEventListener("waiting", function () { setState("loading"); });
-    audio.addEventListener("ended", function () { paintProgress(card, 1); setState("idle"); openSurvey(true); });
+    audio.addEventListener("ended", function () {
+      paintProgress(card, 1); setState("idle");
+      trackDiscover(pid, "complete", { percent: 100, position_seconds: audio.duration, duration_seconds: audio.duration });
+      openSurvey(true);
+    });
     audio.addEventListener("error", function () { setState("idle"); });
 
     active = { teardown: function () { try { audio.pause(); } catch (e) {} audio.src = ""; } };

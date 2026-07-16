@@ -155,7 +155,9 @@
     if (q.type === "scale") {
       var n = q.scale || 5, h = '<div class="sv-scale">';
       for (var i = 1; i <= n; i++) h += '<button type="button" data-v="' + i + '" style="--i:' + (i - 1) + '" class="' + (val === i ? "is-sel" : "") + '">' + i + '</button>';
-      return h + '</div><div class="sv-scale-labels"><span>' + esc(T("survey.scaleLow")) + '</span><span>' + esc(T("survey.scaleHigh")) + '</span></div>';
+      var lo = q.minLabel ? loc(q.minLabel) : T("survey.scaleLow");
+      var hi = q.maxLabel ? loc(q.maxLabel) : T("survey.scaleHigh");
+      return h + '</div><div class="sv-scale-labels"><span>' + esc(lo) + '</span><span>' + esc(hi) + '</span></div>';
     }
     if (q.type === "single" || q.type === "multi") {
       var multi = q.type === "multi", arr = multi ? (val || []) : val, out = '<div class="sv-opts">';
