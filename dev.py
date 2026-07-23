@@ -15,7 +15,13 @@
 #        PORT=3000 python dev.py  (porta diversa)
 # =====================================================================
 import http.server, socketserver, urllib.request, urllib.error
-import json, os, re, sys, socket
+import json, os, re, sys, socket, ssl
+
+# Dev proxy: salta la verifica del certificato (evita SSL CERTIFICATE_VERIFY_FAILED
+# di urllib su macOS quando si proxya verso l'API di produzione in HTTPS).
+_SSL_CTX = ssl.create_default_context()
+_SSL_CTX.check_hostname = False
+_SSL_CTX.verify_mode = ssl.CERT_NONE
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PORT = int(os.environ.get("PORT", "8000"))
@@ -73,7 +79,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             if h in self.headers:
                 req.add_header(h, self.headers[h])
         try:
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=30, context=_SSL_CTX) as r:
                 data, status, ctype = r.read(), r.status, r.headers.get("Content-Type", "application/json")
         except urllib.error.HTTPError as e:
             data, status, ctype = e.read(), e.code, e.headers.get("Content-Type", "application/json")

@@ -405,6 +405,10 @@ window.SchelpI18n = {
     "cookie.body.html": "Vorremmo lasciare un cookie analytics anonimo, così capiamo cosa funziona in questa pagina. Niente tracciamento, niente rivendita, niente pubblicità. Vedi la nostra <a href=\"privacy.html\">informativa privacy</a>.",
     "cookie.accept": "Accetta",
     "cookie.decline": "Rifiuta",
+    "consent.checkbox.html": "Ho letto e accetto l'<a href=\"privacy.html\">informativa privacy</a>.",
+    "form.consentRequired": "Per procedere accetta l'informativa privacy.",
+    "discover.pitch.consentRequired": "Per procedere accetta l'informativa privacy.",
+    "survey.privacy.html": "Le risposte (email inclusa, se fornita) sono trattate secondo l'<a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">informativa privacy</a>.",
 
     // Form runtime messages
     "form.invalid": "Inserisci un indirizzo email valido.",
@@ -858,6 +862,10 @@ window.SchelpI18n = {
     "cookie.body.html": "We'd like to drop one anonymous analytics cookie so we can see what's working on this page. No tracking, no resale, no ads. See our <a href=\"privacy.html\">privacy policy</a>.",
     "cookie.accept": "Accept",
     "cookie.decline": "Decline",
+    "consent.checkbox.html": "I have read and accept the <a href=\"privacy.html\">privacy policy</a>.",
+    "form.consentRequired": "Please accept the privacy policy to continue.",
+    "discover.pitch.consentRequired": "Please accept the privacy policy to continue.",
+    "survey.privacy.html": "Your answers (including your email, if provided) are processed per our <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">privacy policy</a>.",
 
     "form.invalid": "Please enter a valid email address.",
     "form.success": "You're on the list. We'll be in touch.",

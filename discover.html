@@ -43,6 +43,7 @@
 <!-- i18n dictionary (load before discover.js) -->
 <script src="/i18n.js" defer></script>
 <script src="/survey.js" defer></script>
+<script src="/consent.js" defer></script>
 <script src="/discover.js" defer></script>
 
 <!-- Structured data -->
@@ -123,6 +124,10 @@
                      aria-describedby="invite-help">
               <button type="submit"><span data-i18n-text="discover.pitch.cta">Get invite</span></button>
             </form>
+            <label class="dsc-invite-consent" for="invite-consent" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:rgba(255,255,255,0.55);margin-top:12px;cursor:pointer;">
+              <input type="checkbox" id="invite-consent" style="margin-top:2px;flex:0 0 auto;">
+              <span data-i18n-html="consent.checkbox.html">I have read and accept the <a href="/privacy.html">privacy policy</a>.</span>
+            </label>
             <div id="invite-message" class="dsc-invite-message" role="status" aria-live="polite"></div>
             <div id="invite-help" class="dsc-invite-help" data-i18n-text="discover.pitch.help">No spam — we'll only write to send your invite when Schelp is ready.</div>
           </div>

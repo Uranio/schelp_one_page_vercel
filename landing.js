@@ -19,19 +19,25 @@
   // utm_source. Best-effort (keepalive), non blocca nulla.
   var LANDING_API = /^(localhost|127\.0\.0\.1|::1|\[::1\])$/.test(location.hostname) ? "" : "https://api.apipodcast.org";
   var SID_KEY = "schelp_sid_v1", UTM_KEY = "schelp_utm_v1";
+  var _sidEphemeral = null;
+  function consentOK() { return !!(window.SchelpConsent && window.SchelpConsent.has()); }
+  function newId(p) { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (p + Date.now().toString(36) + Math.random().toString(16).slice(2)); }
   function getSid() {
+    // Con consenso: id persistente (funnel journey). Senza: id effimero per-caricamento (anonimo aggregato).
+    if (!consentOK()) { if (!_sidEphemeral) _sidEphemeral = newId("e"); return _sidEphemeral; }
     try {
       var v = localStorage.getItem(SID_KEY);
       if (v) return v;
-      v = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ("s" + Date.now().toString(36) + Math.random().toString(16).slice(2));
+      v = newId("s");
       localStorage.setItem(SID_KEY, v);
       return v;
-    } catch (e) { return null; }
+    } catch (e) { if (!_sidEphemeral) _sidEphemeral = newId("e"); return _sidEphemeral; }
   }
   function getUtm() {
     try {
       var qs = new URLSearchParams(location.search), cur = {};
       ["source", "medium", "campaign"].forEach(function (k) { var v = qs.get("utm_" + k); if (v) cur[k] = v.slice(0, 120); });
+      if (!consentOK()) return cur; // solo attribuzione della visita corrente, nessuno storage persistente
       if (Object.keys(cur).length) { localStorage.setItem(UTM_KEY, JSON.stringify(cur)); return cur; } // first-touch persistente
       return JSON.parse(localStorage.getItem(UTM_KEY) || "{}");
     } catch (e) { return {}; }
@@ -235,6 +241,14 @@
         return;
       }
 
+      var consent = document.getElementById("consent-check");
+      if (consent && !consent.checked) {
+        form.classList.add("is-error");
+        showMessage("form.consentRequired", "error");
+        try { consent.focus(); } catch (e) {}
+        return;
+      }
+
       setLoading(true);
 
       // No endpoint configured — simulate success (preview / staging)
@@ -272,12 +286,10 @@
     });
   }
 
-  // -------------------- Cookie banner --------------------
+  // -------------------- Cookie banner / consenso --------------------
+  // Il banner e lo stato del consenso sono gestiti da consent.js (window.SchelpConsent).
+  // Qui carichiamo Plausible SOLO se/quando l'utente accetta.
   function setupCookies() {
-    var KEY = "schelp_consent_v1";
-    var banner = document.getElementById("cookie-banner");
-    if (!banner) return;
-
     function loadAnalytics() {
       if (!ANALYTICS_DOMAIN || document.getElementById("plausible-script")) return;
       var s = document.createElement("script");
@@ -286,29 +298,12 @@
       s.dataset.domain = ANALYTICS_DOMAIN;
       s.src = ANALYTICS_SRC;
       document.head.appendChild(s);
-      // queue helper
       window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
     }
-
-    var existing = null;
-    try { existing = localStorage.getItem(KEY); } catch (e) {}
-
-    if (existing === "accepted") {
-      loadAnalytics();
-    } else if (existing !== "declined") {
-      // Show banner after a short delay so it doesn't fight the page-load animation
-      setTimeout(function () { banner.classList.add("is-visible"); }, 800);
+    if (window.SchelpConsent) {
+      if (window.SchelpConsent.has()) loadAnalytics();
+      window.SchelpConsent.onChange(function (st) { if (st === "accepted") loadAnalytics(); });
     }
-
-    banner.querySelector(".btn-accept").addEventListener("click", function () {
-      try { localStorage.setItem(KEY, "accepted"); } catch (e) {}
-      banner.classList.remove("is-visible");
-      loadAnalytics();
-    });
-    banner.querySelector(".btn-decline").addEventListener("click", function () {
-      try { localStorage.setItem(KEY, "declined"); } catch (e) {}
-      banner.classList.remove("is-visible");
-    });
   }
 
   // -------------------- Scrollytelling --------------------

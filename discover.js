@@ -31,18 +31,25 @@
   // mai se l'utente ha già risposto per quel podcast (memorizzato in locale).
   var SURVEY_CTX = "discover";
   var SURVEY_SECONDS = 40;               // trigger automatico dopo N secondi
-  var ANON_KEY = "schelp_anon_v1";       // id anonimo stabile (no email)
-  var SURVEY_DONE_KEY = "schelp_survey_done_v1"; // podcast_id già valutati
+  var ANON_KEY = "schelp_anon_v1";       // id anonimo stabile (no email) — persistente solo con consenso
+  var SURVEY_DONE_KEY = "schelp_survey_done_v1"; // podcast_id già valutati (stato UX locale, non tracking)
+  var _anonEphemeral = null;
+  function consentOK() { return !!(window.SchelpConsent && window.SchelpConsent.has()); }
+  function newAnon() {
+    return (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : ("a" + Date.now().toString(36) + Math.random().toString(16).slice(2));
+  }
   function getAnonId() {
+    // Con consenso: id persistente (unique listener / dedup sondaggi). Senza: effimero per-caricamento (anonimo).
+    if (!consentOK()) { if (!_anonEphemeral) _anonEphemeral = newAnon(); return _anonEphemeral; }
     try {
       var v = localStorage.getItem(ANON_KEY);
       if (v) return v;
-      var id = (window.crypto && crypto.randomUUID)
-        ? crypto.randomUUID()
-        : ("a" + Date.now().toString(36) + Math.random().toString(16).slice(2));
+      var id = newAnon();
       localStorage.setItem(ANON_KEY, id);
       return id;
-    } catch (e) { return null; }
+    } catch (e) { if (!_anonEphemeral) _anonEphemeral = newAnon(); return _anonEphemeral; }
   }
   function surveyDoneSet() {
     try { return new Set(JSON.parse(localStorage.getItem(SURVEY_DONE_KEY) || "[]")); }
@@ -541,6 +548,12 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         showMessage("discover.pitch.invalid", "error");
         input.focus();
+        return;
+      }
+      var consent = document.getElementById("invite-consent");
+      if (consent && !consent.checked) {
+        showMessage("discover.pitch.consentRequired", "error");
+        try { consent.focus(); } catch (e) {}
         return;
       }
       button.disabled = true;

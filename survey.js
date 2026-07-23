@@ -94,6 +94,7 @@
         '</div>' +
         '<div class="sv-body" id="sv-body"></div>' +
         '<div class="sv-err" id="sv-err"></div>' +
+        '<div class="sv-privacy" style="font-size:11px;line-height:1.45;color:rgba(255,255,255,.42);padding:2px 4px 6px;">' + T("survey.privacy.html") + '</div>' +
         '<div class="sv-foot" id="sv-foot">' +
           '<button class="sv-skip" type="button" id="sv-skip">' + esc(T("survey.skip")) + '</button>' +
           '<div class="sv-nav">' +

@@ -145,6 +145,10 @@
           <input id="email" type="email" name="email" data-i18n-attr="placeholder:hero.emailPlaceholder" placeholder="you@email.com" required autocomplete="email" inputmode="email" aria-describedby="form-help">
           <button type="submit"><span data-i18n-text="hero.cta">Get early access</span> <span aria-hidden="true">→</span></button>
         </form>
+        <label class="form-consent" for="consent-check" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--fg-3);margin-top:12px;cursor:pointer;">
+          <input type="checkbox" id="consent-check" style="margin-top:2px;flex:0 0 auto;">
+          <span data-i18n-html="consent.checkbox.html">I have read and accept the <a href="privacy.html">privacy policy</a>.</span>
+        </label>
         <a href="/discover" id="hero-discover-cta" class="hero-discover-cta">
           <span class="hdc-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           <span data-i18n-text="hero.discoverCta">Listen to a real episode</span>
@@ -1754,6 +1758,7 @@
   <div id="survey-root"></div>
 
   <script src="survey.js" defer></script>
+  <script src="consent.js" defer></script>
   <script src="landing.js" defer></script>
 </body>
 </html>

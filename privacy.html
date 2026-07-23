@@ -9,7 +9,7 @@
 <link rel="icon" href="logo-schelp.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,30..100;1,9..144,500..800,30..100&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="colors_and_type.css">
 <style>
   body { font-family: var(--font-body); color: var(--fg-2); background: var(--bg-page); margin: 0; }
@@ -24,11 +24,17 @@
   ul { padding-left: 22px; margin: 0 0 14px; }
   li { margin-bottom: 6px; line-height: 1.6; color: var(--fg-2); }
   a { color: var(--coral-500); text-underline-offset: 2px; }
+  code { font-family: var(--font-mono); font-size: 13px; background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 5px; }
   .back { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-3); text-decoration: none; margin-top: 40px; font-size: 14px; }
   .back:hover { color: var(--fg-1); }
   .back::before { content: "←"; }
   hr { border: 0; border-top: 1px solid var(--border-subtle); margin: 40px 0; }
   .small { color: var(--fg-4); font-size: 13px; line-height: 1.6; }
+  .cookie-table { width: 100%; border-collapse: collapse; margin: 8px 0 18px; font-size: 14px; }
+  .cookie-table th, .cookie-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+  .cookie-table th { color: var(--fg-3); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .who { background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 16px 18px; margin: 0 0 8px; }
+  .who p { margin: 0; font-size: 15px; }
 </style>
 </head>
 <body>
@@ -39,50 +45,53 @@
     </a>
 
     <h1>Privacy Policy</h1>
-    <div class="updated">Last updated · May 12, 2026</div>
+    <div class="updated" id="pp-updated">Last updated · —</div>
 
-    <p>This page explains what information Schelp collects on this website, how we use it, and the rights you have over it. We're keeping it short and plain on purpose — if anything's unclear, write to <a href="mailto:hello@schelp.app">hello@schelp.app</a>.</p>
+    <p>This page explains what information Schelp collects on this website, how we use it, and the rights you have over it. If anything is unclear, write to <a id="pp-email-inline" href="mailto:hello@schelp.app">hello@schelp.app</a>.</p>
 
-    <h2>1. Who we are</h2>
-    <p>"Schelp" refers to the company building the Schelp app and operating <strong>schelp.app</strong>. For privacy questions you can reach the data controller at <a href="mailto:hello@schelp.app">hello@schelp.app</a>.</p>
+    <h2>Who we are</h2>
+    <div class="who" id="pp-who">
+      <p>Loading…</p>
+    </div>
 
-    <h2>2. What we collect on this page</h2>
-    <p>Only two things, and only when you give them to us:</p>
-    <ul>
-      <li><strong>Your email address</strong>, if you submit the early-access form. Stored with our email-service provider for the sole purpose of letting you know when Schelp is ready.</li>
-      <li><strong>Anonymous analytics</strong>, if you click "Accept" on the cookie banner. We use a privacy-friendly analytics provider that does not set tracking cookies, does not collect personal data, and does not sell anything. If you click "Decline" or don't respond, no analytics are loaded.</li>
-    </ul>
+    <div id="pp-body"></div>
 
-    <h2>3. What we do <em>not</em> collect</h2>
-    <ul>
-      <li>No advertising cookies.</li>
-      <li>No third-party trackers.</li>
-      <li>No data resale or sharing with marketing partners.</li>
-      <li>No profiling of individual visitors.</li>
-    </ul>
-
-    <h2>4. Legal basis (GDPR)</h2>
-    <p>For the early-access list: your <strong>consent</strong>, given when you submit the form. For analytics: your <strong>consent</strong>, given via the cookie banner. You can withdraw either at any time — unsubscribe via the link in any email we send you, or clear the consent stored in your browser by visiting this page again with cookies cleared.</p>
-
-    <h2>5. How long we keep things</h2>
-    <ul>
-      <li>Early-access emails: until Schelp launches and we've sent your invite, plus 30 days. After that they are deleted unless you've opted in to product news.</li>
-      <li>Analytics: aggregate, anonymous, retained for up to 24 months.</li>
-    </ul>
-
-    <h2>6. Your rights</h2>
-    <p>Under GDPR you have the right to access, correct, delete, restrict, port, and object to the processing of your personal data. To exercise any of these, email <a href="mailto:hello@schelp.app">hello@schelp.app</a> with your request and we'll respond within 30 days. You also have the right to lodge a complaint with your local data-protection authority.</p>
-
-    <h2>7. Children</h2>
-    <p>Schelp is not directed at children under 16 and we do not knowingly collect personal data from them. If you believe a child has submitted data, please write to us and we'll delete it.</p>
-
-    <h2>8. Changes to this policy</h2>
-    <p>If we change anything material, we'll update the "Last updated" date above and — if you're already on the early-access list — drop you an email so you can re-consent or unsubscribe.</p>
+    <h2>Cookies &amp; tracking</h2>
+    <div id="pp-cookies"></div>
 
     <hr>
-    <p class="small">This is a plain-English summary. If you operate from outside the EU/EEA, additional local laws (CCPA, UK GDPR, etc.) may give you equivalent or further rights — we honor them on request.</p>
+    <p class="small">If you operate from outside the EU/EEA, additional local laws (UK GDPR, CCPA, etc.) may give you equivalent or further rights — we honor them on request.</p>
 
     <a class="back" href="index.html">Back to schelp.app</a>
   </div>
+
+  <script src="consent.js" defer></script>
+  <script>
+  (function () {
+    var API = /^(localhost|127\.0\.0\.1|::1|\[::1\])$/.test(location.hostname) ? "" : "https://api.apipodcast.org";
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+    fetch(API + "/public/legal", { headers: { Accept: "application/json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        var email = d.controller_email || "hello@schelp.app";
+        if (d.last_updated) document.getElementById("pp-updated").textContent = "Last updated · " + d.last_updated;
+        var names = [d.controller_name_1, d.controller_name_2].filter(Boolean).map(esc).join(" and ");
+        var who = "<p>Schelp is an independent project run jointly by " +
+          "<strong>" + (names || "[the joint controllers]") + "</strong> as joint data controllers (two individuals, no company). " +
+          "For privacy questions or to exercise your rights, contact us at <a href=\"mailto:" + esc(email) + "\">" + esc(email) + "</a>";
+        if (d.controller_address) who += ", or by post at " + esc(d.controller_address);
+        who += ".</p>";
+        document.getElementById("pp-who").innerHTML = who;
+        document.getElementById("pp-email-inline").setAttribute("href", "mailto:" + email);
+        document.getElementById("pp-email-inline").textContent = email;
+        if (d.privacy_body) document.getElementById("pp-body").innerHTML = d.privacy_body;
+        if (d.cookie_body) document.getElementById("pp-cookies").innerHTML = d.cookie_body;
+      })
+      .catch(function () {
+        document.getElementById("pp-who").innerHTML = "<p>For privacy questions contact <a href=\"mailto:hello@schelp.app\">hello@schelp.app</a>.</p>";
+      });
+  })();
+  </script>
 </body>
 </html>
