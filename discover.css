@@ -360,6 +360,83 @@
   .dsc-invite { justify-content: center; }
 }
 
+/* ---- Card SERIE (visivamente distinta dal singolo episodio) ---- */
+.dsc-card-series { position: relative; }
+/* pila di "copertine" dietro alla cover: suggerisce più episodi */
+.dsc-series-stack { position: absolute; top: 0; left: 0; right: 0; height: 0; pointer-events: none; }
+.dsc-series-stack i {
+  position: absolute; left: 8px; right: 8px; height: 14px;
+  border-radius: 12px 12px 0 0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 0;
+}
+.dsc-series-stack i:first-child { top: -10px; left: 16px; right: 16px; opacity: 0.5; }
+.dsc-series-stack i:last-child { top: -5px; }
+.dsc-card-series .dsc-card-cover { position: relative; }
+.dsc-series-badge {
+  position: absolute; top: 10px; left: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+  padding: 4px 8px; border-radius: 999px;
+  background: rgba(10,10,11,0.72);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+.dsc-fab-series { background: rgba(10,10,11,0.75); border: 1px solid rgba(255,255,255,0.25); }
+
+/* ---- Vista episodi di una serie (dentro la modale) ---- */
+.dsc-series-view { padding: 4px 2px 8px; }
+.dsc-series-head { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 22px; }
+.dsc-series-cover {
+  flex: 0 0 auto; width: 132px; height: 132px; border-radius: 16px;
+  background: rgba(255,255,255,0.06) center/cover no-repeat;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.dsc-series-info h2 {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(20px, 3vw, 28px); line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--fg-1); margin: 6px 0 8px;
+}
+.dsc-series-eyebrow {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.16em; color: var(--coral-500);
+}
+.dsc-series-info p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.62); margin: 0 0 8px; }
+.dsc-series-meta { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.45); }
+
+.dsc-ep-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.dsc-ep {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 14px; border-radius: 12px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.07);
+  cursor: pointer;
+  transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.dsc-ep:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.16); transform: translateX(2px); }
+.dsc-ep-num {
+  flex: 0 0 auto; width: 26px; text-align: center;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,0.35);
+}
+.dsc-ep-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.dsc-ep-title { font-size: 14px; font-weight: 600; color: var(--fg-1); line-height: 1.3; }
+.dsc-ep-sub { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.4); }
+.dsc-ep-play {
+  flex: 0 0 auto; width: 30px; height: 30px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--coral-500); color: #fff;
+}
+.dsc-ep-play svg { width: 14px; height: 14px; margin-left: 1px; }
+.dsc-ep-empty { padding: 20px; text-align: center; color: rgba(255,255,255,0.4); font-size: 14px; }
+
+@media (max-width: 560px) {
+  .dsc-series-head { flex-direction: column; gap: 14px; }
+  .dsc-series-cover { width: 96px; height: 96px; }
+}
+
 /* ---- Modale player ---- */
 .dsc-modal {
   position: fixed; inset: 0;

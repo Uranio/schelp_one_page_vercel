@@ -147,7 +147,13 @@
   var currentInterest = ""; // categoria attiva nella sidebar ("" = tutte)
   var CURRENT_ROWS = []; // ultime righe caricate (per categoria), pre-ricerca
 
+  var SERIES_KEY = "__series__";   // pseudo-categoria "Series" nella sidebar
+
   // ---------------- deep-link & condivisione ----------------
+  function deepLinkSeriesId() {
+    var m = location.pathname.match(/^\/discover\/series\/(\d+)/);
+    return m ? m[1] : null;
+  }
   function deepLinkId() {
     var m = location.pathname.match(/^\/discover\/(\d+)/);
     if (m) return m[1];
@@ -240,6 +246,9 @@
       sideList.appendChild(b);
     }
     mk("", t("discover.filter.all"));
+    // Pseudo-categoria: le serie non sono un interesse ma una vetrina a parte
+    // (gli episodi di serie sono esclusi dalle liste per categoria lato backend).
+    mk(SERIES_KEY, t("discover.filter.series"));
     (values || []).forEach(function (v) { mk(v, interestEn(v)); });
   }
 
@@ -256,6 +265,16 @@
     render(CURRENT_ROWS.filter(function (p) { return matchesSearch(p, q); }));
   }
   function loadList() {
+    if (currentInterest === SERIES_KEY) {
+      if (MODE !== "live") { CURRENT_ROWS = []; renderWithSearch(); return Promise.resolve(); }
+      showState("loading");
+      return apiGet("/public/author/" + AUTHOR + "/series?per_page=50")
+        .then(function (d) {
+          CURRENT_ROWS = ((d && d.series) || []).map(function (s) { s.__series = true; return s; });
+          renderWithSearch();
+        })
+        .catch(function () { showState("error"); updateCount(0); });
+    }
     if (MODE === "live") {
       var q = ["per_page=50"];
       if (currentInterest) q.push("interest=" + encodeURIComponent(currentInterest));
@@ -290,7 +309,10 @@
     }
     showState("grid");
     updateCount(pods.length);
-    pods.forEach(function (p, i) { if (p && p.id != null) rendered[p.id] = p; grid.appendChild(card(p, i)); });
+    pods.forEach(function (p, i) {
+      if (p && p.id != null && !p.__series) rendered[p.id] = p;
+      grid.appendChild(p && p.__series ? seriesCard(p, i) : card(p, i));
+    });
   }
 
   function card(p, i) {
@@ -323,6 +345,97 @@
     }
     c.addEventListener("click", function () { openPlayer(p); });
     return c;
+  }
+
+  // ---------------- serie ----------------
+  // Card visivamente distinta dal singolo episodio: copertina "impilata",
+  // badge SERIES e conteggio episodi al posto della durata.
+  function seriesCard(s, i) {
+    var c = document.createElement("button");
+    c.type = "button";
+    c.className = "dsc-card dsc-card-series";
+    c.style.animationDelay = (i * 50) + "ms";
+
+    var n = s.episode_count != null ? s.episode_count : (s.total_episodes || 0);
+    var metaBits = [];
+    if (s.interest) metaBits.push(escapeHtml(interestEn(s.interest)));
+    metaBits.push(n + " " + t(n === 1 ? "discover.series.episode" : "discover.series.episodes"));
+
+    c.innerHTML =
+      '<div class="dsc-series-stack" aria-hidden="true"><i></i><i></i></div>' +
+      '<div class="dsc-card-cover">' +
+        '<div class="dsc-card-ph" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm2-3h12v2H6zM3 10h18a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm7 2.5v6l5-3z"/></svg>' +
+        '</div>' +
+        '<span class="dsc-series-badge">' + escapeHtml(t("discover.series.badge")) + '</span>' +
+        '<span class="dsc-fab dsc-fab-series" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h11v2H4zm0 5h11v2H4zm0 5h7v2H4zm14-9 5 4-5 4z"/></svg></span>' +
+      '</div>' +
+      '<div class="dsc-card-meta">' +
+        '<span class="dsc-card-title">' + escapeHtml(s.title || "Series") + '</span>' +
+        '<span class="dsc-card-sub">' + metaBits.join(" · ") + '</span>' +
+        '<span class="dsc-card-author">@' + escapeHtml(s.author || AUTHOR) + '</span>' +
+      '</div>';
+
+    if (s.cover_url) {
+      var cover = c.querySelector(".dsc-card-cover");
+      cover.style.backgroundImage = "url('" + s.cover_url + "')";
+      cover.classList.add("has-img");
+    }
+    c.addEventListener("click", function () { openSeries(s.id); });
+    return c;
+  }
+
+  // Drill-down: elenco episodi della serie dentro la stessa modale del player.
+  function openSeries(planId, push) {
+    apiGet("/public/series/" + planId)
+      .then(function (d) {
+        if (!d || !d.series) return;
+        var s = d.series, eps = d.episodes || [];
+        eps.forEach(function (e) { if (e && e.id != null) rendered[e.id] = e; });
+
+        mount.innerHTML =
+          '<div class="dsc-series-view">' +
+            '<div class="dsc-series-head">' +
+              '<div class="dsc-series-cover' + (s.cover_url ? ' has-img' : '') + '"' +
+                (s.cover_url ? ' style="background-image:url(\'' + s.cover_url + '\')"' : '') + '></div>' +
+              '<div class="dsc-series-info">' +
+                '<span class="dsc-series-eyebrow">' + escapeHtml(t("discover.series.badge")) + '</span>' +
+                '<h2>' + escapeHtml(s.title || "") + '</h2>' +
+                (s.description ? '<p>' + escapeHtml(s.description) + '</p>' : '') +
+                '<span class="dsc-series-meta">' +
+                  (s.interest ? escapeHtml(interestEn(s.interest)) + ' · ' : '') +
+                  eps.length + ' ' + escapeHtml(t(eps.length === 1 ? "discover.series.episode" : "discover.series.episodes")) +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+            '<ol class="dsc-ep-list"></ol>' +
+          '</div>';
+
+        var list = mount.querySelector(".dsc-ep-list");
+        if (!eps.length) {
+          list.innerHTML = '<li class="dsc-ep-empty">' + escapeHtml(t("discover.series.emptyEpisodes")) + '</li>';
+        }
+        eps.forEach(function (e, idx) {
+          var li = document.createElement("li");
+          li.className = "dsc-ep";
+          li.innerHTML =
+            '<span class="dsc-ep-num">' + (e.episode_number || idx + 1) + '</span>' +
+            '<span class="dsc-ep-body">' +
+              '<span class="dsc-ep-title">' + escapeHtml(e.title || "Episode") + '</span>' +
+              '<span class="dsc-ep-sub">' + (e.duration_minutes ? e.duration_minutes + ' min' : '') + '</span>' +
+            '</span>' +
+            '<span class="dsc-ep-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>';
+          li.addEventListener("click", function () { openPlayer(e); });
+          list.appendChild(li);
+        });
+
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        if (push !== false) {
+          try { history.pushState({ series: planId }, "", "/discover/series/" + planId); } catch (err) {}
+        }
+      })
+      .catch(function () {});
   }
 
   // ---------------- player (markup .tplayer riusato da landing.css) ----------------
@@ -515,7 +628,7 @@
     if (modal) modal.hidden = true;
     if (mount) mount.innerHTML = "";
     document.body.style.overflow = "";
-    if (push !== false && /^\/discover\/\d+/.test(location.pathname)) {
+    if (push !== false && /^\/discover\/(series\/)?\d+/.test(location.pathname)) {
       history.pushState({}, "", "/discover");
     }
   }
@@ -600,6 +713,8 @@
 
     // Back/forward del browser: apri o chiudi in base all'URL.
     window.addEventListener("popstate", function () {
+      var sid = deepLinkSeriesId();
+      if (sid) { openSeries(sid, false); return; }
       var id = deepLinkId();
       if (id) openById(id, false); else closePlayer(false);
     });
@@ -621,7 +736,9 @@
       })
       .catch(function () { return useStatic(); })
       .then(function () {
-        // Deep-link: se l'URL punta a un episodio, aprilo (senza ri-pushare).
+        // Deep-link: se l'URL punta a una serie o a un episodio, aprilo (senza ri-pushare).
+        var sid = deepLinkSeriesId();
+        if (sid) { openSeries(sid, false); return; }
         var id = deepLinkId();
         if (id) openById(id, false);
       });
