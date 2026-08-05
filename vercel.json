@@ -3,6 +3,8 @@
   "rewrites": [
     { "source": "/discover", "destination": "/discover.html" },
     { "source": "/discover/:id", "destination": "/discover.html" },
+    { "source": "/news", "destination": "/news.html" },
+    { "source": "/news/:slug", "destination": "/news.html" },
     { "source": "/p/:id", "destination": "https://api.apipodcast.org/public/share/:id" }
   ]
 }

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-i18n-text="news.meta.title">Schelp — News</title>
+<meta name="description" data-i18n-attr="content:news.meta.description" content="News and updates from the Schelp team.">
+<meta name="theme-color" content="#0A0A0B">
+
+<link rel="canonical" href="https://schelp.app/news">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Schelp">
+<meta property="og:title" data-i18n-attr="content:news.meta.title" content="Schelp — News">
+<meta property="og:description" data-i18n-attr="content:news.meta.description" content="News and updates from the Schelp team.">
+<meta property="og:url" content="https://schelp.app/news">
+<meta property="og:image" content="https://schelp.app/og.png">
+
+<!-- Favicons -->
+<link rel="icon" href="/logo-schelp.png">
+<link rel="apple-touch-icon" href="/icon-512.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Fonts (same set as the landing) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<!-- Tokens + page styles -->
+<link rel="stylesheet" href="/colors_and_type.css">
+<link rel="stylesheet" href="/landing.css">
+<link rel="stylesheet" href="/news.css">
+
+<!-- i18n dictionary (load before news.js) -->
+<script src="/i18n.js" defer></script>
+<script src="/consent.js" defer></script>
+<script src="/news.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n-text="a11y.skipLink">Skip to content</a>
+  <div class="bg-wash" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" data-i18n-attr="aria-label:nav.brand.aria" aria-label="Schelp — home">
+        <img src="/logo-schelp.png" alt="" width="36" height="36">
+        <span>schelp</span>
+      </a>
+      <div class="links">
+        <a href="/" data-i18n-text="nav.home">Home</a>
+        <a href="/discover" data-i18n-text="nav.discover">Discover</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="news">
+    <!-- Vista elenco -->
+    <section class="news-list" id="news-list">
+      <div class="eyebrow" data-i18n-text="news.eyebrow">From the team</div>
+      <h1 class="news-h1" data-i18n-text="news.title">News</h1>
+      <p class="news-sub" data-i18n-text="news.subtitle">Updates, announcements and stories from Schelp.</p>
+
+      <div class="news-grid" id="news-grid" hidden></div>
+
+      <div class="news-state" id="news-loading">
+        <div class="news-spinner" aria-hidden="true"></div>
+        <p data-i18n-text="news.loading">Loading…</p>
+      </div>
+      <div class="news-state" id="news-empty" hidden>
+        <div class="news-state-icon" aria-hidden="true">📰</div>
+        <p class="news-state-title" data-i18n-text="news.empty.title">Nothing here yet</p>
+        <p class="news-state-sub" data-i18n-text="news.empty.sub">Check back soon for updates from the Schelp team.</p>
+      </div>
+      <div class="news-state" id="news-error" hidden>
+        <div class="news-state-icon" aria-hidden="true">⚠️</div>
+        <p class="news-state-title" data-i18n-text="news.error.title">Couldn't load the news</p>
+        <p class="news-state-sub" data-i18n-text="news.error.sub">Something went wrong. Please try again later.</p>
+      </div>
+    </section>
+
+    <!-- Vista articolo (riempita da news.js) -->
+    <article class="news-article" id="news-article" hidden></article>
+  </main>
+
+  <footer class="footer">
+    <div data-i18n-text-template="footer.copyright" data-template-vars="year">© <span id="year">2026</span> Schelp · podcasts for your day</div>
+    <div class="legal">
+      <a href="/privacy.html" data-i18n-text="footer.privacy">Privacy</a>
+      <span aria-hidden="true">·</span>
+      <a href="mailto:hello@schelp.app">hello@schelp.app</a>
+    </div>
+  </footer>
+</body>
+</html>
