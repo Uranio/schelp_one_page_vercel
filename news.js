@@ -127,6 +127,16 @@
         if (back) back.addEventListener("click", function (e) {
           e.preventDefault(); history.pushState({}, "", "/news"); loadList();
         });
+        // Sondaggio richiamabile da un pulsante nel corpo del post
+        articleEl.querySelectorAll("[data-survey-open]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            if (!window.SchelpSurvey) return;
+            window.SchelpSurvey.open({
+              context: btn.getAttribute("data-survey-context") || "landing",
+              source: "news", lang: LANG
+            });
+          });
+        });
       })
       .catch(function () {
         articleEl.innerHTML =
