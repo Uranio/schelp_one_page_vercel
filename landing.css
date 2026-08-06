@@ -3178,6 +3178,9 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 .ser-ep-play svg { width: 13px; height: 13px; color: #0D0D0D; margin-left: 1px; }
 
 /* "Scopri" nav entry — always visible (anche su mobile, fuori da .links) */
+.nav .nav-actions {
+  display: inline-flex; align-items: center; gap: 10px; margin-left: auto;
+}
 .nav .nav-discover {
   display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--font-mono); font-size: 13px; font-weight: 600;
