@@ -149,6 +149,8 @@
 
   var SERIES_KEY = "__series__";   // pseudo-categoria "Series" nella sidebar
   var IMAGES_KEY = "__images__";   // pseudo-categoria "Podcast from images"
+  // Chevron bianco riusato nelle frecce "foto → podcast" (colore/gradiente dal contenitore CSS)
+  var CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>';
 
   // ---------------- deep-link & condivisione ----------------
   function deepLinkSeriesId() {
@@ -345,6 +347,7 @@
           '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zm7 9a7 7 0 0 1-6 6.92V21h-2v-2.08A7 7 0 0 1 5 12h2a5 5 0 0 0 10 0h2z"/></svg>' +
         '</div>' +
         (fromImg ? '<span class="dsc-card-srcimg" style="background-image:url(\'' + p.source_image_url + '\')" title="' + escapeHtml(t("discover.images.badge")) + '" aria-hidden="true"></span>' : '') +
+        (fromImg ? '<span class="dsc-card-srcarrow" aria-hidden="true">' + CHEVRON + '</span>' : '') +
         (fromImg ? '<span class="dsc-card-imgbadge">' + escapeHtml(t("discover.images.badge")) + '</span>' : '') +
         '<span class="dsc-fab" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
       '</div>' +
@@ -530,18 +533,24 @@
 
   function openPlayer(p, push) {
     closePlayer(false);
-    mount.innerHTML = buildPlayerHTML(p);
+    // Podcast da immagine: foto sorgente a SINISTRA, freccia, poi il player.
+    var fromImg = p.from_image && p.source_image_url;
+    if (modal) modal.classList.toggle("is-fromimg", !!fromImg);
+    if (fromImg) {
+      mount.innerHTML =
+        '<div class="dsc-fromimg">' +
+          '<figure class="dsc-fromimg-src">' +
+            '<img src="' + escapeHtml(p.source_image_url) + '" alt="" loading="lazy">' +
+            '<figcaption>' + escapeHtml(t("discover.images.source")) + '</figcaption>' +
+          '</figure>' +
+          '<span class="dsc-fromimg-arrow" aria-hidden="true">' + CHEVRON + '</span>' +
+          '<div class="dsc-fromimg-player">' + buildPlayerHTML(p) + '</div>' +
+        '</div>';
+    } else {
+      mount.innerHTML = buildPlayerHTML(p);
+    }
     var card = mount.querySelector(".tplayer");
     if (p.image_url) card.querySelector(".tplayer-cover").style.backgroundImage = "url('" + p.image_url + "')";
-    // Podcast da immagine: mostra la foto sorgente sotto al player
-    if (p.from_image && p.source_image_url) {
-      var src = document.createElement("figure");
-      src.className = "dsc-srcphoto";
-      src.innerHTML =
-        '<img src="' + escapeHtml(p.source_image_url) + '" alt="" loading="lazy">' +
-        '<figcaption>' + escapeHtml(t("discover.images.caption")) + '</figcaption>';
-      mount.appendChild(src);
-    }
     buildBars(card, card.getAttribute("data-peaks"));
     var shareBtn = card.querySelector(".tplayer-share");
     if (shareBtn) shareBtn.addEventListener("click", function () { sharePodcast(p); });
@@ -650,7 +659,7 @@
 
   function closePlayer(push) {
     if (active) { active.teardown(); active = null; }
-    if (modal) modal.hidden = true;
+    if (modal) { modal.hidden = true; modal.classList.remove("is-fromimg"); }
     if (mount) mount.innerHTML = "";
     document.body.style.overflow = "";
     if (push !== false && /^\/discover\/(series\/)?\d+/.test(location.pathname)) {

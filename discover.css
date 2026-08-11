@@ -531,40 +531,80 @@
 .dsc-side-item-special.is-active { color: #fff; }
 .dsc-side-item-special.is-active::before { background: var(--violet-500, #7B61FF); }
 
-/* ---------- Podcast da immagine: thumbnail foto sorgente sulla card ---------- */
+/* ---------- Podcast da immagine: card tra le altre ----------
+   Foto di partenza ingrandita in alto a sx + freccia gradient verso la cover AI. */
 .dsc-card-srcimg {
   position: absolute;
-  left: 10px; top: 10px; z-index: 2;
-  width: 46px; height: 46px;
-  border-radius: 10px;
+  left: 12px; top: 12px; z-index: 3;
+  width: 64px; height: 64px;
+  border-radius: 14px;
   background: #1a1a1a center / cover no-repeat;
-  border: 2px solid rgba(255,255,255,0.9);
+  border: 2.5px solid #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.55);
+}
+.dsc-card-srcarrow {
+  position: absolute;
+  left: 66px; top: 34px; z-index: 4;
+  width: 24px; height: 24px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--coral-500, #FF6B6B), var(--violet-500, #7B61FF));
+  border: 2px solid rgba(13,13,13,0.9);
   box-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
+.dsc-card-srcarrow svg { width: 12px; height: 12px; }
+.dsc-card:hover .dsc-card-srcarrow { transform: scale(1.12); }
+.dsc-card-srcarrow { transition: transform 200ms var(--ease-out); }
 .dsc-card-imgbadge {
   position: absolute;
-  left: 10px; bottom: 10px; z-index: 2;
+  left: 12px; bottom: 12px; z-index: 3;
   font-family: var(--font-mono, monospace);
   font-size: 10px; font-weight: 700; letter-spacing: 0.03em;
   color: #fff;
-  padding: 3px 8px; border-radius: 999px;
+  padding: 3px 9px; border-radius: 999px;
   background: linear-gradient(135deg, var(--coral-500, #FF6B6B), var(--violet-500, #7B61FF));
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
-/* ---------- Foto sorgente sotto al player ---------- */
-.dsc-srcphoto {
-  margin: 16px auto 0;
-  max-width: 420px;
-  text-align: center;
+/* ---------- Podcast da immagine: vista player (foto a SINISTRA + freccia) ---------- */
+.dsc-modal.is-fromimg .dsc-modal-body { width: min(720px, 94vw); }
+.dsc-fromimg {
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px;
 }
-.dsc-srcphoto img {
-  width: 100%; max-height: 300px; object-fit: cover;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
+.dsc-fromimg-src {
+  flex: 0 0 auto;
+  width: 210px; max-width: 40%;
+  text-align: center;
+  margin: 0;
+}
+.dsc-fromimg-src img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 20px 50px -18px rgba(0,0,0,0.75);
   display: block;
 }
-.dsc-srcphoto figcaption {
-  margin-top: 8px;
-  font-size: 12px; color: rgba(255,255,255,0.5);
+.dsc-fromimg-src figcaption {
+  margin-top: 10px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px; letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.55);
+}
+.dsc-fromimg-arrow {
+  flex: 0 0 auto;
+  width: 46px; height: 46px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--coral-500, #FF6B6B), var(--violet-500, #7B61FF));
+  box-shadow: 0 8px 22px -6px rgba(123,97,255,0.6), 0 0 0 6px rgba(123,97,255,0.10);
+  margin-bottom: 22px;              /* allinea con il centro del player, non con la caption */
+}
+.dsc-fromimg-arrow svg { width: 22px; height: 22px; }
+.dsc-fromimg-player { flex: 0 1 340px; min-width: 0; }
+.dsc-fromimg-player .tplayer { width: 100%; }
+
+@media (max-width: 640px) {
+  .dsc-fromimg { flex-direction: column; gap: 10px; }
+  .dsc-fromimg-src { width: 62%; max-width: 220px; }
+  .dsc-fromimg-arrow { transform: rotate(90deg); margin-bottom: 0; }
+  .dsc-fromimg-player { flex: 0 0 auto; width: min(320px, 82%); }
 }
