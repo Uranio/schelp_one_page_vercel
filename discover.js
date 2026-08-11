@@ -148,6 +148,7 @@
   var CURRENT_ROWS = []; // ultime righe caricate (per categoria), pre-ricerca
 
   var SERIES_KEY = "__series__";   // pseudo-categoria "Series" nella sidebar
+  var IMAGES_KEY = "__images__";   // pseudo-categoria "Podcast from images"
 
   // ---------------- deep-link & condivisione ----------------
   function deepLinkSeriesId() {
@@ -231,10 +232,10 @@
   function buildCategories(values) {
     if (!sideList) return;
     sideList.innerHTML = "";
-    function mk(val, label) {
+    function mk(val, label, special) {
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "dsc-side-item" + (val === currentInterest ? " is-active" : "");
+      b.className = "dsc-side-item" + (val === currentInterest ? " is-active" : "") + (special ? " dsc-side-item-special" : "");
       b.textContent = label;
       b.addEventListener("click", function () {
         if (currentInterest === val) return;
@@ -246,9 +247,10 @@
       sideList.appendChild(b);
     }
     mk("", t("discover.filter.all"));
-    // Pseudo-categoria: le serie non sono un interesse ma una vetrina a parte
+    // Pseudo-categorie evidenziate: vetrine a parte, non interessi.
     // (gli episodi di serie sono esclusi dalle liste per categoria lato backend).
-    mk(SERIES_KEY, t("discover.filter.series"));
+    mk(SERIES_KEY, t("discover.filter.series"), true);
+    mk(IMAGES_KEY, t("discover.filter.images"), true);
     (values || []).forEach(function (v) { mk(v, interestEn(v)); });
   }
 
@@ -273,6 +275,16 @@
           CURRENT_ROWS = ((d && d.series) || []).map(function (s) { s.__series = true; return s; });
           renderWithSearch();
         })
+        .catch(function () { showState("error"); updateCount(0); });
+    }
+    if (currentInterest === IMAGES_KEY) {
+      if (MODE !== "live") {
+        CURRENT_ROWS = ALL.filter(function (p) { return p.from_image; });
+        renderWithSearch(); return Promise.resolve();
+      }
+      showState("loading");
+      return apiGet("/public/author/" + AUTHOR + "?from_image=1&per_page=50")
+        .then(function (d) { CURRENT_ROWS = (d && d.podcasts) || []; renderWithSearch(); })
         .catch(function () { showState("error"); updateCount(0); });
     }
     if (MODE === "live") {
@@ -325,11 +337,15 @@
     if (p.interest) metaBits.push(escapeHtml(interestEn(p.interest)));
     if (p.duration_minutes) metaBits.push(p.duration_minutes + " min");
 
+    var fromImg = p.from_image && p.source_image_url;
+
     c.innerHTML =
       '<div class="dsc-card-cover">' +
         '<div class="dsc-card-ph" aria-hidden="true">' +
           '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zm7 9a7 7 0 0 1-6 6.92V21h-2v-2.08A7 7 0 0 1 5 12h2a5 5 0 0 0 10 0h2z"/></svg>' +
         '</div>' +
+        (fromImg ? '<span class="dsc-card-srcimg" style="background-image:url(\'' + p.source_image_url + '\')" title="' + escapeHtml(t("discover.images.badge")) + '" aria-hidden="true"></span>' : '') +
+        (fromImg ? '<span class="dsc-card-imgbadge">' + escapeHtml(t("discover.images.badge")) + '</span>' : '') +
         '<span class="dsc-fab" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
       '</div>' +
       '<div class="dsc-card-meta">' +
@@ -517,6 +533,15 @@
     mount.innerHTML = buildPlayerHTML(p);
     var card = mount.querySelector(".tplayer");
     if (p.image_url) card.querySelector(".tplayer-cover").style.backgroundImage = "url('" + p.image_url + "')";
+    // Podcast da immagine: mostra la foto sorgente sotto al player
+    if (p.from_image && p.source_image_url) {
+      var src = document.createElement("figure");
+      src.className = "dsc-srcphoto";
+      src.innerHTML =
+        '<img src="' + escapeHtml(p.source_image_url) + '" alt="" loading="lazy">' +
+        '<figcaption>' + escapeHtml(t("discover.images.caption")) + '</figcaption>';
+      mount.appendChild(src);
+    }
     buildBars(card, card.getAttribute("data-peaks"));
     var shareBtn = card.querySelector(".tplayer-share");
     if (shareBtn) shareBtn.addEventListener("click", function () { sharePodcast(p); });

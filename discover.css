@@ -521,3 +521,50 @@
 }
 .tplayer-share:hover { background: rgba(255,255,255,0.16); transform: scale(1.05); }
 .tplayer-share svg { width: 15px; height: 15px; }
+
+/* ---------- Pseudo-categorie evidenziate (Series / Podcast from images) ---------- */
+.dsc-side-item-special {
+  color: var(--violet-500, #7B61FF);
+  font-weight: 700;
+}
+.dsc-side-item-special:hover { color: #a48cff; }
+.dsc-side-item-special.is-active { color: #fff; }
+.dsc-side-item-special.is-active::before { background: var(--violet-500, #7B61FF); }
+
+/* ---------- Podcast da immagine: thumbnail foto sorgente sulla card ---------- */
+.dsc-card-srcimg {
+  position: absolute;
+  left: 10px; top: 10px; z-index: 2;
+  width: 46px; height: 46px;
+  border-radius: 10px;
+  background: #1a1a1a center / cover no-repeat;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.dsc-card-imgbadge {
+  position: absolute;
+  left: 10px; bottom: 10px; z-index: 2;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.03em;
+  color: #fff;
+  padding: 3px 8px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--coral-500, #FF6B6B), var(--violet-500, #7B61FF));
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* ---------- Foto sorgente sotto al player ---------- */
+.dsc-srcphoto {
+  margin: 16px auto 0;
+  max-width: 420px;
+  text-align: center;
+}
+.dsc-srcphoto img {
+  width: 100%; max-height: 300px; object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  display: block;
+}
+.dsc-srcphoto figcaption {
+  margin-top: 8px;
+  font-size: 12px; color: rgba(255,255,255,0.5);
+}
