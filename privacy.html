@@ -80,7 +80,6 @@
         var who = "<p>Schelp is an independent project run jointly by " +
           "<strong>" + (names || "[the joint controllers]") + "</strong> as joint data controllers (two individuals, no company). " +
           "For privacy questions or to exercise your rights, contact us at <a href=\"mailto:" + esc(email) + "\">" + esc(email) + "</a>";
-        if (d.controller_address) who += ", or by post at " + esc(d.controller_address);
         who += ".</p>";
         document.getElementById("pp-who").innerHTML = who;
         document.getElementById("pp-email-inline").setAttribute("href", "mailto:" + email);
