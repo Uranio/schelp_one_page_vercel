@@ -5,6 +5,33 @@
     { "source": "/discover/:id", "destination": "/discover.html" },
     { "source": "/news", "destination": "/news.html" },
     { "source": "/news/:slug", "destination": "/news.html" },
-    { "source": "/p/:id", "destination": "https://api.apipodcast.org/public/share/:id" }
+    { "source": "/p/:id", "destination": "https://api.apipodcast.org/public/share/:id" },
+    { "source": "/login", "destination": "/studio/index.html" },
+    { "source": "/signup", "destination": "/studio/index.html" },
+    { "source": "/studio", "destination": "/studio/index.html" },
+    { "source": "/studio/:path*", "destination": "/studio/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/studio/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(login|signup|studio|studio/.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Robots-Tag", "value": "noindex" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://api.apipodcast.org; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        }
+      ]
+    },
+    {
+      "source": "/(login|signup|studio|studio/index.html)",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    }
   ]
 }
