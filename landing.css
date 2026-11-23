@@ -3193,6 +3193,22 @@ button:focus-visible, a:focus-visible { outline-offset: 4px; }
 }
 .nav .nav-discover:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
 .nav .nav-discover:active { transform: scale(0.97); }
+/* "Accedi" alla webapp (schelp.app/login) */
+.nav .nav-login {
+  color: #fff; border-color: transparent;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff3d5a 60%, #e8327a 100%);
+  box-shadow: 0 6px 18px -6px rgba(255, 80, 100, 0.6);
+}
+.nav .nav-login:hover { background: linear-gradient(135deg, #ff7d7d 0%, #ff5068 60%, #ee4589 100%); border-color: transparent; }
+.nav .nav-discover { white-space: nowrap; }
+@media (max-width: 440px) {
+  .nav .nav-actions { gap: 6px; }
+  .nav .nav-discover { padding: 7px 11px; font-size: 12px; }
+}
+@media (max-width: 400px) {
+  /* Sui telefoni piccoli resta solo l'icona del logo: c'è spazio per tutte le voci */
+  .nav .brand span { display: none; }
+}
 
 /* Hero — CTA secondaria verso Discover (ascolta prima di iscriverti) */
 .hero-discover-cta {

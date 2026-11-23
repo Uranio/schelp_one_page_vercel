@@ -821,6 +821,8 @@
     trackLanding("page_view");
     var dcta = document.getElementById("hero-discover-cta");
     if (dcta) dcta.addEventListener("click", function () { trackLanding("discover_cta"); });
+    var login = document.getElementById("nav-login");
+    if (login) login.addEventListener("click", function () { trackLanding("cta_click"); });
     setupLanguageToggle();
     startCountdown();
     setupForm();
