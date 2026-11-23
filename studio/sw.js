@@ -3,7 +3,7 @@
  * - Asset con hash (/studio/assets/*): cache permanente.
  * - Font Google: cache con aggiornamento in background.
  * - API e audio: mai intercettati (l'audio offline sta in IndexedDB). */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = `shell-${VERSION}`;
 const ASSETS = `assets-${VERSION}`;
 const FONTS = `fonts-${VERSION}`;
@@ -73,4 +73,42 @@ self.addEventListener('fetch', (event) => {
       ),
     );
   }
+});
+
+/* ─── Notifiche push (Web Push dal backend) ─── */
+self.addEventListener('push', (event) => {
+  let msg = {};
+  try {
+    msg = event.data ? event.data.json() : {};
+  } catch {
+    msg = { title: 'Schelp', body: event.data ? event.data.text() : '' };
+  }
+  const title = msg.title || 'Schelp';
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: msg.body || '',
+      icon: '/studio/icon-192.png',
+      badge: '/studio/icon-192.png',
+      tag: msg.tag || 'schelp',
+      renotify: true,
+      data: { url: msg.url || '/studio', ...(msg.data || {}) },
+    }),
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = new URL((event.notification.data && event.notification.data.url) || '/studio', self.location.origin).href;
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((wins) => {
+      // Riusa una finestra della webapp già aperta, altrimenti ne apre una nuova.
+      for (const w of wins) {
+        if (w.url.includes('/studio') && 'focus' in w) {
+          w.navigate(url).catch(() => {});
+          return w.focus();
+        }
+      }
+      return self.clients.openWindow(url);
+    }),
+  );
 });
