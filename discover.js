@@ -485,6 +485,11 @@
             '<button type="button" class="tplayer-rew" data-skip="10" aria-label="Forward 10 seconds"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1l6 6-6 6V9a5 5 0 1 0 5 5h2a7 7 0 1 1-7-9z"/></svg><span class="tplayer-skip-num">10</span></button>' +
             '<button type="button" class="tplayer-skip" data-skip="15" aria-label="Skip forward 15 seconds"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM4 4l10.5 8L4 20z"/></svg></button>' +
           '</div>' +
+          // Dalla pagina condivisa alla webapp: ascolta/salva in Schelp, oppure crea il tuo
+          '<div class="tplayer-app">' +
+            '<a class="tplayer-app-open" href="/studio/podcast/' + encodeURIComponent(p.id) + '?discover=1">' + escapeHtml(t("discover.app.open")) + '</a>' +
+            '<a class="tplayer-app-create" href="/signup">' + escapeHtml(t("discover.app.create")) + '</a>' +
+          '</div>' +
           '<div class="tplayer-fbrow">' +
             '<button type="button" class="tplayer-fb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>' + escapeHtml(t("survey.fbButton")) + '</span></button>' +
           '</div>' +
@@ -580,6 +585,9 @@
       });
     }
     if (fbBtn) fbBtn.addEventListener("click", function () { openSurvey(false); });
+    card.querySelectorAll(".tplayer-app a").forEach(function (a) {
+      a.addEventListener("click", function () { try { audio.pause(); } catch (e) {} });
+    });
 
     // --- tracking: play (una volta) + milestones 25/50/75 + complete ---
     var playSent = false, milestones = {};

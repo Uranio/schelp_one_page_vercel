@@ -457,6 +457,8 @@ window.SchelpI18n = {
     "survey.error": "Invio non riuscito. Riprova tra un momento.",
     "survey.emailPlaceholder": "tu@email.com",
     "survey.fbButton": "Lascia un feedback",
+    "discover.app.open": "Apri in Schelp",
+    "discover.app.create": "Crea il tuo podcast",
 
     // Footer year-stamp tagline (gets dynamic year)
     "footer.copyright": "© {year} Schelp · podcast per la tua giornata",
@@ -936,6 +938,8 @@ window.SchelpI18n = {
     "survey.error": "Couldn't send. Try again in a moment.",
     "survey.emailPlaceholder": "you@email.com",
     "survey.fbButton": "Leave feedback",
+    "discover.app.open": "Open in Schelp",
+    "discover.app.create": "Create your podcast",
 
     "footer.copyright": "© {year} Schelp · podcasts for your day",
 
