@@ -108,5 +108,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/u/:username",
+      "destination": "/studio/u/:username",
+      "permanent": false
+    }
   ]
 }
